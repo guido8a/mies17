@@ -2140,20 +2140,17 @@ response.outputStream << file.newInputStream()
     }
 
     def saveBuenVivir = {
-        println("params " + params)
+//        println("params " + params)
         def proyecto = Proyecto.get(params.proyecto)
         def meta
         def metas
         def metaProyecto
         def errores = ''
 
-
         if(params.deleted){
             def c = params.deleted.split(",")
             c.each{
-                println("---> " + it)
-                def metaBorrar = MetaBuenVivir.get(it)
-                def borrar = MetaBuenVivirProyecto.findByMetaBuenVivirAndProyecto(metaBorrar, proyecto)
+                def borrar = MetaBuenVivirProyecto.get(it.toString())
                 try {
                     borrar.delete(flush: true)
                 }catch (e){
@@ -2201,7 +2198,12 @@ response.outputStream << file.newInputStream()
         }else{
             flash.message = "Error al guardar las metas"
         }
+    }
 
+    def formPoliticas () {
+        def proyecto = Proyecto.get(params.id)
+        def politicasAgenda = PoliticasAgendaProyecto.findAllByProyecto(proyecto)
+        return[proyecto: proyecto, politicasAgenda: politicasAgenda]
     }
 
 }
