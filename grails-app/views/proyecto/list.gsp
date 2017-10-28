@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="layout" content="main"/>
         <g:set var="entityName" value="${message(code: 'proyecto.label', default: 'Proyecto')}"/>
-        <title>Lista de Proyectos</title>
+        <title>Lista de Proyectos Nuevos</title>
 
         <style type="text/css">
         .clean {
