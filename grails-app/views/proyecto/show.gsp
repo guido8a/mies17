@@ -79,10 +79,6 @@
 
             <div id="" class="toolbar ui-widget-header ui-corner-all">
 
-                %{--<g:link class="button list" action="list">--}%
-                %{--Lista de proyectos--}%
-                %{--</g:link>--}%
-
                 <!-- FLYOUT MENU PROYECTO -->
                 <a tabindex="0" href="#" id="menuProyecto">
                     Proyecto
@@ -128,43 +124,7 @@
                             </a>
 
                         </li>
-                        %{--
-                                                <li>
-                                                    <g:link controller="asignacion" action="asignacionProyecto" id="${proyectoInstance.id}"
-                                                            class="button  fg-button">
-                                                        <span class="ui-icon ui-icon-cart"></span>
-                                                        Asignaciones de inversión
-                                                    </g:link>
-                                                </li>
-                        --}%
-                        %{--<li>--}%
-                        %{--<g:link controller="asignacion" action="asignacionesProyecto" id="${proyectoInstance.id}"--}%
-                        %{--class="button  fg-button">--}%
-                        %{--<span class="ui-icon ui-icon-cart"></span>--}%
-                        %{--Asignaciones--}%
-                        %{--</g:link>--}%
-
-                        %{--</li>--}%
-                        %{--<li>--}%
-                        %{--<g:link controller="obra" action="pacProyecto" id="${proyectoInstance.id}"--}%
-                        %{--class="button  fg-button">--}%
-                        %{--<span class="ui-icon ui-icon-cart"></span>--}%
-                        %{--P.A.C.--}%
-                        %{--</g:link>--}%
-                        %{--</li>--}%
-                        %{--<li>--}%
-                        %{--<a href="#" class="button responsables fg-button" function="showHistorial">--}%
-                        %{--<span class="ui-icon ui-icon-clock"></span>--}%
-                        %{--Historial Responsables--}%
-                        %{--</a>--}%
-                        %{--</li>--}%
-                        %{--<li>--}%
-                        %{--<a href="#" class="button estado fg-button" function="showEstado">--}%
-                        %{--<span class="ui-icon ui-icon-radio-off"></span>--}%
-                        %{--Estado--}%
-                        %{--</a>--}%
-                        %{--</li>--}%
-                    </ul>
+                     </ul>
                 </div>
 
                 <!-- FIN FLYOUT MENU PROYECTO -->
@@ -256,7 +216,13 @@
                     <div class="sectionHeader ui-widget-header ui-corner-top" title="Ocultar" data-object="detalles">
                         Detalles del proyecto
                         <span class="ui-icon ui-icon-triangle-1-n" style="float: right;"></span>
+                        <span style="margin-left: 800px">
+                            <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                                Editar
+                            </g:link>
+                        </span>
                     </div>
+
                     <table width="1040px" class="ui-widget-content ui-corner-bottom" id="detalles">
                         <tbody>
 
@@ -466,6 +432,11 @@
                          data-object="buenVivir">
                         Buen Vivir
                         <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
+                        <span style="margin-left: 862px">
+                            <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                                Editar
+                            </g:link>
+                        </span>
                     </div>
                     <table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="buenVivir">
                         <thead>
@@ -507,6 +478,11 @@
                     <div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="politicasAS">
                         Pol&iacute;ticas de agenda social
                         <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
+                        <span style="margin-left: 772px">
+                            <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                                Editar
+                            </g:link>
+                        </span>
                     </div>
                     <table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="politicasAS">
                         <tbody>
@@ -525,6 +501,11 @@
                     <div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="politicas">
                         Pol&iacute;ticas MIES
                         <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
+                        <span style="margin-left: 838px">
+                            <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                                Editar
+                            </g:link>
+                        </span>
                     </div>
                     <table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="politicas">
                         <tbody>
@@ -544,6 +525,11 @@
                          data-object="financiamiento">
                         Presupuesto/Fuentes
                         <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
+                        <span style="margin-left: 798px">
+                            <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                                Editar
+                            </g:link>
+                        </span>
                     </div>
                     <table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden"
                            id="financiamiento">
@@ -624,6 +610,11 @@
                     <div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar" data-object="entidades">
                         Entidades participantes
                         <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
+                            <span style="margin-left: 784px">
+                                <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                                    Editar
+                                </g:link>
+                            </span>
                     </div>
                     <table class="ui-widget-content ui-corner-bottom ui-helper-hidden" width="100%"
                            style="font-size: 13px;"
