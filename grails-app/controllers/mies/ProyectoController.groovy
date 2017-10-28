@@ -2,6 +2,8 @@ package mies
 
 import mies.seguridad.Usro
 
+import java.text.SimpleDateFormat
+
 class ProyectoController extends mies.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
@@ -586,33 +588,63 @@ class ProyectoController extends mies.seguridad.Shield {
         render(str)
     }
 
-    def formproyecto = {
+    def formProyecto = {
         println "params: $params"
         def proyecto = Proyecto.get(params.id)
         [proyecto: proyecto]
-/*
-        proyecto {
-            on("validarProyecto") {
-                flow.evento = params.goto
-                if (params.mes) {
-                    params.mes = (params.mes).toInteger()
-                }
-                if (flow.type == "create") {
-                    println "CREA"
-                    flow.proyecto = new Proyecto(params)
-                    flow.type = "edit"
-                } else {
-                    println "EDITA"
-                    println "PARAMS"
-                    println params
-                    flow.proyecto.properties = params
-                }
-                println "WTF"
-            }.to("validarProyecto")
-            on("salir").to("salir")
-            on("click") {flow.evento = params.evento}.to "redirect"
-        } //proyecto
-*/
+    }
+
+    def validarProyecto()  {
+        println "params validarProyecto: $params"
+        def proyecto = Proyecto.get(params.id)
+
+        if (params.mes) {
+            params.mes = (params.mes).toInteger()
+        }
+        if (!params.id) {
+            println "CREA"
+            proyecto = new Proyecto(params)
+        } else {
+            println "edita proyecto"
+            proyecto = Proyecto.get(params.id)
+        }
+
+        def tx_fcha
+        def fcha
+        if(params.fechaInicioPlanificada.size() > 20){
+            tx_fcha = "${params.fechaInicioPlanificada_day}-${params.fechaInicioPlanificada_month}-${params.fechaInicioPlanificada_year}"
+            fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
+            proyecto.fechaInicioPlanificada = fcha
+        }
+        if(params.fechaFinPlanificada.size() > 20){
+            tx_fcha = "${params.fechaFinPlanificada_day}-${params.fechaFinPlanificada_month}-${params.fechaFinPlanificada_year}"
+            fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
+            proyecto.fechaFinPlanificada = fcha
+        }
+        if(params.fechaInicio.size() > 20){
+            tx_fcha = "${params.fechaInicio_day}-${params.fechaInicio_month}-${params.fechaInicio_year}"
+            fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
+            proyecto.fechaInicio = fcha
+        }
+        if(params.fechaFin.size() > 20){
+            tx_fcha = "${params.fechaFin_day}-${params.fechaFin_month}-${params.fechaFin_year}"
+            fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
+            proyecto.fechaFin = fcha
+        }
+
+        params.remove('fechaInicioPlanificada')
+        params.remove('fechaFinPlanificada')
+        params.remove('fechaInicio')
+        params.remove('fechaFin')
+        proyecto.properties = params
+
+        if (!proyecto.hasErrors() && proyecto.save(flush: true)) {
+            flash.message = "Proyecto actualizado correctamente"
+            redirect(action: "formProyecto", id: proyecto.id)
+        }
+        else {
+            render(proyecto.errors)
+        }
     }
 
     def nuevoProyectoFlow = {
@@ -955,58 +987,6 @@ class ProyectoController extends mies.seguridad.Shield {
 //            redirect(controller: "proyecto", action: "semplades", id: flow.proyecto.id)
             redirect(controller: "proyecto", action: "show", id: flow.proyecto.id)
         }
-
-//        cargarFinanciamiento {
-//            action {
-//                yes()
-//            } //cargar financiamiento > action
-//            on("yes").to("financiamiento")
-//        } //cargar financiamiento
-//
-//        financiamiento {
-//            on("saveFinanciamiento") {
-//                println params
-//
-//                if (!flow.financiamientos || flow.financiamientos.size() == 0) {
-//                    flow.financiamientos = []
-//                }
-//
-//                params.each {
-//                    if (it.key.contains("mnt")) {
-//                        def parts = (it.key).split("_")
-//                        def id = parts[1]
-//                        def monto = it.value
-//
-//                        def financiamiento
-//
-//                        if ((!flow.financiamientos || flow.financiamientos.size() == 0) || (flow.financiamientos.size() > 0 && !flow.financiamientos.fuente.id.contains(id))) {
-//                            financiamiento = new Financiamiento()
-//                            financiamiento.proyecto = flow.proyecto
-//                            financiamiento.fuente = Fuente.get(id)
-//                            financiamiento.monto = monto.toDouble()
-////                            financiamiento.porcentaje = (monto.toDouble() * 100) / flow.proyecto.monto;
-//                        }
-//                        flow.financiamientos.add(financiamiento)
-//                    } else {
-//                        if (it.key == "deleted") {
-//                            def parts = it.value.split(",")
-//                            def fins = []
-//                            if (parts.size() > 0) {
-//                                parts.each { pa ->
-//                                    fins.add(Financiamiento.get(pa))
-//                                }
-//                            }
-//                            flow.financiamientos = flow.financiamientos - fins
-//                            flow.financiamientosDelete = fins
-//                        } //deleted
-//                    }
-//                }
-//            }.to("buenVivir")//to("checkpoint1")
-//            on("lista").to("lista")
-//            on("salir").to("salir")
-//            on("politicasProyecto").to("cargarPoliticas")
-//            on("click") {flow.evento = params.evento}.to "redirect"
-//        } //financiamiento
 
         lista {
             redirect(controller: "proyecto", action: "list")

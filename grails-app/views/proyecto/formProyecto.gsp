@@ -41,7 +41,7 @@
                     <g:renderErrors bean="${proyecto}" as="list"/>
                 </div>
             </g:hasErrors>
-            <g:form class="frmProyecto" method="post" action="nuevoProyecto" event="validarProyecto">
+            <g:form class="frmProyecto" method="post" action="validarProyecto" event="validarProyecto">
                 <g:hiddenField name="id" value="${proyecto?.id}"/>
                 <g:hiddenField name="version" value="${proyecto?.version}"/>
                 <input type="hidden" name="goto" id="goto" value="validarProyecto"/>
@@ -409,7 +409,7 @@
                             <g:select class="ui-widget-content ui-corner-all objetivoEstrategico"
                                       name="objetivoEstrategico.id"
                                       title="${Proyecto.constraints.objetivoEstrategico.attributes.mensaje}"
-                                      style="width: 360px;"
+                                      style="width: 360px;height: 40px;"
                                       from="${mies.ObjetivoEstrategicoProyecto.list()}" optionKey="id"
                                       value="${proyecto?.objetivoEstrategico?.id}"
                                       noSelection="['null': '']"/>
@@ -475,7 +475,7 @@
 
                                 <div class="botones">
                                     <div class="botones left">
-                                        <g:link action="nuevoProyecto" event="salir" class="button salir">Salir</g:link>
+                                        <g:link action="show" id="${proyecto?.id}" event="salir" class="button salir">Salir</g:link>
                                     </div>
 
                                     <div class="botones right">
@@ -483,9 +483,6 @@
                                             Guardar
                                         </a>
 
-                                        <a href="#" class="button save" title="A objetivos del buen vivir">
-                                            Continuar
-                                        </a>
                                     </div>
                                 </div>
 
