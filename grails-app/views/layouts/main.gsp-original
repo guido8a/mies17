@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><g:layoutTitle default="Grails"/></title>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" />--}%
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'forms.css')}"/>
+    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'logo_mies.jpg')}" type="image/x-icon"/>
+
+    <script type="text/javascript" src="${resource(dir: 'js/jquery/js', file: 'jquery-1.6.2.min.js')}"></script>
+    <script type="text/javascript"
+            src="${resource(dir: 'js/jquery/js', file: 'jquery-ui-1.8.16.custom.min.js')}"></script>
+
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'funciones.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'date-es-EC.js')}"></script>
+
+    <link rel="stylesheet" href="${resource(dir: 'js/jquery/css/start', file: 'jquery-ui-1.8.16.custom.css')}"/>
+
+    <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/countdown', file: 'jquery.countdown.js')}"></script>
+    <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/countdown', file: 'jquery.countdown.css')}"/>
+
+    <g:layoutHead/>
+    <g:javascript library="application"/>
+</head>
+
+<body>
+<div id="spinner" class="spinner" style="display:none;">
+    <img src="${resource(dir: 'images', file: 'spinner.gif')}"
+         alt="${message(code: 'spinner.alt', default: 'Loading...')}"/>
+</div>
+
+<div style="height: 20px; background:none; margin-bottom: 5px; width: 100%;"></div>
+
+<div id="treeMenu"
+     style="margin-left: 10px;margin-top: 0px;float: left; position: absolute; left:20px; top: 3px;">
+    <g:generarMenuHorizontal/>
+</div>
+<div id="" style="width: 160px;height: 30px;position: absolute;top:3px;left: 860px;">Tiempo aproximado hasta que termine su seción</div>
+<div id="countdown" style="width: 70px;height: 30px;position: absolute;top:3px;left: 1015px;border: none"></div>
+
+<div class="ui-dialog ui-widget ui-widget-content ui-corner-all"
+     style="height: 740px;  width: 1100px; margin-left:10px; position: absolute; left: 20px; top:37px;overflow-y: hidden">
+    <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"
+         style="text-align: center;">
+        <span class="ui-dialog-title" style="float: none;"><g:layoutTitle default=""/></span>
+    </div>
+
+    <div class="ui-dialog-content ui-widget-content" style="height: 690px;">
+        <g:layoutBody/>
+    </div>
+</div>
+<script type="text/javascript">
+    var fin = new Date()
+    fin.addMinutes(20)
+    $('#countdown').countdown({until: fin, compact: true,format: 'MS', description: '',onExpiry: verificarSecion});
+
+    function verificarSecion() {
+        $.ajax({
+            type: "POST",
+            url: "${createLink(action:'verificarSession',controller:'inicio')}",
+            data: "",
+            success: function(msg) {
+                if(msg=="ok") {
+                    fin.addMinutes(20)
+                    $('#countdown').countdown('change', {until: fin});;
+                } else
+                    location.href="${createLink(controller:'login',action:'logout')}"
+            }
+        });
+    }
+
+    $(".ajax").click(function(){
+        fin = new Date()
+        fin.addMinutes(20)
+        $('#countdown').countdown('change', {until: fin});
+    });
+
+
+</script>
+</body>
+</html>

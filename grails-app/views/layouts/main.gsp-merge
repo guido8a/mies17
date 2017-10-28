@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><g:layoutTitle default="Grails"/></title>
+        %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" />--}%
+        <link rel="stylesheet" href="${resource(dir: 'css', file: 'forms.css')}"/>
+        <link rel="shortcut icon" href="${resource(dir: 'images', file: 'logo_mies.jpg')}" type="image/x-icon"/>
+
+        <script type="text/javascript" src="${resource(dir: 'js/jquery/js', file: 'jquery-1.6.2.min.js')}"></script>
+        <script type="text/javascript"
+                src="${resource(dir: 'js/jquery/js', file: 'jquery-ui-1.8.16.custom.min.js')}"></script>
+
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'funciones.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'date-es-EC.js')}"></script>
+
+        <link rel="stylesheet" href="${resource(dir: 'js/jquery/css/start', file: 'jquery-ui-1.8.16.custom.css')}"/>
+
+        <g:layoutHead/>
+        <g:javascript library="application"/>
+    </head>
+
+    <body>
+        <div id="spinner" class="spinner" style="display:none;">
+            <img src="${resource(dir: 'images', file: 'spinner.gif')}"
+                 alt="${message(code: 'spinner.alt', default: 'Loading...')}"/>
+        </div>
+
+        <div style="height: 20px; background:none; margin-bottom: 5px; width: 100%;"></div>
+
+        <div id="treeMenu"
+             style="margin-left: 10px;margin-top: 0px;float: left; position: absolute; left:20px; top: 3px;">
+            <g:generarMenuHorizontal/>
+        </div>
+
+        <div class="ui-dialog ui-widget ui-widget-content ui-corner-all"
+             style="height: 750px;  width: 1100px; margin-left:10px; position: absolute; left: 20px; top:35px;overflow-y: hidden">
+            <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"
+                 style="text-align: center;">
+                <span class="ui-dialog-title" style="float: none;"><g:layoutTitle default=""/></span>
+            </div>
+
+            <div class="ui-dialog-content ui-widget-content" style="height: 720px;">
+                <g:layoutBody/>
+            </div>
+        </div>
+    </body>
+</html>

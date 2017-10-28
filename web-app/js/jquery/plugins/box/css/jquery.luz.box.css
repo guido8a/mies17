@@ -1,0 +1,36 @@
+.box_img {
+    width        : 32px;
+    height       : 32px;
+    display      : inline-block;
+    margin-right : 10px;
+}
+
+.box_alert {
+    /*background: url(dialog-info.png);*/
+    background : url(images/dialog-information.png);
+}
+
+.box_error {
+    /*background: url(dialog-error.png);*/
+    background : url(images/dialog-error.png);
+}
+
+.box_info {
+    /*background: url(system-help.png);*/
+    background : url(images/dialog-info.png);
+}
+
+.box_question {
+    /*background: url(Dialog-Question.png);*/
+    background : url(images/Dialog-Question.png);
+}
+
+.box_warning {
+    /*background: url(dialog-warning.png);*/
+    background : url(images/dialog-warning.png);
+}
+
+.box_wallet {
+    /*background: url(dialog-warning.png);*/
+    background : url(images/kwalletmanager.png);
+}

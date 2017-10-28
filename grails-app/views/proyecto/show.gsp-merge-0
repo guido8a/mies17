@@ -1,0 +1,537 @@
+<%@ page import="mies.Proyecto" %>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="layout" content="main"/>
+
+    <script type="text/javascript"
+            src="${resource(dir: 'js/jquery/plugins/validation', file: 'jquery.validate.min.js')}"></script>
+    <script type="text/javascript"
+            src="${resource(dir: 'js/jquery/plugins/validation', file: 'additional-methods.js')}"></script>
+    <script type="text/javascript"
+            src="${resource(dir: 'js/jquery/plugins/validation', file: 'messages_es.js')}"></script>
+
+    <script type="text/javascript"
+            src="${resource(dir: 'js/jquery/plugins/qtip', file: 'jquery.qtip.min.js')}"></script>
+
+    <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/qtip', file: 'jquery.qtip.css')}"/>
+
+    <g:set var="entityName"
+           value="${message(code: 'proyecto.label', default: 'Proyecto')}"/>
+    <title><g:message code="default.show.label" args="[entityName]"/></title>
+</head>
+
+<body>
+
+<div class="dialog" title="${title}">
+<div id="" class="toolbar ui-widget-header ui-corner-all">
+    <g:link class="button list" action="list">
+        <g:message code="proyecto.list" default="Proyecto List"/>
+    </g:link>
+    <g:link class="button semplades" action="semplades" id="${proyectoInstance.id}">
+        Datos Semplades
+    </g:link>
+    <g:link class="button documentos" action="documentos" id="${proyectoInstance.id}">
+        Documentos
+    </g:link>
+
+    <g:link class="button responsable" action="responsable" id="${proyectoInstance.id}">
+        Responsable
+    </g:link>
+    <g:link class="button responsables" action="responsables" id="${proyectoInstance.id}">
+        Historial Responsables
+    </g:link>
+</div> <!-- toolbar -->
+
+<div class="body">
+<g:if test="${flash.message}">
+    <div class="message ui-state-highlight ui-corner-all">${flash.message}</div>
+</g:if>
+<div>
+<table width="100%" class="ui-widget-content ui-corner-all">
+
+<thead>
+    <tr>
+        <td colspan="4" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">
+            Detalles del proyecto
+        </td>
+    </tr>
+</thead>
+<tbody>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'id', 'error')}">
+    <td class="label">
+        <g:message code="proyecto.id.label"
+                   default="Id"/>
+    </td>
+
+    <td class="campo">
+
+        ${fieldValue(bean: proyectoInstance, field: "id")}
+
+    </td> <!-- campo -->
+
+    <td class="label">
+        <g:message code="proyecto.unidadEjecutora.label"
+                   default="Unidad Ejecutora"/>
+    </td>
+
+    <td class="campo">
+
+        <g:link controller="unidadEjecutora" action="show"
+                id="${proyectoInstance?.unidadEjecutora?.id}">
+            ${proyectoInstance?.unidadEjecutora?.encodeAsHTML()}
+        </g:link>
+
+    </td> <!-- campo -->
+
+</tr>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'etapa', 'error')}">
+    <td class="label">
+        <g:message code="proyecto.etapa.label"
+                   default="Etapa"/>
+    </td>
+
+    <td class="campo">
+
+        <g:link controller="etapa" action="show"
+                id="${proyectoInstance?.etapa?.id}">
+            ${proyectoInstance?.etapa?.encodeAsHTML()}
+        </g:link>
+
+    </td> <!-- campo -->
+
+    <td class="label">
+        <g:message code="proyecto.fase.label"
+                   default="Fase"/>
+    </td>
+
+    <td class="campo">
+
+        <g:link controller="fase" action="show"
+                id="${proyectoInstance?.fase?.id}">
+            ${proyectoInstance?.fase?.encodeAsHTML()}
+        </g:link>
+
+    </td> <!-- campo -->
+
+</tr>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'tipoProducto', 'error')}">
+    <td class="label">
+        <g:message code="proyecto.tipoProducto.label"
+                   default="Tipo Producto"/>
+    </td>
+
+    <td class="campo">
+
+        <g:link controller="tipoProducto" action="show"
+                id="${proyectoInstance?.tipoProducto?.id}">
+            ${proyectoInstance?.tipoProducto?.encodeAsHTML()}
+        </g:link>
+
+    </td> <!-- campo -->
+
+    <td class="label">
+        <g:message code="proyecto.estadoProyecto.label"
+                   default="Estado Proyecto"/>
+    </td>
+
+    <td class="campo">
+
+        <g:link controller="estadoProyecto" action="show"
+                id="${proyectoInstance?.estadoProyecto?.id}">
+            ${proyectoInstance?.estadoProyecto?.encodeAsHTML()}
+        </g:link>
+
+    </td> <!-- campo -->
+
+</tr>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'linea', 'error')}">
+
+    <td class="label">
+        <g:message code="proyecto.linea.label"
+                   default="Linea"/>
+    </td>
+
+    <td class="campo">
+
+        <g:link controller="linea" action="show"
+                id="${proyectoInstance?.linea?.id}">
+            ${proyectoInstance?.linea?.encodeAsHTML()}
+        </g:link>
+
+    </td> <!-- campo -->
+
+    <td class="label">
+        <g:message code="proyecto.tipoInversion.label"
+                   default="Tipo Inversion"/>
+    </td>
+
+    <td class="campo">
+
+        <g:link controller="tipoInversion" action="show"
+                id="${proyectoInstance?.tipoInversion?.id}">
+            ${proyectoInstance?.tipoInversion?.encodeAsHTML()}
+        </g:link>
+
+    </td> <!-- campo -->
+
+</tr>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'cobertura', 'error')}">
+
+    <td class="label">
+        <g:message code="proyecto.cobertura.label"
+                   default="Cobertura"/>
+    </td>
+
+    <td class="campo">
+
+        <g:link controller="cobertura" action="show"
+                id="${proyectoInstance?.cobertura?.id}">
+            ${proyectoInstance?.cobertura?.encodeAsHTML()}
+        </g:link>
+
+    </td> <!-- campo -->
+
+    <td class="label">
+        <g:message code="proyecto.calificacion.label"
+                   default="Calificacion"/>
+    </td>
+
+    <td class="campo">
+
+        <g:link controller="calificacion" action="show"
+                id="${proyectoInstance?.calificacion?.id}">
+            ${proyectoInstance?.calificacion?.encodeAsHTML()}
+        </g:link>
+
+    </td> <!-- campo -->
+
+</tr>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'programa', 'error')}">
+
+    <td class="label">
+        <g:message code="proyecto.programa.label"
+                   default="Programa"/>
+    </td>
+
+    <td class="campo">
+
+        <g:link controller="programa" action="show"
+                id="${proyectoInstance?.programa?.id}">
+            ${proyectoInstance?.programa?.encodeAsHTML()}
+        </g:link>
+
+    </td> <!-- campo -->
+
+
+    <td class="label">
+        <g:message code="proyecto.codigoProyecto.label"
+                   default="Codigo Proyecto"/>
+    </td>
+
+    <td class="campo">
+
+        ${fieldValue(bean: proyectoInstance, field: "codigoProyecto")}
+
+    </td> <!-- campo -->
+
+</tr>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'fechaRegistro', 'error')}">
+
+    <td class="label">
+        <g:message code="proyecto.fechaRegistro.label"
+                   default="Fecha Registro"/>
+    </td>
+
+    <td class="campo">
+
+        <g:formatDate date="${proyectoInstance?.fechaRegistro}" format="dd-MM-yyyy HH:mm"/>
+
+    </td> <!-- campo -->
+
+    <td class="label">
+        <g:message code="proyecto.fechaModificacion.label"
+                   default="Fecha Modificacion"/>
+    </td>
+
+    <td class="campo">
+
+        <g:formatDate date="${proyectoInstance?.fechaModificacion}" format="dd-MM-yyyy HH:mm"/>
+
+    </td> <!-- campo -->
+
+</tr>
+
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'nombre', 'error')}">
+
+    <td class="label">
+        <g:message code="proyecto.nombre.label"
+                   default="Nombre"/>
+    </td>
+
+    <td class="campo">
+
+        ${fieldValue(bean: proyectoInstance, field: "nombre")}
+
+    </td> <!-- campo -->
+
+    <td class="label">
+        <g:message code="proyecto.monto.label"
+                   default="Monto"/>
+    </td>
+
+    <td class="campo">
+
+        ${fieldValue(bean: proyectoInstance, field: "monto")}
+
+    </td> <!-- campo -->
+
+</tr>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'parroquiasDistrito', 'error')}">
+
+    <td class="label">
+        <g:message code="proyecto.parroquiasDistrito.label"
+                   default="Parroquias Distrito"/>
+    </td>
+
+    <td class="campo">
+
+        ${fieldValue(bean: proyectoInstance, field: "parroquiasDistrito")}
+
+    </td> <!-- campo -->
+
+    <td class="label">
+        <g:message code="proyecto.descripcion.label"
+                   default="Descripcion"/>
+    </td>
+
+    <td class="campo">
+
+        ${fieldValue(bean: proyectoInstance, field: "descripcion")}
+
+    </td> <!-- campo -->
+
+</tr>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'fechaInicioPlanificada', 'error')}">
+
+    <td class="label">
+        <g:message code="proyecto.fechaInicioPlanificada.label"
+                   default="Fecha Inicio Planificada"/>
+    </td>
+
+    <td class="campo">
+
+        <g:formatDate date="${proyectoInstance?.fechaInicioPlanificada}" format="dd-MM-yyyy HH:mm"/>
+
+    </td> <!-- campo -->
+    <td class="label">
+        <g:message code="proyecto.fechaInicio.label"
+                   default="Fecha Inicio"/>
+    </td>
+
+    <td class="campo">
+
+        <g:formatDate date="${proyectoInstance?.fechaInicio}" format="dd-MM-yyyy HH:mm"/>
+
+    </td> <!-- campo -->
+
+</tr>
+
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'fechaFinPlanificada', 'error')}">
+
+    <td class="label">
+        <g:message code="proyecto.fechaFinPlanificada.label"
+                   default="Fecha Fin Planificada"/>
+    </td>
+
+    <td class="campo">
+
+        <g:formatDate date="${proyectoInstance?.fechaFinPlanificada}" format="dd-MM-yyyy HH:mm"/>
+
+    </td> <!-- campo -->
+
+    <td class="label">
+        <g:message code="proyecto.fechaFin.label"
+                   default="Fecha Fin"/>
+    </td>
+
+    <td class="campo">
+
+        <g:formatDate date="${proyectoInstance?.fechaFin}" format="dd-MM-yyyy HH:mm"/>
+
+    </td> <!-- campo -->
+
+</tr>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'mes', 'error')}">
+
+    <td class="label">
+        <g:message code="proyecto.mes.label"
+                   default="Mes"/>
+    </td>
+
+    <td class="campo">
+
+        ${fieldValue(bean: proyectoInstance, field: "mes")}
+
+    </td> <!-- campo -->
+
+    <td class="label">
+        <g:message code="proyecto.problema.label"
+                   default="Problema"/>
+    </td>
+
+    <td class="campo">
+
+        ${fieldValue(bean: proyectoInstance, field: "problema")}
+
+    </td> <!-- campo -->
+
+</tr>
+
+<tr class="prop ${hasErrors(bean: proyectoInstance, field: 'informacionDias', 'error')}">
+
+    <td class="label">
+        <g:message code="proyecto.informacionDias.label"
+                   default="Informacion Dias"/>
+    </td>
+
+    <td class="campo">
+
+        ${fieldValue(bean: proyectoInstance, field: "informacionDias")}
+
+    </td> <!-- campo -->
+    <td class="label">
+        <g:message code="proyecto.subPrograma.label"
+                   default="Sub Programa"/>
+    </td>
+
+    <td class="campo">
+
+        ${fieldValue(bean: proyectoInstance, field: "subPrograma")}
+
+    </td> <!-- campo -->
+
+</tr>
+
+</tbody>
+<tfoot>
+    <tr>
+        <td colspan="4" class="buttons" style="text-align: right;">
+            <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                <g:message code="default.button.update.label" default="Edit"/>
+            </g:link>
+            <g:link class="button delete" action="delete" id="${proyectoInstance?.id}">
+                <g:message code="default.button.delete.label" default="Delete"/>
+            </g:link>
+        </td>
+    </tr>
+</tfoot>
+</table>
+</div>
+</div> <!-- body -->
+</div> <!-- dialog -->
+
+
+<div id="dlg_responsable"><div id="dlg_contenido"></div></div>
+
+<script type="text/javascript">
+    $(function() {
+
+        var botonesSave = {
+            "Cancelar": function() {
+                $("#dlg_responsable").dialog("close");
+            },
+            "Guardar": function() {
+                var data = $(".frmResponsableProyecto").serialize();
+                var url = $(".frmResponsableProyecto").attr("action");
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    success: function(msg) {
+                        if (msg == "OK") {
+                            $("#dlg_responsable").dialog("close");
+                        } else {
+                            alert("Ha ocurrido un error al guardar");
+                        }
+                    }
+                });
+            }
+        };
+
+        var botonesCerrar = {
+            "Cerrar": function() {
+                $("#dlg_responsable").dialog("close");
+            }
+        };
+
+        $("#dlg_responsable").dialog({
+            autoOpen: false,
+            modal: true,
+            width: 675,
+            buttons: botonesSave
+        });
+
+        $(".button").button();
+        $(".list").button("option", "icons", {primary:'ui-icon-clipboard'});
+        $(".semplades").button("option", "icons", {primary:'ui-icon-folder-open'});
+
+        $(".responsable").button("option", "icons", {primary:'ui-icon-person'}).click(function() {
+            $("#dlg_responsable").dialog("option", "title", 'Asignar responsable del proyecto ${proyectoInstance.nombre}');
+            $("#dlg_responsable").dialog("option", "buttons", botonesSave);
+
+            var url = "${createLink(action:'responsable', id:proyectoInstance.id)}";
+            $("#dlg_responsable").dialog("open");
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function(msg) {
+                    $("#dlg_contenido").html(msg);
+                }
+            });
+            return false;
+        });
+        $(".responsables").button("option", "icons", {primary:'ui-icon-clock', secondary: 'ui-icon-person'}).click(function() {
+            $("#dlg_responsable").dialog("option", "title", 'Historial de responsables del proyecto ${proyectoInstance.nombre}');
+            $("#dlg_responsable").dialog("option", "buttons", botonesSave);
+
+            var url = "${createLink(action:'historialResponsables', id:proyectoInstance.id)}";
+            $("#dlg_responsable").dialog("open");
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function(msg) {
+                    $("#dlg_contenido").html(msg);
+                }
+            });
+            return false;
+        });
+
+        $(".documentos").button("option", "icons", {primary:'ui-icon-document'});
+
+        $(".edit").button("option", "icons", {primary:'ui-icon-pencil'});
+        $(".delete").button("option", "icons", {primary:'ui-icon-trash'}).click(function() {
+            if (confirm("${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}")) {
+                return true;
+            }
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>
