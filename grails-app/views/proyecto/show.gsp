@@ -195,7 +195,8 @@
                     </g:link>
                 </g:if>
                 <g:else>
-                    <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                    %{--<g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">--}%
+                    <g:link class="button edit" action="formproyecto" id="${proyectoInstance?.id}">
                         Editar
                     </g:link>
                 </g:else>

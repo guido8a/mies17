@@ -586,6 +586,35 @@ class ProyectoController extends mies.seguridad.Shield {
         render(str)
     }
 
+    def formproyecto = {
+        println "params: $params"
+        def proyecto = Proyecto.get(params.id)
+        [proyecto: proyecto]
+/*
+        proyecto {
+            on("validarProyecto") {
+                flow.evento = params.goto
+                if (params.mes) {
+                    params.mes = (params.mes).toInteger()
+                }
+                if (flow.type == "create") {
+                    println "CREA"
+                    flow.proyecto = new Proyecto(params)
+                    flow.type = "edit"
+                } else {
+                    println "EDITA"
+                    println "PARAMS"
+                    println params
+                    flow.proyecto.properties = params
+                }
+                println "WTF"
+            }.to("validarProyecto")
+            on("salir").to("salir")
+            on("click") {flow.evento = params.evento}.to "redirect"
+        } //proyecto
+*/
+    }
+
     def nuevoProyectoFlow = {
         inicio {
             action {
