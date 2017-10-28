@@ -10,12 +10,9 @@
     <title>Advertencia</title>
   </head>
   <body >
-    <div class="contenido ui-widget-content ui-corner-all " style="background: #F6F6F6;padding-left: 15px">
-
-      <img src="${resource(dir:'images',file:'skull.gif')}" style="float:left" width="33.6px" height="30px"/><h1 style="color: red;">WARNING!</h1><br>
+    <div class="contenido ui-widget-content ui-corner-all " style="background: #F6F6F6;padding-left: 15px; text-align: center">
+      <img src="${resource(dir:'images',file:'alerta.jpg')}" style="float:left" width="33.6px" height="30px"/><h1 style="color: red;">ADVERTENCIA!</h1><br>
       <font size="3">${msn}</font> <br>
-
-        
       <br>
       <br>
 
@@ -30,17 +27,6 @@
               $("#regresar").button()
               $("#prueba").button()
           </script>
-        %{--<h2>Que eres pal burro????</h2>        --}%
-        %{--<select name="queEresPalBurro">--}%
-          %{--<option>seleccione....</option>--}%
-          %{--<option>Pápa</option>--}%
-          %{--<option>Novio</option>--}%
-          %{--<option>Hijo</option>--}%
-          %{--<option>Sobrino</option>--}%
-          %{--<option>Yo mismo soy</option>--}%
-        %{--</select>--}%
-          %{--<g:link action="index" controller="inicio" class=" tbbtn fg-button ui-state-default fg-button-icon-left ui-corner-all"> <span class="ui-icon ui-icon-disk"></span><span>Aceptar</span></g:link>--}%
-        %{--Hint: 'yo mismo soy'--}%
         <div class="message" style="width: 840px;">
           <strong>Error ${request.'javax.servlet.error.status_code'}:</strong> ${request.'javax.servlet.error.message'.encodeAsHTML()}<br/>
           <strong>Servlet:</strong> ${request.'javax.servlet.error.servlet_name'}<br/>

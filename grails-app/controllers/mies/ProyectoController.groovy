@@ -2153,4 +2153,75 @@ response.outputStream << file.newInputStream()
         } //show
     }
 
+    def formBuenVivir = {
+        def proyecto = Proyecto.get(params.id)
+        def metasProyecto = MetaBuenVivirProyecto.findAllByProyecto(proyecto)
+        return[metasProyecto:metasProyecto,proyecto: proyecto]
+    }
+
+    def saveBuenVivir = {
+        println("params " + params)
+        def proyecto = Proyecto.get(params.proyecto)
+        def meta
+        def metas
+        def metaProyecto
+        def errores = ''
+
+
+        if(params.deleted){
+            def c = params.deleted.split(",")
+            c.each{
+                println("---> " + it)
+                def metaBorrar = MetaBuenVivir.get(it)
+                def borrar = MetaBuenVivirProyecto.findByMetaBuenVivirAndProyecto(metaBorrar, proyecto)
+                try {
+                    borrar.delete(flush: true)
+                }catch (e){
+                    println("error al borrar la meta buen vivir del proyecto " + e)
+                    errores += e
+                }
+            }
+        }
+
+        if(params.meta){
+            if(params.meta.class == java.lang.String ){
+                meta = MetaBuenVivir.get(params.meta)
+                metaProyecto = new MetaBuenVivirProyecto()
+                metaProyecto.metaBuenVivir = meta
+                metaProyecto.proyecto = proyecto
+
+                try{
+                    metaProyecto.save(flush: true)
+                }catch (e){
+                    println("error al agregar meta buen vivir " + e)
+                    errores += e
+                }
+
+            }else{
+                params.meta.each{
+                    meta = MetaBuenVivir.get(it)
+                    metaProyecto = new MetaBuenVivirProyecto()
+                    metaProyecto.metaBuenVivir = meta
+                    metaProyecto.proyecto = proyecto
+
+                    try{
+                        metaProyecto.save(flush: true)
+
+                    }catch (e){
+                        println("error al agregar meta buen vivir " + e)
+                        errores += e
+                    }
+                }
+            }
+        }
+
+
+        if(errores == ''){
+            redirect(controller: 'proyecto', action: 'formBuenVivir',id: proyecto.id)
+        }else{
+            flash.message = "Error al guardar las metas"
+        }
+
+    }
+
 }
