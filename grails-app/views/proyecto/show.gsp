@@ -438,6 +438,7 @@
                         <g:if test="${proyectoInstance.aprobado !='a'}">
                             <span style="margin-left: 862px">
                                 <g:link class="button edit" action="formBuenVivir" id="${proyectoInstance?.id}">
+
                                     Editar
                                 </g:link>
                             </span>
