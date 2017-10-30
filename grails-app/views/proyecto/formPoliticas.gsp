@@ -64,8 +64,10 @@
 
     <div class="ui-widget-content ui-corner-all" style="padding: 10px;">
 
-        <g:form class="frmFinanciamiento" method="post" action="nuevoProyecto" event="savePoliticasAgenda">
+        %{--<g:form class="frmFinanciamiento" method="post" action="nuevoProyecto" event="savePoliticasAgenda">--}%
+        <g:form class="frmFinanciamiento" method="post" action="savePoliticas">
             <input type="hidden" name="goto" id="goto" value="politicasAgenda"/>
+            <g:hiddenField name="proyecto" value="${proyecto?.id}"/>
             <table>
                 <thead>
                 <tr style="padding: 5px;">
@@ -79,12 +81,13 @@
                 </thead>
                 <tbody>
                 <g:each in="${PoliticaAgendaSocial.list()}" status="i" var="pol">
-                    <g:set var="contiene"
-                           value="${(politicasAgenda.contains(pol.id.toLong())) ||(politicasAgenda.contains(pol.id.toInteger()))}"/>
-                    <tr class="${i % 2 == 0 ? 'even' : 'odd'} ${contiene ? 'ui-state-highlight' : ''}">
+                    %{--<g:set var="contiene"--}%
+                           %{--value="${(politicasAgenda.contains(pol.id.toLong())) ||(politicasAgenda.contains(pol.id.toInteger()))}"/>--}%
+                    %{--<tr class="${i % 2 == 0 ? 'even' : 'odd'} ${contiene ? 'ui-state-highlight' : ''}">--}%
+                    <tr class="${i % 2 == 0 ? 'even' : 'odd'} ${politicasAgenda.contains(pol.id) ? 'ui-state-highlight' : ''}">
                         <td style="text-align: center;">
                             <input type="checkbox" name="politica" class="sel" value="${pol.id}"
-                                   id="sel_${pol.id}" ${(contiene) ? "checked" : ""}/>
+                                   id="sel_${pol.id}" ${politicasAgenda.contains(pol.id) ? "checked" : ""}/>
                         </td>
                         <td>
                             ${pol.descripcion}

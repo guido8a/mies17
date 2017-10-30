@@ -2202,8 +2202,82 @@ response.outputStream << file.newInputStream()
 
     def formPoliticas () {
         def proyecto = Proyecto.get(params.id)
-        def politicasAgenda = PoliticasAgendaProyecto.findAllByProyecto(proyecto)
+        def politicasAgenda = PoliticasAgendaProyecto.findAllByProyecto(proyecto).politicaAgendaSocial.id
         return[proyecto: proyecto, politicasAgenda: politicasAgenda]
     }
 
+    def savePoliticas = {
+        println("params " + params)
+        def proyecto = Proyecto.get(params.proyecto)
+        def politica
+        def errores = ''
+        def politicaProyecto
+
+        def politicasAgenda = PoliticasAgendaProyecto.findAllByProyecto(proyecto)
+
+        if(params.politica){
+
+            politicasAgenda.politicaAgendaSocial.id.each { p->
+                if(params.politica.contains(p.toString())){
+                    params.politica = params.politica - p.toString()
+                }else{
+                    politica = PoliticaAgendaSocial.get(p)
+                    politicaProyecto = PoliticasAgendaProyecto.findByPoliticaAgendaSocialAndProyecto(politica,proyecto)
+                    try{
+                        politicaProyecto.delete(flush: true)
+                    }catch (e){
+                        println("error al borrar una politica especifica " + e)
+                        errores += e
+                    }
+                }
+            }
+
+            if(params.politica.class == java.lang.String ){
+                politica = PoliticaAgendaSocial.get(params.politica)
+                politicaProyecto = new PoliticasAgendaProyecto()
+                politicaProyecto.proyecto = proyecto
+                politicaProyecto.politicaAgendaSocial = politica
+
+                try{
+                   politicaProyecto.save(flush: true)
+                }catch (e){
+                   println("error al guardar la politica " + e)
+                    errores += e
+                }
+            }else{
+                params.politica.each{
+                    politica = PoliticaAgendaSocial.get(it)
+                    politicaProyecto = new PoliticasAgendaProyecto()
+                    politicaProyecto.proyecto = proyecto
+                    politicaProyecto.politicaAgendaSocial = politica
+
+                    try{
+                        politicaProyecto.save(flush: true)
+                    }catch (e){
+                        println("error al guardar la politica " + e)
+                        errores += e
+                    }
+                }
+            }
+        }else{
+            politicasAgenda.each{b->
+
+                try{
+                    b.delete(flush: true)
+                }catch (e){
+                    println("error al borrar todas las politicas")
+                    errores += e
+                }
+
+            }
+        }
+
+
+        if(errores == ''){
+            redirect(controller: 'proyecto', action: 'formPoliticas',id: proyecto.id)
+        }else{
+            flash.message = "Error al guardar las politicas"
+        }
+
+    }
 }
