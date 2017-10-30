@@ -500,13 +500,20 @@
                     </div>
                     <table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="politicasAS">
                         <tbody>
-                            <g:each in="${plas}" status="i" var="plas">
+                        <g:if test="${plas.size() > 0}">
+                            <g:each in="${plas}" status="i" var="plast">
                                 <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
                                     <td>
-                                        ${plas.politicaAgendaSocial.descripcion}
+                                        <b style="color: #0e82c7;">*</b> "${plast.politicaAgendaSocial.descripcion}"
                                     </td>
                                 </tr>
                             </g:each>
+                        </g:if>
+                        <g:else>
+                            <td style="text-align: center; color: #ff0f24">
+                                No existen asignadas políticas de agenda social!
+                            </td>
+                        </g:else>
                         </tbody>
                     </table>
                 </div>
@@ -517,7 +524,7 @@
                         <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
                         <g:if test="${proyectoInstance.aprobado !='a'}">
                             <span style="margin-left: 838px">
-                                <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                                <g:link class="button edit" action="formPoliticasMies" id="${proyectoInstance?.id}">
                                     Editar
                                 </g:link>
                             </span>
@@ -525,18 +532,25 @@
                     </div>
                     <table width="1040px" class="ui-widget-content ui-corner-bottom ui-helper-hidden" id="politicas">
                         <tbody>
+                        <g:if test="${politicas.size() > 0}">
                             <g:each in="${politicas}" status="i" var="pol">
                                 <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
                                     <td>
-                                        ${pol.politica.descripcion}
+                                        <b style="color: #0e82c7;">*</b> "${pol?.politica?.descripcion}"
                                     </td>
                                 </tr>
                             </g:each>
+                        </g:if>
+                        <g:else>
+                            <td style="text-align: center; color: #ff0f24">
+                                No existen asignadas políticas!
+                            </td>
+                        </g:else>
+
                         </tbody>
                     </table>
                 </div>
-
-                <div style="width: 1040px;float: left; margin-top: 5px;">
+                  <div style="width: 1040px;float: left; margin-top: 5px;">
                     <div class="sectionHeader ui-widget-header ui-corner-all" title="Mostrar"
                          data-object="financiamiento">
                         Presupuesto/Fuentes

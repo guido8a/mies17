@@ -2272,12 +2272,89 @@ response.outputStream << file.newInputStream()
             }
         }
 
-
         if(errores == ''){
             redirect(controller: 'proyecto', action: 'formPoliticas',id: proyecto.id)
         }else{
             flash.message = "Error al guardar las politicas"
         }
+    }
 
+    def formPoliticasMies () {
+        def proyecto = Proyecto.get(params.id)
+        def politicasProyecto = PoliticasProyecto.findAllByProyecto(proyecto).politica.id
+        return[proyecto: proyecto, politicasProyecto: politicasProyecto]
+    }
+
+    def savePoliticasMies = {
+//        println("params " + params)
+        def proyecto = Proyecto.get(params.proyecto)
+        def politica
+        def errores = ''
+        def politicaProyecto
+
+        def politicasMies = PoliticasProyecto.findAllByProyecto(proyecto)
+
+        if(params.politica){
+
+            politicasMies.politica.id.each { p->
+                if(params.politica.contains(p.toString())){
+                    params.politica = params.politica - p.toString()
+                }else{
+                    politica = Politica.get(p)
+                    politicaProyecto = PoliticasProyecto.findByPoliticaAndProyecto(politica,proyecto)
+                    try{
+                        politicaProyecto.delete(flush: true)
+                    }catch (e){
+                        println("error al borrar una politica especifica " + e)
+                        errores += e
+                    }
+                }
+            }
+
+            if(params.politica.class == java.lang.String ){
+                politica = Politica.get(params.politica)
+                politicaProyecto = new PoliticasProyecto()
+                politicaProyecto.proyecto = proyecto
+                politicaProyecto.politica = politica
+
+                try{
+                    politicaProyecto.save(flush: true)
+                }catch (e){
+                    println("error al guardar la politica " + e)
+                    errores += e
+                }
+            }else{
+                params.politica.each{
+                    politica = Politica.get(it)
+                    politicaProyecto = new PoliticasProyecto()
+                    politicaProyecto.proyecto = proyecto
+                    politicaProyecto.politica = politica
+
+                    try{
+                        politicaProyecto.save(flush: true)
+                    }catch (e){
+                        println("error al guardar la politica MIES " + e)
+                        errores += e
+                    }
+                }
+            }
+        }else{
+            politicasMies.each{b->
+
+                try{
+                    b.delete(flush: true)
+                }catch (e){
+                    println("error al borrar todas las politicas MIES")
+                    errores += e
+                }
+
+            }
+        }
+
+        if(errores == ''){
+            redirect(controller: 'proyecto', action: 'formPoliticasMies',id: proyecto.id)
+        }else{
+            flash.message = "Error al guardar las politicas MIES"
+        }
     }
 }
