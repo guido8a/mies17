@@ -557,7 +557,7 @@
                         <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
                         <g:if test="${proyectoInstance.aprobado !='a'}">
                             <span style="margin-left: 798px">
-                                <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                                <g:link class="button edit" action="formPresupuesto" id="${proyectoInstance?.id}">
                                     Editar
                                 </g:link>
                             </span>
@@ -576,7 +576,7 @@
                                 <th style="padding: 5px;" class="head" width="120px;">
                                     Porcentaje
                                 </th>
-                                <th style="padding: 5px;" class="head ui-corner-tr" width="120px;">
+                                <th style="padding: 5px; text-align: center" class="head ui-corner-tr" width="120px;">
                                     A&ntilde;o
                                 </th>
                             </tr>
@@ -609,7 +609,7 @@
                                         <g:set var="prct" value="${prct+ finPorcentaje}"/>
                                     </td>
 
-                                    <td>
+                                    <td style="text-align: center;">
                                         ${fin.anio?.anio}
                                     </td>
                                 </tr>

@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="${resource(dir: 'css/menuSemplades', file: 'flow_menu_green.css')}"/>
 
     <title>
-        Pol&iacute;ticas del proyecto ${proyecto.nombre}
+        Pol&iacute;ticas del proyecto: "${proyecto.nombre}"
     </title>
 </head>
 

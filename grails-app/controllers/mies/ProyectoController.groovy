@@ -1856,7 +1856,8 @@ response.outputStream << file.newInputStream()
             if (it.key.contains("mnt")) {
                 def parts = (it.key).split("_")
                 def id = parts[1]
-                def anio = parts[2]
+//                def anio = parts[2]
+                def anio = Anio.findByAnio(new Date().format("yyyy"))
                 def monto = it.value
 
                 def financiamiento
@@ -1866,7 +1867,8 @@ response.outputStream << file.newInputStream()
                     financiamiento.proyecto = proyecto
                     financiamiento.fuente = Fuente.get(id)
                     financiamiento.monto = monto.toDouble()
-                    financiamiento.anio = Anio.get(anio)
+//                    financiamiento.anio = Anio.get(anio)
+                    financiamiento.anio = anio
 
                     financiamiento = kerberosService.saveObject(financiamiento, Financiamiento, session.perfil, session.usuario, actionName, controllerName, session)
 
@@ -2239,9 +2241,9 @@ response.outputStream << file.newInputStream()
                 politicaProyecto.politicaAgendaSocial = politica
 
                 try{
-                   politicaProyecto.save(flush: true)
+                    politicaProyecto.save(flush: true)
                 }catch (e){
-                   println("error al guardar la politica " + e)
+                    println("error al guardar la politica " + e)
                     errores += e
                 }
             }else{
@@ -2356,5 +2358,66 @@ response.outputStream << file.newInputStream()
         }else{
             flash.message = "Error al guardar las politicas MIES"
         }
+    }
+
+    def formPresupuesto () {
+        def proyecto = Proyecto.get(params.id)
+        def financiamientos = Financiamiento.findAllByProyecto(proyecto)
+        return[proyecto: proyecto, financiamientos: financiamientos]
+    }
+
+    def savePresupuesto = {
+//        println("params " + params)
+        def proyecto = Proyecto.get(params.proyecto)
+        def anio = Anio.findByAnio(new Date().format('yyyy'))
+        def fuente
+        def financiamiento
+        def errores = ''
+        def borrar
+
+        if(params.deleted){
+            borrar = params.deleted.split(",")
+           borrar.each{f->
+                financiamiento = Financiamiento.get(f.toString())
+
+                try{
+                    financiamiento.delete(flush: true)
+                }catch (e){
+                    println("error al borrar el financiamiento " + e)
+                    errores += e
+                }
+            }
+        }
+
+        params.each {
+            if (it.key.contains("mnt")) {
+
+                def monto = it.value
+                def parts = (it.key).split("_")
+                fuente = Fuente.get(parts[1])
+                financiamiento = new Financiamiento()
+                financiamiento.proyecto = proyecto
+                financiamiento.fuente = fuente
+                financiamiento.anio = anio
+                financiamiento.monto = monto.toDouble()
+
+                try{
+                    financiamiento.save(flush: true)
+                }catch (e){
+                    println("error al guardar el financiamiento " + e)
+                    errores += e
+                }
+
+            }
+        }
+
+        if(errores == ''){
+            redirect(controller: 'proyecto', action: 'formPresupuesto',id: proyecto.id)
+        }else{
+            flash.message = "Error al guardar el finaciamiento"
+        }
+
+
+
     }
 }

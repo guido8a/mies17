@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
 
     <title>
-        Metas del buen vivir del proyecto ${proyecto?.nombre}
+        Metas del buen vivir del proyecto: "${proyecto?.nombre}"
     </title>
 </head>
 

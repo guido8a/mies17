@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
 
     <title>
-        Pol&iacute;ticas de agenda social del proyecto ${proyecto.nombre}
+        Pol&iacute;ticas de agenda social del proyecto: "${proyecto.nombre}"
     </title>
 </head>
 
