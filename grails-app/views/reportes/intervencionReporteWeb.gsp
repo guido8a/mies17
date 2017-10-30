@@ -99,9 +99,8 @@
             <div class="titulo">
                 Intervención e inversión del MIES en el año ${anio}
             </div>
-
+            %{--${raw(tabla)}--}%
             ${tabla}
-
         </div>
 
     </body>

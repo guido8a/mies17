@@ -569,10 +569,8 @@ class ReportesController {
     }
 
     def reasignacionAgrupado = {
-        def anio = Anio.findByAnio(new Date().format("yyyy"))
-//        def uni99 = UnidadEjecutora.findAllByCodigo("9999")
-//        def resto = UnidadEjecutora.findAllByCodigoNotEqual("9999").sort{it.codigo.toInteger()}
-//        resto+= UnidadEjecutora.findAllByCodigoIsNull()
+//        def anio = Anio.findByAnio(new Date().format("yyyy"))
+        def anio = Anio.findByAnio('2012') //borrar en lugar de la línea anterior
         def cn = dbConnectionService.getConnection()
         def resultados = []
         def total = 0
@@ -843,6 +841,7 @@ class ReportesController {
     }
 
     def reporteIntervencion(params) {
+        println "params... reporteIntervencion $params"
         def tipo = params.tipo
         def anio = params.anio
         def tabla = ""
@@ -1031,6 +1030,7 @@ class ReportesController {
         } else if (tipo == "P") {
 
         }
+//        render tabla
         return tabla
     }
 

@@ -24,7 +24,7 @@ class Reportes2Controller {
     def index = { }
 
     def usuariosGUI = {
-
+      println "ingresa a rep. usuarios"
     }
 
 
@@ -77,6 +77,7 @@ class Reportes2Controller {
     }
 
     def usuariosPdf = {
+        println "usuarios...."
         def usuarios = Usro.list()
         usuarios = usuarios.sort { it.persona.apellido }
         return [usuarios: usuarios]

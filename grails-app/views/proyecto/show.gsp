@@ -202,7 +202,13 @@
                 </g:else>
 
 
-                <g:link class="button delete" action="deleteProyecto" id="${proyectoInstance?.id}">
+                <g:link class="button" action="list" style="margin-left: 20px">
+                    Banco de Proyectos
+                </g:link>
+                <g:link class="button" action="formProyecto">
+                    Nuevo Proyecto
+                </g:link>
+                <g:link class="button delete" action="deleteProyecto" id="${proyectoInstance?.id}" style="margin-left: 20px">
                     Eliminar
                 </g:link>
 

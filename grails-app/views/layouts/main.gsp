@@ -15,9 +15,16 @@
 
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/css/start', file: 'jquery-ui-1.8.16.custom.css')}"/>
 
+
+        <!-- el timer para cerrar la sesion -->
+        <script src="${resource(dir: 'js/jquery/plugins/jquery.countdown', file: 'jquery.countdown.min.js')}"></script>
+        <link href="${resource(dir: 'js/jquery/plugins/jquery.countdown', file: 'jquery.countdown.css')}" rel="stylesheet">
+
+%{--
         <script type="text/javascript"
                 src="${resource(dir: 'js/jquery/plugins/countdown', file: 'jquery.countdown.js')}"></script>
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/countdown', file: 'jquery.countdown.css')}"/>
+--}%
 
         <script type="text/javascript"
                 src="${resource(dir: 'js/jquery/js', file: 'jquery.ui.datepicker-es.js')}"></script>
@@ -40,11 +47,13 @@
         </div>
 
         <div id="texto_count"
-             style="width: 160px;height: 30px;position: absolute;top:3px;left: 860px;font-size: 11px;line-height: 15px;">Tiempo aproximado hasta que termine su sesión</div>
+             style="width: 160px;height: 30px;position: absolute;top:3px;left: 860px;font-size: 11px;line-height: 15px;">
+            Tiempo aproximado hasta que termine su sesión</div>
 
-        <div id="countdown" style="width: 70px;height: 30px;position: absolute;top:3px;left: 1015px;border: none"></div>
+        <div id="countdown" style="width: 70px;height: 30px;position: absolute;top:-10px;left: 1015px;border: none; font-size: 24px"></div>
 
-        <div id="countdown2"
+
+    <div id="countdown2"
              style="width: 70px;height: 30px;position: absolute;top:3px;left: 1015px;border: none;display: none"></div>
 
         <div class="ui-dialog ui-widget ui-widget-content ui-corner-all"
@@ -58,51 +67,61 @@
                 <g:layoutBody/>
             </div>
         </div>
-        <script type="text/javascript">
-            var fin = new Date()
-            var check = new Date()
-            check.addMinutes(15)
-            fin.addMinutes(20)
-            $('#countdown').countdown({until: fin, compact: true,format: 'MS', description: '',onExpiry: verificarSecion});
-            $('#countdown2').countdown({until: check, compact: true,format: 'MS', description: '',onExpiry: alerta});
+    <script type="text/javascript">
+        var ot = document.title;
 
-            function verificarSecion() {
-                $.ajax({
-                    type: "POST",
-                    url: "${createLink(action:'verificarSession',controller:'inicio')}",
-                    data: "",
-                    success: function(msg) {
-                        if (msg == "ok") {
-                            fin.addMinutes(20)
-                            check.addMinutes(15)
-                            $('#countdown').countdown('change', {until: fin});
-                            $("#countdown").css("color", "black")
-                            $("#texto_count").css("color", "black")
-                            $('#countdown2').countdown('change', {until: check});
-                        } else
-                            location.href = "${createLink(controller:'login',action:'logout')}"
+        //    openLoader()
+        //    openLoader("Con mensaje")
+
+        function resetTimer() {
+            var ahora = new Date();
+            var fin = ahora.clone().add(20).minute();
+            $("#countdown").countdown('option', {
+                until : fin
+            });
+            $(".countdown_amount").removeClass("highlight");
+            document.title = ot;
+        }
+
+        function validarSesion() {
+            $.ajax({
+                url     : '${createLink(controller: "login", action: "validarSesion")}',
+                success : function (msg) {
+                    if (msg == "NO") {
+                        location.href = "${g.createLink(controller: 'login', action: 'login')}";
+                    } else {
+                        resetTimer();
                     }
-                });
-            }
+                }
+            });
+        }
 
-            function alerta() {
-                $("#texto_count").css("color", "red").show("pulsate")
-                $("#countdown").css("color", "red")
+        function highlight(periods) {
+            if ((periods[5] == 5 && periods[6] == 0) || (periods[5] < 5)) {
+                document.title = "Fin de sesión en " + (periods[5].toString().lpad('0', 2)) + ":" + (periods[6].toString().lpad('0', 2)) + " - " + ot;
+                $(".countdown_amount").addClass("highlight");
             }
+        }
 
-            $(".ajax").click(function() {
-                fin = new Date()
-                fin.addMinutes(20)
-                check = new Date()
-                check.addMinutes(15)
-                $("#countdown").css("color", "black")
-                $('#countdown').countdown('change', {until: fin});
-                $("#texto_count").css("color", "black")
-                $('#countdown2').countdown('change', {until: check});
+        $(function () {
+            var ahora = new Date();
+            var fin = ahora.clone().add(20).minute();
+
+            $('#countdown').countdown({
+                until    : fin,
+                format   : 'MS',
+                compact  : true,
+                onExpiry : validarSesion,
+                onTick   : highlight
             });
 
+            $(".btn-ajax").click(function () {
+                resetTimer();
+            });
+        });
 
-        </script>
+    </script>
+
     </body>
 
 </html>

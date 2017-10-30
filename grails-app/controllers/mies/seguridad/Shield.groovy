@@ -7,9 +7,7 @@ class Shield{
      * Verifica si el usuario actual tiene los permisos para ejecutar una acción
      */
     def auth() {
-
-
-        //println "an "+actionName+" cn "+ controllerName+"  "
+        println "an "+actionName+" cn "+ controllerName+"  "
         if(!session.usuario || !session.perfil){
             if(actionName=~"verificarSession"){
                 session.an="inicio"
