@@ -35,8 +35,8 @@ grails.mime.types = [ // the first one is the default format
 //grails.urlmapping.cache.maxsize = 1000
 
 // Legacy setting for codec used to encode data with ${}
-//grails.views.default.codec = "html"
-grails.views.default.codec = "none"
+grails.views.default.codec = "html"
+//grails.views.default.codec = "none"
 
 // The default scope for controllers. May be prototype, session or singleton.
 // If unspecified, controllers are prototype scoped.
@@ -49,7 +49,7 @@ grails {
             encoding = 'UTF-8'
             htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
             codecs {
-                expression = 'html' // escapes values inside ${}
+                expression = 'none' // escapes values inside ${} antes html
                 scriptlet = 'html' // escapes output from scriptlets in GSPs
                 taglib = 'none' // escapes output from taglibs
                 staticparts = 'none' // escapes output from static template parts
