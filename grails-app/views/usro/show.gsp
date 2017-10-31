@@ -44,7 +44,7 @@
 
         <div class="prop">
             <label><g:message code="usro.usroLogin.label" default="Login"/></label>
-            <div class="campo">${fieldValue(bean: usroInstance, field: "usroLogin")}</div> <!-- campo -->
+            <div class="campo">${fieldValue(bean: usroInstance, field: "login")}</div> <!-- campo -->
         </div> <!-- prop -->
         <div class="prop"><label><g:message code="usro.sigla.label" default="Sigla"/></label>
             <div class="campo">${fieldValue(bean: usroInstance, field: "sigla")}</div> <!-- campo -->

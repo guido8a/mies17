@@ -79,7 +79,7 @@
                         </div>
                     </div>
 
-                    <div class="prop mandatory ${hasErrors(bean: usroInstance, field: 'usroLogin', 'error')}">
+                    <div class="prop mandatory ${hasErrors(bean: usroInstance, field: 'login', 'error')}">
                         <label for="usroLogin">
                             <g:message code="usro.usroLogin.label" default="Usro Login"/>
                             <span class="indicator">*</span>

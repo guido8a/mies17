@@ -116,3 +116,6 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+// Added by the Audit-Logging plugin:
+auditLog.auditDomainClassName = 'mies.audit.Audit'

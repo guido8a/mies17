@@ -42,7 +42,7 @@
 
                         <td><g:link action="show"
                                     id="${usroInstance.id}">${fieldValue(bean: usroInstance, field: "persona")}</g:link></td>
-                        <td>${fieldValue(bean: usroInstance, field: "usroLogin")}</td>
+                        <td>${fieldValue(bean: usroInstance, field: "login")}</td>
                         <td>${fieldValue(bean: usroInstance, field: "sigla")}</td>
                         <td>${fieldValue(bean: usroInstance, field: "usroActivo")}</td>
                         <td>${fieldValue(bean: usroInstance, field: "cargoPersonal")}</td>

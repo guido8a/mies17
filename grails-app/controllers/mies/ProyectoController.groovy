@@ -474,7 +474,7 @@ class ProyectoController extends mies.seguridad.Shield {
     }
 
     def validarAutorizacion = {
-        if (session.usuario.id.toLong() == Usro.findByUsroLogin("ruth").id.toLong()) {
+        if (session.usuario.id.toLong() == Usro.findByLogin("ruth").id.toLong()) {
             if (session.usuario.autorizacion == params.auth.encodeAsMD5()) {
                 render "OK"
             } else {

@@ -6,7 +6,7 @@ class LoginService {
 //    static scope = 'session'
 
     Usro login(user, pass) {
-    def usuario = Usro.findWhere(usroLogin: user, usroPassword: pass.trim().encodeAsMD5() ,usroActivo:1 )
+    def usuario = Usro.findWhere(login: user, usroPassword: pass.trim().encodeAsMD5() ,usroActivo:1 )
         if (usuario) {
             if (this.verificarAccesoUsuario(usuario)) {
                 return usuario
@@ -52,7 +52,7 @@ class LoginService {
     }
 
     boolean autorizaciones(usuario,pass) {
-        def us = Usro.findWhere(usroLogin: usuario.usroLogin, autorizacion: pass.trim().encodeAsMD5(),usroActivo:1 )
+        def us = Usro.findWhere(login: usuario.usroLogin, autorizacion: pass.trim().encodeAsMD5(),usroActivo:1 )
         if (us) {
             return true
         }

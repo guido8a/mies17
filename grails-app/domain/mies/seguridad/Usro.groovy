@@ -4,7 +4,7 @@ class Usro implements Serializable{
     mies.Persona persona
     mies.CargoPersonal cargoPersonal
     mies.UnidadEjecutora unidad
-    String usroLogin
+    String login
     String usroPassword
     String autorizacion
     String sigla
@@ -26,7 +26,7 @@ class Usro implements Serializable{
             id column: 'usro__id'
             persona column: 'prsn__id'
             cargoPersonal column: 'cgpr__id'
-            usroLogin column: 'usrologn'
+            login column: 'usrologn'
             usroPassword column: 'usropass'
             autorizacion column: 'usroatrz'
             sigla column: 'usrosgla'
@@ -40,7 +40,7 @@ class Usro implements Serializable{
     static constraints = {
         persona(blank:false,nullable: false, attributes: [mensaje: 'Persona'],unique:true)
         cargoPersonal(blank:true,nullable: true, attributes: [mensaje: 'Cargo'])
-        usroLogin(matches:/^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]{1,15}$/,size:1..15,blank:false,nullable:false,unique:true, attributes: [mensaje: 'Nombre de usuario'])
+        login(matches:/^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]{1,15}$/,size:1..15,blank:false,nullable:false,unique:true, attributes: [mensaje: 'Nombre de usuario'])
         usroPassword(matches:/^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]+$/,size:1..64,blank:false,nullable:false, attributes: [mensaje: 'Contraseña para el ingreso al sistema'])
         autorizacion (matches:/^[a-zA-Z0-9ñÑ .,áéíóúÁÉÍÚÓüÜ#_+-]+$/,size:1..255,blank:false,nullable:false, attributes: [mensaje: 'Contraseña para autorizaciones'])
         sigla (matches:/^[a-zA-Z]{1,8}$/,size:1..8,blank:false,nullable:false, attributes: [mensaje: 'Sigla del usuario'])
@@ -52,7 +52,7 @@ class Usro implements Serializable{
 
     
     String toString(){
-        return "${this.usroLogin}"
+        return "${this.login}"
     }
     
 }

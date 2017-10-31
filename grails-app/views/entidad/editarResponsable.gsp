@@ -226,7 +226,7 @@
 
         <tbody>
 
-            <tr class="prop ${hasErrors(bean: usuario, field: 'cargoPersonal', 'error')} ${hasErrors(bean: usuario, field: 'usroLogin', 'error')}">
+            <tr class="prop ${hasErrors(bean: usuario, field: 'cargoPersonal', 'error')} ${hasErrors(bean: usuario, field: 'login', 'error')}">
 
                 <td class="label " valign="middle">
                     <g:message code="usro.unidad.label" default="Unidad"/>
