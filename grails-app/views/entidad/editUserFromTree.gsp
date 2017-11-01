@@ -301,10 +301,10 @@
                 </td>
 
                 <td class=" mandatory" valign="middle">
-                    <g:textField name="usuario.usroLogin" id="usroLogin"
-                                 title="${Usro.constraints.usroLogin.attributes.mensaje}"
+                    <g:textField name="usuario.login" id="login"
+                                 title="${Usro.constraints.login.attributes.mensaje}"
                                  class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="15"
-                                 value="${usuario?.usroLogin}"/>
+                                 value="${usuario?.login}"/>
                 </td>
 
                 <td class="label" valign="middle">

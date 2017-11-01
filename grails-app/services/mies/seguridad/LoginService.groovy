@@ -52,7 +52,7 @@ class LoginService {
     }
 
     boolean autorizaciones(usuario,pass) {
-        def us = Usro.findWhere(login: usuario.usroLogin, autorizacion: pass.trim().encodeAsMD5(),usroActivo:1 )
+        def us = Usro.findWhere(login: usuario.login, autorizacion: pass.trim().encodeAsMD5(),usroActivo:1 )
         if (us) {
             return true
         }

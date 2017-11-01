@@ -265,16 +265,16 @@
             <tr class="prop ${hasErrors(bean: usuario, field: 'usroPassword', 'error')} ${hasErrors(bean: usuario, field: 'autorizacion', 'error')}">
 
                 <td class="label  mandatory" valign="middle">
-                    <g:message code="usro.usroLogin.label" default="Login"/>
+                    <g:message code="usro.login.label" default="Login"/>
                 </td>
                 <td class="indicator mandatory">
                     <span class="indicator">*</span>
                 </td>
                 <td class=" mandatory" valign="middle">
-                    <g:textField name="usuario.usroLogin" id="usroLogin"
-                                 title="${Usro.constraints.usroLogin.attributes.mensaje}"
+                    <g:textField name="usuario.login" id="login"
+                                 title="${Usro.constraints.login.attributes.mensaje}"
                                  class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="15"
-                                 value="${usuario?.usroLogin}"/>
+                                 value="${usuario?.login}"/>
                 </td>
 
                 <td class="label  mandatory" valign="middle">

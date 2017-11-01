@@ -153,11 +153,11 @@ td {
         <tr>
 
             <td class="label  " valign="middle">
-                <g:message code="usro.usroLogin.label" default="Usuario"/>
+                <g:message code="usro.login.label" default="Usuario"/>
             </td>
 
             <td class=" " valign="middle">
-                ${usuario?.usroLogin}
+                ${usuario?.login}
             </td>
 
         </tr>

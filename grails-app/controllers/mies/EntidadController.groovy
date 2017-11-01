@@ -885,7 +885,7 @@ class EntidadController extends mies.seguridad.Shield {
 
             if (persona.errors.getErrorCount() != 0) {
                 err = true
-                println "errores persona"
+                println "errores persona: ${persona.errors}"
             } else {
                 def usro
                 if (paramsUsuario.id) {

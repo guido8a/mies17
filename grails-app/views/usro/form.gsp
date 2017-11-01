@@ -80,15 +80,15 @@
                     </div>
 
                     <div class="prop mandatory ${hasErrors(bean: usroInstance, field: 'login', 'error')}">
-                        <label for="usroLogin">
-                            <g:message code="usro.usroLogin.label" default="Usro Login"/>
+                        <label for="login">
+                            <g:message code="usro.login.label" default="Usro Login"/>
                             <span class="indicator">*</span>
                         </label>
 
                         <div class="campo">
-                            <g:textField name="usroLogin" id="usroLogin" title="${Usro.constraints.usroLogin.attributes.mensaje}"
+                            <g:textField name="login" id="login" title="${Usro.constraints.login.attributes.mensaje}"
                                          class="6 field required ui-widget-content ui-corner-all" minLenght="1"
-                                         maxLenght="15" style="width: 150px;" value="${usroInstance?.usroLogin}"/>
+                                         maxLenght="15" style="width: 150px;" value="${usroInstance?.login}"/>
                         </div>
                     </div>
 

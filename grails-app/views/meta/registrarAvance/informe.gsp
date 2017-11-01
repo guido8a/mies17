@@ -57,7 +57,7 @@
                         &nbsp;
                     </td>
                     <td class="" valign="middle">
-                        ${responsable.responsable.usroLogin}
+                        ${responsable.responsable.login}
                         <input type="hidden" name="responsableProyecto.id" value="${responsable.id}">
                     </td>
 

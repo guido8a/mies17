@@ -26,8 +26,8 @@
                 <thead>
                 <tr>
                     <tdn:sortableColumn property="persona" class="ui-state-default" title="Persona" />
-                    <tdn:sortableColumn property="usroLogin" class="ui-state-default"
-                                       title="${message(code: 'usro.usroLogin.label', default: 'Nombre de usuario')}"/>
+                    <tdn:sortableColumn property="login" class="ui-state-default"
+                                       title="${message(code: 'usro.login.label', default: 'Nombre de usuario')}"/>
                     <tdn:sortableColumn property="usroPassword" class="ui-state-default"
                                         title="${message(code: 'usro.sigla.label', default: 'Sigla')}"/>
                     <tdn:sortableColumn property="usroActivo" class="ui-state-default"

@@ -71,14 +71,14 @@
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="usroLogin"><g:message code="usro.usroLogin.label"
+                                    <label for="login"><g:message code="usro.login.label"
                                                                       default="Usro Login"/></label>
                                 </td>
                                 <td valign="top"
-                                    class="value ${hasErrors(bean: usroInstance, field: 'usroLogin', 'errors')}">
-                                    <g:textField name="usroLogin" id="usroLogin" title="UsroLogin"
+                                    class="value ${hasErrors(bean: usroInstance, field: 'login', 'errors')}">
+                                    <g:textField name="login" id="login" title="login"
                                                  class="field required ui-widget-content ui-corner-all" minLenght="1"
-                                                 maxLenght="15" value="${usroInstance?.usroLogin}"/>
+                                                 maxLenght="15" value="${usroInstance?.login}"/>
                                 </td>
                             </tr>
 
