@@ -47,7 +47,8 @@
             </div>
 
             <div id="" class="toolbar ui-widget-header ui-corner-all" style="margin-bottom: 5px;">
-                <g:link class="button edit" action="editarEntidades" id="${proyecto.id}">
+                %{--<g:link class="button edit" action="editarEntidades" id="${proyecto.id}">--}%
+                <g:link class="button edit" action="formEntidades" id="${proyecto.id}" params="[band: 1]">
                     Editar
                 </g:link>
             </div> <!-- toolbar -->

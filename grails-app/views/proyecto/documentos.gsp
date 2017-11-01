@@ -28,7 +28,7 @@
 
         <g:set var="entityName"
                value="${message(code: 'proyecto.label', default: 'Proyecto')}"/>
-        <title>Documentos del proyecto ${proyecto.nombre}</title>
+        <title>Documentos del proyecto: "${proyecto.nombre}"</title>
 
         <style type="text/css">
         .field {
@@ -91,6 +91,9 @@
                                                class="ui-widget-content ui-corner-all"/>
                                         <a href="#" class="button search">Buscar</a>
                                     </g:form>
+                                    <a href="#" name= botonTodos id="btnTodos" class="button" title="Cargar todos los documentos">
+                                        Cargar Todos
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -207,6 +210,7 @@
                 $("#dlg_ver").dialog({
                     autoOpen: false,
                     modal: true,
+                    resizable: false,
                     width: 800,
                     buttons: {
                         "Cerrar": function() {
@@ -218,6 +222,7 @@
                 $("#dlg_doc").dialog({
                     autoOpen: false,
                     modal: true,
+                    resizable: false,
                     width: 500,
                     buttons: {
                         "Cancelar": function() {
@@ -232,6 +237,7 @@
                 $("#dlg_editar").dialog({
                     autoOpen: false,
                     modal: true,
+                    resizable: false,
                     width: 500,
                     buttons: {
                         "Cancelar": function() {

@@ -1782,7 +1782,7 @@ response.outputStream << file.newInputStream()
     }
 
     def saveIndicadoresSenplades = {
-        println params
+//        println params
         def proyecto = Proyecto.get(params.id)
 
         def indicador = IndicadoresSenplades.findByProyecto(proyecto)
@@ -1799,14 +1799,22 @@ response.outputStream << file.newInputStream()
         indicador.metodologia = params.met
         indicador.impactos = params.imp
 
-        indicador = kerberosService.saveObject(indicador, IndicadoresSenplades, session.perfil, session.usuario, actionName, controllerName, session)
-        println indicador
-
-        if (indicador.errors.getErrorCount() != 0) {
-            redirect(action: "editarIndicadoresSenplades", id: params.id)
-        } else {
+        try{
+            indicador.save(flush: true)
             redirect(action: "verIndicadoresSenplades", id: params.id)
+        }catch (e){
+            println("error al guardar los indicadores senplades " + e)
+            redirect(action: "editarIndicadoresSenplades", id: params.id)
         }
+
+//        indicador = kerberosService.saveObject(indicador, IndicadoresSenplades, session.perfil, session.usuario, actionName, controllerName, session)
+//        println indicador
+
+//        if (indicador.errors.getErrorCount() != 0) {
+//            redirect(action: "editarIndicadoresSenplades", id: params.id)
+//        } else {
+//            redirect(action: "verIndicadoresSenplades", id: params.id)
+//        }
     }
 
     def verEntidades = {
@@ -2363,7 +2371,11 @@ response.outputStream << file.newInputStream()
     def formPresupuesto () {
         def proyecto = Proyecto.get(params.id)
         def financiamientos = Financiamiento.findAllByProyecto(proyecto)
-        return[proyecto: proyecto, financiamientos: financiamientos]
+        def band = false
+        if(params.band == '1'){
+            band = true
+        }
+        return[proyecto: proyecto, financiamientos: financiamientos, band: band]
     }
 
     def savePresupuesto = {
@@ -2377,7 +2389,7 @@ response.outputStream << file.newInputStream()
 
         if(params.deleted){
             borrar = params.deleted.split(",")
-           borrar.each{f->
+            borrar.each{f->
                 financiamiento = Financiamiento.get(f.toString())
 
                 try{
@@ -2411,13 +2423,102 @@ response.outputStream << file.newInputStream()
             }
         }
 
+        def band = 0
+        if(params.band == 'true'){
+            band = 1
+        }
+
+
         if(errores == ''){
-            redirect(controller: 'proyecto', action: 'formPresupuesto',id: proyecto.id)
+            redirect(controller: 'proyecto', action: 'formPresupuesto',id: proyecto.id, params: [band: band])
         }else{
             flash.message = "Error al guardar el finaciamiento"
+        }
+    }
+
+    def formEntidades () {
+        println("params " + params)
+        def proyecto = Proyecto.get(params.id)
+        def entidadesProyecto = EntidadesProyecto.findAllByProyecto(proyecto)
+        def band = false
+        if(params.band == '1'){
+            band = true
+        }
+        return[proyecto: proyecto, entidadesProyecto: entidadesProyecto, band: band]
+
+    }
+
+    def saveEntidades = {
+//        println("params " + params)
+        def proyecto = Proyecto.get(params.proyecto)
+        def unidad
+        def tipo
+        def entidad
+
+        if(params.unidad == null || params.tipoParticipacion == null || !params.monto){
+            render "no2"
+        }else{
+
+            unidad = UnidadEjecutora.get(params.unidad)
+            tipo = TipoParticipacion.get(params.tipoParticipacion)
+
+            entidad = new EntidadesProyecto()
+            entidad.proyecto = proyecto
+            entidad.monto = params.monto.toDouble()
+            entidad.unidad = unidad
+            entidad.rol = params.rol
+            entidad.tipoPartisipacion = tipo
+
+            try{
+                entidad.save(flush: true)
+                render "OK"
+            }catch (e){
+                println("error al guardar la entidad proyecto " + e)
+                render "no1"
+            }
         }
 
 
 
     }
+
+    def borrarEntidad = {
+//        println("params " + params)
+        def entidad
+        def errores = ''
+
+        if(params.id.class == java.lang.String){
+            entidad = EntidadesProyecto.get(params.id)
+
+            try{
+                entidad.delete(flush: true)
+
+            }catch (e){
+                println("error al borrar la entidad del proyecto " + e)
+                errores += e
+            }
+        }else{
+
+            params.id.each{ d->
+                entidad = EntidadesProyecto.get(d)
+
+                try{
+                    entidad.delete(flush: true)
+                }catch (e){
+                    println("error al borrar la entidad del proyecto " + e)
+                    errores += e
+                }
+            }
+        }
+
+
+        if(errores == ''){
+            render "OK"
+        }else{
+            render "NO"
+        }
+
+
+    }
+
 }

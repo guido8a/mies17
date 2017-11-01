@@ -28,6 +28,15 @@
 
     <script type="text/javascript"
             src="${resource(dir: 'js/jquery/plugins/qtip', file: 'jquery.qtip.min.js')}"></script>
+    <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
+          type="text/css"/>
+    <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
+          type="text/css"/>
+
+    <script src="${resource(dir: 'js/jquery/plugins/', file: 'jquery.easing.1.3.js')}" type="text/javascript"
+            language="JavaScript"></script>
+    <script src="${resource(dir: 'js/jquery/plugins/jBreadCrumb/js', file: 'jquery.jBreadCrumb.1.1.js')}"
+            type="text/javascript" language="JavaScript"></script>
 
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/qtip', file: 'jquery.qtip.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css/menuSemplades', file: 'flow_menu_green.css')}"/>
@@ -38,6 +47,32 @@
 </head>
 
 <body>
+
+
+<g:if test="${band}">
+    <div class="breadCrumbHolder module">
+        <div id="breadCrumb" class="breadCrumb module">
+            <ul>
+                <li>
+                    <g:link class="bc" controller="proyecto" action="show"
+                            id="${proyecto.id}">
+                        Proyecto
+                    </g:link>
+                </li>
+                <li>
+                    <g:link class="bc" controller="proyecto" action="verEntidades"
+                            id="${proyecto.id}">
+                        Entidades proyecto
+                    </g:link>
+                </li>
+                <li>
+                    Edici&oacute;n
+                </li>
+            </ul>
+        </div>
+    </div>
+</g:if>
+
 
 <div class="dialog" title="Financiamiento del proyecto ${proyecto.nombre}">
 
@@ -78,11 +113,12 @@
                                                                  minFractionDigits="2" maxFractionDigits="2"/>
         </div>
 
-        %{--<g:form class="frmFinanciamiento" method="post" action="nuevoProyecto" event="saveFinanciamiento">--}%
-        %{--<g:form class="frmFinanciamiento" method="post" action="saveFinanciamiento">--}%
+    %{--<g:form class="frmFinanciamiento" method="post" action="nuevoProyecto" event="saveFinanciamiento">--}%
+    %{--<g:form class="frmFinanciamiento" method="post" action="saveFinanciamiento">--}%
         <g:form class="frmFinanciamiento" method="post" action="savePresupuesto">
             <input type="hidden" name="deleted" id="deleted"/>
             <g:hiddenField name="proyecto" value="${proyecto?.id}"/>
+            <g:hiddenField name="band" value="${band}"/>
             <table id="tblFinanciamiento">
                 <thead>
                 <tr style="padding: 5px;">
@@ -169,12 +205,14 @@
                     Guardar
                 </a>
             </div>
+            <g:if test="${!band}">
+                <div class="botones left">
+                    <a href="#" class="button" id="btnSalir" title="Regresar a proyecto">
+                        Salir
+                    </a>
+                </div>
+            </g:if>
 
-            <div class="botones left">
-                <a href="#" class="button" id="btnSalir" title="Regresar a proyecto">
-                    Salir
-                </a>
-            </div>
         </div>
     </div>
 
@@ -217,7 +255,14 @@
             }
         }
     });
+
     $(function() {
+
+        <g:if test="${band}">
+        $("#breadCrumb").jBreadCrumb({
+            beginingElementsToLeaveOpen: 10
+        });
+        </g:if>
 
         $("#dialog-confirm").dialog({
             resizable: false,

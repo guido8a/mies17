@@ -644,7 +644,7 @@
                         <span class="ui-icon ui-icon-triangle-1-s" style="float: right;"></span>
                         <g:if test="${proyectoInstance.aprobado !='a'}">
                             <span style="margin-left: 784px">
-                                <g:link class="button edit" action="nuevoProyecto" id="${proyectoInstance?.id}">
+                                <g:link class="button edit" action="formEntidades" id="${proyectoInstance?.id}">
                                     Editar
                                 </g:link>
                             </span>
