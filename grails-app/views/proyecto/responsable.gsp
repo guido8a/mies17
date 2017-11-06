@@ -32,6 +32,7 @@ select.field {
         <g:hiddenField name="ejecucion.id" value="${responsableEjecucion?.id}"/>
         <g:hiddenField name="ejecucion.version" value="${responsableEjecucion?.version}"/>
         <g:hiddenField name="ejecucion.proyecto.id" value="${proyecto.id}"/>
+        <g:hiddenField name="unidad.id" value="${unidad}"/>
 
         <g:hiddenField name="ejecucion.tipo" id="tipo_ejecucion" value="insert"/>
 

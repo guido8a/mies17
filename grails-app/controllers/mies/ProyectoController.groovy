@@ -1198,6 +1198,7 @@ class ProyectoController extends mies.seguridad.Shield {
             params.id = [params.id]
         }
 
+
         (params.id).each { id ->
             def doc = Documento.get(id)
             def archivo = doc.documento
@@ -1211,7 +1212,8 @@ class ProyectoController extends mies.seguridad.Shield {
             p.id = id
             p.controllerName = controllerName
             p.actionName = actionName
-            kerberosService.delete(p, Documento, session.perfil, session.usuario)
+            kerberosService.delete(p, doc, session.perfil, session.usuario)
+
         }
 
         redirect(action: "documentos", params: [id: proyecto.id])
@@ -1297,7 +1299,7 @@ response.outputStream << file.newInputStream()
             }
         }
 
-        return [proyecto: proyecto, responsableEjecucion: results[0], responsableIngreso: results2[0], responsableSeguimiento: results3[0], responsablesEjecucion: responsablesEjecucion, responsablesIngreso: responsablesIngreso, responsablesSeguimiento: responsablesSeguimiento]
+        return [proyecto: proyecto, responsableEjecucion: results[0], responsableIngreso: results2[0], responsableSeguimiento: results3[0], responsablesEjecucion: responsablesEjecucion, responsablesIngreso: responsablesIngreso, responsablesSeguimiento: responsablesSeguimiento, unidad: unidadProyecto?.id]
     } //responsable
 
     def responsables = {
@@ -1331,10 +1333,10 @@ response.outputStream << file.newInputStream()
     } //responsable
 
     def saveResponsable = {
-        println "SAVE RESPONSABLE"
-        params.each {
-            println it
-        }
+        println "SAVE RESPONSABLE " + params
+//        params.each {
+//            println it
+//        }
         def err = false
         if (params.ingreso) {
             def proyecto = Proyecto.get(params.ingreso.proyecto.id)
@@ -1358,19 +1360,50 @@ response.outputStream << file.newInputStream()
                 println results
                 render("!!")
             } else {
+//                if (params.ingreso.tipo == "update") {
+//                    def ant = ResponsableProyecto.get(params.ingreso.id)
+//                    ant.hasta = Date.parse("dd-MM-yyyy", desde)
+//                    ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableIngreso", "proyecto", session)
+//                    err = ant.errors.getErrorCount() != 0
+//                }
+//                params.ingreso.id = null
+//                params.ingreso.tipo = TipoResponsable.findByCodigo("I")
+//                def obj = kerberosService.save(params.ingreso, ResponsableProyecto, session.perfil, session.usuario)
+//                if (obj.errors.getErrorCount() != 0 || err) {
+//                    render("NO")
+//                } else {
+//                    render("OK")
+//                }
+
                 if (params.ingreso.tipo == "update") {
                     def ant = ResponsableProyecto.get(params.ingreso.id)
                     ant.hasta = Date.parse("dd-MM-yyyy", desde)
                     ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableIngreso", "proyecto", session)
                     err = ant.errors.getErrorCount() != 0
-                }
-                params.ingreso.id = null
-                params.ingreso.tipo = TipoResponsable.findByCodigo("I")
-                def obj = kerberosService.save(params.ingreso, ResponsableProyecto, session.perfil, session.usuario)
-                if (obj.errors.getErrorCount() != 0 || err) {
-                    render("NO")
-                } else {
-                    render("OK")
+                }else{
+                    def responsable = new ResponsableProyecto()
+                    def unidad = UnidadEjecutora.get(params."unidad.id")
+                    def tipo = TipoResponsable.findByCodigo("I")
+                    def usuario = Usro.get(session.usuario.id)
+                    def d = new Date().parse("dd-MM-yyyy", desde)
+                    def h = new Date().parse("dd-MM-yyyy", hasta)
+
+                    responsable.unidad = unidad
+                    responsable.proyecto = proyecto
+                    responsable.responsable = usuario
+                    responsable.tipo = tipo
+                    responsable.desde  = d
+                    responsable.hasta  = h
+                    responsable.observaciones = params.ingreso.observaciones
+
+                    try{
+                        responsable.save(flush: true)
+                        println("res "  + responsable?.id)
+                        render "OK"
+                    }catch (e){
+                        println("error al guardar el responsable ingreso" + e)
+                        render "NO"
+                    }
                 }
             }
         }
@@ -1379,6 +1412,7 @@ response.outputStream << file.newInputStream()
 
             def desde = params.ejecucion.desde
             def hasta = params.ejecucion.hasta
+
 
             def c = ResponsableProyecto.createCriteria()
             def results = c.list {
@@ -1396,19 +1430,52 @@ response.outputStream << file.newInputStream()
                 println results
                 render("!!")
             } else {
+//                if (params.ejecucion.tipo == "update") {
+//                    def ant = ResponsableProyecto.get(params.ejecucion.id)
+//                    ant.hasta = Date.parse("dd-MM-yyyy", desde)
+//                    ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableEjecucion", "proyecto", session)
+//                    err = ant.errors.getErrorCount() != 0
+//                }
+//                params.ejecucion.id = null
+//                params.ejecucion.tipo = TipoResponsable.findByCodigo("E")
+//                def obj = kerberosService.save(params.ejecucion, ResponsableProyecto, session.perfil, session.usuario)
+//                if (obj.errors.getErrorCount() != 0 || err) {
+//                    render("NO")
+//                } else {
+//                    render("OK")
+//                }
+
+
                 if (params.ejecucion.tipo == "update") {
                     def ant = ResponsableProyecto.get(params.ejecucion.id)
                     ant.hasta = Date.parse("dd-MM-yyyy", desde)
                     ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableEjecucion", "proyecto", session)
                     err = ant.errors.getErrorCount() != 0
-                }
-                params.ejecucion.id = null
-                params.ejecucion.tipo = TipoResponsable.findByCodigo("E")
-                def obj = kerberosService.save(params.ejecucion, ResponsableProyecto, session.perfil, session.usuario)
-                if (obj.errors.getErrorCount() != 0 || err) {
-                    render("NO")
-                } else {
-                    render("OK")
+                }else{
+
+                    def responsable = new ResponsableProyecto()
+                    def unidad = UnidadEjecutora.get(params."unidad.id")
+                    def tipo = TipoResponsable.findByCodigo("E")
+                    def usuario = Usro.get(session.usuario.id)
+                    def d = new Date().parse("dd-MM-yyyy", desde)
+                    def h = new Date().parse("dd-MM-yyyy", hasta)
+
+                    responsable.unidad = unidad
+                    responsable.proyecto = proyecto
+                    responsable.responsable = usuario
+                    responsable.tipo = tipo
+                    responsable.desde  = d
+                    responsable.hasta  = h
+                    responsable.observaciones = params.ejecucion.observaciones
+
+                    try{
+                        responsable.save(flush: true)
+                        println("res "  + responsable?.id)
+                        render "OK"
+                    }catch (e){
+                        println("error al guardar el responsable ejecucion" + e)
+                        render "NO"
+                    }
                 }
             }
         }
@@ -1434,56 +1501,55 @@ response.outputStream << file.newInputStream()
                 println results
                 render("!!")
             } else {
+//                if (params.seguimiento.tipo == "update") {
+//                    def ant = ResponsableProyecto.get(params.seguimiento.id)
+//                    ant.hasta = Date.parse("dd-MM-yyyy", desde)
+//                    ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableSeguimiento", "proyecto", session)
+//                    err = ant.errors.getErrorCount() != 0
+//                }
+//                params.seguimiento.id = null
+//                params.seguimiento.tipo = TipoResponsable.findByCodigo("S")
+//                def obj = kerberosService.save(params.seguimiento, ResponsableProyecto, session.perfil, session.usuario)
+//                if (obj.errors.getErrorCount() != 0 || err) {
+//                    render("NO")
+//                } else {
+//                    render("OK")
+//                }
+
+
                 if (params.seguimiento.tipo == "update") {
                     def ant = ResponsableProyecto.get(params.seguimiento.id)
                     ant.hasta = Date.parse("dd-MM-yyyy", desde)
                     ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableSeguimiento", "proyecto", session)
                     err = ant.errors.getErrorCount() != 0
-                }
-                params.seguimiento.id = null
-                params.seguimiento.tipo = TipoResponsable.findByCodigo("S")
-                def obj = kerberosService.save(params.seguimiento, ResponsableProyecto, session.perfil, session.usuario)
-                if (obj.errors.getErrorCount() != 0 || err) {
-                    render("NO")
-                } else {
-                    render("OK")
+                }else{
+                    def responsable = new ResponsableProyecto()
+                    def unidad = UnidadEjecutora.get(params."unidad.id")
+                    def tipo = TipoResponsable.findByCodigo("S")
+                    def usuario = Usro.get(session.usuario.id)
+                    def d = new Date().parse("dd-MM-yyyy", desde)
+                    def h = new Date().parse("dd-MM-yyyy", hasta)
+
+                    responsable.unidad = unidad
+                    responsable.proyecto = proyecto
+                    responsable.responsable = usuario
+                    responsable.tipo = tipo
+                    responsable.desde  = d
+                    responsable.hasta  = h
+                    responsable.observaciones = params.seguimiento.observaciones
+
+                    try{
+                        responsable.save(flush: true)
+                        println("res "  + responsable?.id)
+                        render "OK"
+                    }catch (e){
+                        println("error al guardar el responsable seguimiento" + e)
+                        render "NO"
+                    }
                 }
             }
         }
-//        if (params.ejecucion) {
-        //            if (params.ejecucion.tipo == "update") {
-        //                def fecha = params.ejecucion.desde[1]
-        //                def ant = ResponsableProyecto.get(params.ejecucion.id)
-        //                ant.hasta = Date.parse("dd-MM-yyyy", fecha)
-        //                ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsable", "proyecto", session)
-        //                err = ant.errors.getErrorCount() != 0
-        //            }
-        //            params.ejecucion.id = null
-        //            params.ejecucion.tipo = TipoResponsable.findByCodigo("E")
-        //            def obj2 = kerberosService.save(params.ejecucion, ResponsableProyecto, session.perfil, session.usuario)
-        //            if (obj2.errors.getErrorCount() != 0 || err) {
-        //                render("NO")
-        //            } else {
-        //                render("OK")
-        //            }
-        //        }
-        //        if (params.seguimiento) {
-        //            if (params.seguimiento.tipo == "update") {
-        //                def fecha = params.seguimiento.desde[1]
-        //                def ant = ResponsableProyecto.get(params.seguimiento.id)
-        //                ant.hasta = Date.parse("dd-MM-yyyy", fecha)
-        //                ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsable", "proyecto", session)
-        //                err = ant.errors.getErrorCount() != 0
-        //            }
-        //            params.seguimiento.id = null
-        //            params.seguimiento.tipo = TipoResponsable.findByCodigo("S")
-        //            def obj2 = kerberosService.save(params.seguimiento, ResponsableProyecto, session.perfil, session.usuario)
-        //            if (obj2.errors.getErrorCount() != 0 || err) {
-        //                render("NO")
-        //            } else {
-        //                render("OK")
-        //            }
-        //        }
+
     }
 
     def historialResponsables = {

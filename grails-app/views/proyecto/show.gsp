@@ -742,12 +742,11 @@
                 $("#dlg_contenido").html(loading);
                 $("#dlg_responsable").dialog("open");
 
-                $("#dlg_responsable").dialog("option", "title", 'Asignar responsable del proyecto ${proyectoInstance.nombre}');
+                $("#dlg_responsable").dialog("option", "title", "Asignar responsable del proyecto: '${proyectoInstance.nombre}' ");
                 $("#dlg_responsable").dialog("option", "width", 745);
                 $("#dlg_responsable").dialog("option", "buttons", botonesSave);
                 $("#dlg_responsable").dialog("option", "position", [330, 250]);
 
-            %{--var url = "${createLink(action:'responsable', id:proyectoInstance.id)}";--}%
                 var url = "${createLink(action:'responsables', id:proyectoInstance.id)}";
 
                 $.ajax({

@@ -2,6 +2,8 @@ package mies
 
 class AsignacionController extends mies.seguridad.Shield {
 
+    def kerberosService
+
     static allowedMethods = [guardarAsignacion: "POST"]
 
 //    def kerberosService
@@ -806,7 +808,7 @@ class AsignacionController extends mies.seguridad.Shield {
 
         }
 
-//        asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, "guardarAsignacion", "asignacion", session)
+        asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, "guardarAsignacion", "asignacion", session)
         if (asg.errors.getErrorCount() == 0) {
             render guardarPras(asg)
         } else {

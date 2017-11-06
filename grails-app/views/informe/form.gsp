@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/slider', file: 'ui.slider.extras.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
     <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/ckeditor', file: 'ckeditor.js')}"></script>
+
     <script type="text/javascript"
             src="${resource(dir: 'js/jquery/plugins/ckeditor/adapters', file: 'jquery.js')}"></script>
 
@@ -67,11 +68,11 @@
                 <tr>
                     <td colspan="6" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">
                         <g:if test="${source == 'edit'}">
-                            <g:message code="default.edit.legend" args="${['Informe']}" default="Edit Informe details"/>
+                            <g:message code="default.edit.legend" args="${['Informe']}" default="Editar detalles"/>
                         </g:if>
                         <g:else>
                             <g:message code="default.create.legend" args="${['Informe']}"
-                                       default="Enter Informe details"/>
+                                       default="Detalles del informe"/>
                         </g:else>
                     </td>
                 </tr>

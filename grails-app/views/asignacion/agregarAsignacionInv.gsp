@@ -166,7 +166,7 @@
                     <g:formatNumber number="${(asg.redistribucion==0)?asg.planificado.toDouble():asg.redistribucion.toDouble()}"
                                     format="###,##0"
                                     minFractionDigits="2" maxFractionDigits="2"/>
-                    <g:set var="total" value="${total.toDouble().round(2)+((asg.redistribucion==0)?asg.planificado.toDouble().round(2):asg.redistribucion.toDouble().round(2))}"></g:set>
+                    <g:set var="total" value="${total.toDouble().round(2)+((asg.redistribucion==0)?asg.planificado.toDouble().round(2):asg.redistribucion.toDouble().round(2))}"/>
                 </td>
 
                 %{--<td style="text-align: center">--}%

@@ -119,21 +119,21 @@
 
     <div style="position: absolute;top:25px;right:10px;font-size: 15px;">
         <b>Total Unidad:</b>
-        <g:formatNumber number="${totalUnidad}"
+        <g:formatNumber number="${totalUnidad ?: 0}"
                         format="###,##0"
                         minFractionDigits="2" maxFractionDigits="2"/>
     </div>
 
     <div style="position: absolute;top:45px;right:10px;font-size: 15px;">
         <b>M&aacute;ximo Inversiones:</b>
-        <g:formatNumber number="${maxInv}"
+        <g:formatNumber number="${maxInv ?: 0}"
                         format="###,##0"
                         minFractionDigits="2" maxFractionDigits="2"/>
     </div>
 
     <div style="position: absolute;top:65px;right:10px;font-size: 17px;">
         <b>Restante:</b>
-        <g:formatNumber number="${maxInv - totalUnidad}"
+        <g:formatNumber number="${(maxInv ?: 0) - (totalUnidad ?: 0)}"
                         format="###,##0"
                         minFractionDigits="2" maxFractionDigits="2"/>
     </div>

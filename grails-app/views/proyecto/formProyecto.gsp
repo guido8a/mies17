@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
 
         <title>
-            <g:message code="default.${type}.label" args="${['Proyecto']}" default="Proyecto details"/>
+            <g:message code="default.${type}.label" args="${['Proyecto']}" default="Detalles del Proyecto"/>
         </title>
         <style type="text/css">
         textarea {
@@ -34,7 +34,7 @@
     <body>
 
         <div class="dialog"
-             title="${g.message("code": "default." + type + ".label", "args": ['Proyecto'], "default": "Proyecto details")}">
+             title="${g.message("code": "default." + type + ".label", "args": ['Proyecto'], "default": "Detalles del Proyecto")}">
 
             <g:hasErrors bean="${proyecto}">
                 <div class="errors ui-state-error ui-corner-all">
@@ -55,7 +55,7 @@
       <tr>
           <td colspan="6" class="ui-widget ui-widget-header ui-corner-all" style="padding: 3px;">
                 <g:message code="default.${type}.legend" args="${['Proyecto']}"
-                           default="${type?.capitalize()} Proyecto details"/>
+                           default="Detalles del Proyecto"/>
                 </td>
                     </tr>
                 </thead>

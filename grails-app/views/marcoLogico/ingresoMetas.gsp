@@ -384,9 +384,7 @@
 <input type="hidden" id="id_hidden">
 
 <div style="float: left;width: 90%;height: 35px;display: block;margin-top: 10px;">
-    Actividad: <g:select
-            from="${mies.MarcoLogico.findAllByMarcoLogicoAndEstado(actividad.marcoLogico,0,[sort:'id'])}"
-            optionKey="id" id="cmb_comp" value="${actividad.id}"/>
+    Actividad: <g:select name="actividad_name" from="${mies.MarcoLogico.findAllByMarcoLogicoAndEstado(actividad.marcoLogico,0,[sort:'id'])}" optionKey="id" id="cmb_comp" value="${actividad.id}"/>
 </div>
 </div>
 </div>
@@ -573,7 +571,7 @@
             primary:"ui-icon-closethick"
         }
     }).click(function () {
-                if (confirm("Está seguro de querer eliminar esta meta?\nEsta acción no es reversible.")) {
+                if (confirm("Está seguro de querer eliminar esta meta?\nEsta acción no se puede deshacer.")) {
                     var meta = $(this).attr("id");
                     $.ajax({
                         type:"POST",

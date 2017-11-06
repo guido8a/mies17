@@ -34,7 +34,7 @@ class KerberosService {
     public delete(params, dominio, perfil, usuario) {
         try {
             dominio.delete(flush: true)
-
+            return true
         } catch (e) {
             println "error delete " + e
             return false

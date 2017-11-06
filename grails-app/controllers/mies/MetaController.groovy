@@ -53,7 +53,8 @@ class MetaController {
         if (avances.size() > 0) {
             render("NO_Esta meta tiene avances, no puede ser eliminada.")
         } else {
-            if (kerberosService.delete(params, Meta, session.perfil, session.usuario)) {
+//            if (kerberosService.delete(params, Meta, session.perfil, session.usuario)) {
+            if (kerberosService.delete(params, meta, session.perfil, session.usuario)) {
                 render("OK_Meta eliminada correctamente.")
             } else {
                 render("NO_Ha ocurrido un error al eliminar la meta.")

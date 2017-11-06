@@ -91,9 +91,6 @@
                                                class="ui-widget-content ui-corner-all"/>
                                         <a href="#" class="button search">Buscar</a>
                                     </g:form>
-                                    <a href="#" name= botonTodos id="btnTodos" class="button" title="Cargar todos los documentos">
-                                        Cargar Todos
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -104,6 +101,7 @@
                         <table style="width: 1050px;">
                             <thead>
                                 <tr>
+
                                     <tdn:sortableColumn property="grupoProcesos" class="ui-state-default"
                                                         title="${message(code: 'documento.grupoProcesos.label', default: 'Grupo Procesos')}"/>
                                     <tdn:sortableColumn property="descripcion" class="ui-state-default"

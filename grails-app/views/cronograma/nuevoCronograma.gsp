@@ -365,7 +365,7 @@
         <div style="width: 110px;float: left">
             <b>Fuente:</b>
         </div>
-        <g:select from="${fuentes}" id="fuente" optionKey="id" optionValue="descripcion" style="width: 200px;"/>
+        <g:select name="fuente_name" from="${fuentes}" id="fuente" optionKey="id" optionValue="descripcion" style="width: 200px;"/>
     </div>
 
     <div style="width: 100%;float: left;margin-top: 10px;">

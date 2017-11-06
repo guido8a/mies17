@@ -7,7 +7,8 @@
         <tbody>
             <tr class="prop ${hasErrors(bean: documentoInstance, field: 'grupoProcesos', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="documento.grupoProcesos.label" default="Grupo Procesos"/>
+                    %{--<g:message code="documento.grupoProcesos.label" default="Grupo Procesos"/>--}%
+                    Grupo Procesos
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -20,7 +21,8 @@
             </tr>
             <tr class="prop ${hasErrors(bean: documentoInstance, field: 'descripcion', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="documento.descripcion.label" default="Descripción"/>
+                    %{--<g:message code="documento.descripcion.label" default="Descripción"/>--}%
+                    Descripción
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -46,7 +48,8 @@
             </tr>
             <tr class="prop ${hasErrors(bean: documentoInstance, field: 'resumen', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="documento.resumen.label" default="Resumen"/>
+                    %{--<g:message code="documento.resumen.label" default="Resumen"/>--}%
+                    Resumen
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -61,7 +64,8 @@
             <g:if test="${!documentoInstance}">
                 <tr class="prop ${hasErrors(bean: documentoInstance, field: 'documento', 'error')}">
                     <td class="label " valign="middle">
-                        <g:message code="documento.documento.label" default="Documento"/>
+                        %{--<g:message code="documento.documento.label" default="Documento"/>--}%
+                        Documento
                     </td>
                     <td class="indicator">
                         &nbsp;
