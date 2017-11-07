@@ -8,6 +8,13 @@ select.field {
 .datepicker {
     width : 215px;
 }
+
+   .colores{
+       color: #e2a745;
+   }
+
+
+
 </style>
 
 
@@ -29,7 +36,7 @@ select.field {
 
 
     <g:form action="saveResponsable" class="frmResponsableProyecto" method="post" name="ejecucion">
-        <g:hiddenField name="ejecucion.id" value="${responsableEjecucion?.id}"/>
+        <g:hiddenField name="ejecucion.id" id="id_ejecucion" value="${responsableEjecucion?.id}"/>
         <g:hiddenField name="ejecucion.version" value="${responsableEjecucion?.version}"/>
         <g:hiddenField name="ejecucion.proyecto.id" value="${proyecto.id}"/>
         <g:hiddenField name="unidad.id" value="${unidad}"/>
@@ -41,21 +48,22 @@ select.field {
 
             <thead>
                 <tr>
-                    <td width="430" colspan="5" class="ui-widget ui-widget-header ui-corner-left" style="padding: 3px;">
+                    <td width="400" colspan="3" class="ui-widget ui-widget-header ui-corner-left" style="padding: 3px;">
                         Responsable U.E. del proyecto
                     </td>
-                    <td class="ui-widget ui-widget-header ui-corner-right">
+                    <td class="ui-widget ui-widget-header ui-corner-right" width="200px" colspan="3">
                         <a href="#" tipo="ejecucion" class="btn save">Guardar</a>
                         <a href="#" tipo="ejecucion" class="btn cancel">Cancelar</a>
+                        <a href="#" tipo="ejecucion" class="btn nuevo" title="Nuevo Responsable">Nuevo</a>
                     </td>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody id="t_ejecucion">
 
                 <tr class="prop ${hasErrors(bean: responsableEjecucion, field: 'responsable', 'error')}">
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.responsable.label" default="Responsable"/>
+                       Responsable
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -69,7 +77,7 @@ select.field {
 
                 <tr class="prop ${hasErrors(bean: responsableEjecucion, field: 'desde', 'error')}">
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.desde.label" default="Desde"/>
+                     Desde
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -87,7 +95,7 @@ select.field {
                     </td>
 
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.hasta.label" default="Hasta"/>
+                      Hasta
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -107,7 +115,7 @@ select.field {
 
                 <tr class="prop ${hasErrors(bean: responsableEjecucion, field: 'observaciones', 'error')}">
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.observaciones.label" default="Observaciones"/>
+                        Observaciones
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -142,7 +150,7 @@ select.field {
 
             <tr class="prop ${hasErrors(bean: responsableEjecucion, field: 'responsable', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.responsable.label" default="Responsable"/>
+                    Responsable
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -154,7 +162,7 @@ select.field {
 
             <tr class="prop ${hasErrors(bean: responsableEjecucion, field: 'desde', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.desde.label" default="Desde"/>
+                    Desde
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -164,7 +172,7 @@ select.field {
                 </td>
 
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.hasta.label" default="Hasta"/>
+                    Hasta
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -176,7 +184,7 @@ select.field {
 
             <tr class="prop ${hasErrors(bean: responsableEjecucion, field: 'observaciones', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.observaciones.label" default="Observaciones"/>
+                    Observaciones
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -192,7 +200,7 @@ select.field {
     <br/>
 
     <g:form action="saveResponsable" class="frmResponsableProyecto" method="post" name="ingreso">
-        <g:hiddenField name="ingreso.id" value="${responsableIngreso?.id}"/>
+        <g:hiddenField name="ingreso.id" id="id_ingreso" value="${responsableIngreso?.id}"/>
         <g:hiddenField name="ingreso.version" value="${responsableIngreso?.version}"/>
         <g:hiddenField name="ingreso.proyecto.id" value="${proyecto.id}"/>
 
@@ -202,21 +210,22 @@ select.field {
                id="create_ingreso">
             <thead>
                 <tr>
-                    <td width="430" colspan="5" class="ui-widget ui-widget-header ui-corner-left" style="padding: 3px;">
+                    <td width="400" colspan="3" class="ui-widget ui-widget-header ui-corner-left" style="padding: 3px;">
                         Responsable U.E./Ingreso de información
                     </td>
-                    <td class="ui-widget ui-widget-header ui-corner-right">
+                    <td class="ui-widget ui-widget-header ui-corner-right" width="200px" colspan="3">
                         <a href="#" tipo="ingreso" class="btn save">Guardar</a>
                         <a href="#" tipo="ingreso" class="btn cancel">Cancelar</a>
+                        <a href="#" tipo="ingreso" class="btn nuevo" title="Nuevo Responsable">Nuevo</a>
                     </td>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody id="t_ingreso">
 
                 <tr class="prop ${hasErrors(bean: responsableIngreso, field: 'responsable', 'error')}">
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.responsable.label" default="Responsable"/>
+                        Responsable
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -230,7 +239,7 @@ select.field {
 
                 <tr class="prop ${hasErrors(bean: responsableIngreso, field: 'desde', 'error')}">
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.desde.label" default="Desde"/>
+                        Desde
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -245,7 +254,7 @@ select.field {
                     </td>
 
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.hasta.label" default="Hasta"/>
+                        Hasta
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -262,7 +271,7 @@ select.field {
 
                 <tr class="prop ${hasErrors(bean: responsableIngreso, field: 'observaciones', 'error')}">
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.observaciones.label" default="Observaciones"/>
+                        Observaciones
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -295,7 +304,7 @@ select.field {
 
             <tr class="prop ${hasErrors(bean: responsableIngreso, field: 'responsable', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.responsable.label" default="Responsable"/>
+                    Responsable
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -307,7 +316,7 @@ select.field {
 
             <tr class="prop ${hasErrors(bean: responsableIngreso, field: 'desde', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.desde.label" default="Desde"/>
+                    Desde
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -317,7 +326,7 @@ select.field {
                 </td>
 
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.hasta.label" default="Hasta"/>
+                    Hasta
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -329,7 +338,7 @@ select.field {
 
             <tr class="prop ${hasErrors(bean: responsableIngreso, field: 'observaciones', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.observaciones.label" default="Observaciones"/>
+                    Observaciones
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -345,7 +354,7 @@ select.field {
     <br/>
 
     <g:form action="saveResponsable" class="frmResponsableProyecto" method="post" name="seguimiento">
-        <g:hiddenField name="seguimiento.id" value="${responsableSeguimiento?.id}"/>
+        <g:hiddenField name="seguimiento.id" id="id_seguimiento" value="${responsableSeguimiento?.id}"/>
         <g:hiddenField name="seguimiento.version" value="${responsableSeguimiento?.version}"/>
         <g:hiddenField name="seguimiento.proyecto.id" value="${proyecto.id}"/>
 
@@ -356,21 +365,22 @@ select.field {
 
             <thead>
                 <tr>
-                    <td width="430" colspan="5" class="ui-widget ui-widget-header ui-corner-left" style="padding: 3px;">
+                    <td width="400" colspan="3" class="ui-widget ui-widget-header ui-corner-left" style="padding: 3px;">
                         Responsable MIES Seguimiento
                     </td>
-                    <td class="ui-widget ui-widget-header ui-corner-right">
+                    <td class="ui-widget ui-widget-header ui-corner-right" width="200px" colspan="3">
                         <a href="#" tipo="seguimiento" class="btn save">Guardar</a>
                         <a href="#" tipo="seguimiento" class="btn cancel">Cancelar</a>
+                        <a href="#" tipo="seguimiento" class="btn nuevo" title="Nuevo Responsable">Nuevo</a>
                     </td>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody id="t_seguimiento">
 
                 <tr class="prop ${hasErrors(bean: responsableEjecucion, field: 'responsable', 'error')}">
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.responsable.label" default="Responsable"/>
+                        Responsable
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -384,7 +394,7 @@ select.field {
 
                 <tr class="prop ${hasErrors(bean: responsableSeguimiento, field: 'desde', 'error')}">
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.desde.label" default="Desde"/>
+                        Desde
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -402,7 +412,7 @@ select.field {
                     </td>
 
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.hasta.label" default="Hasta"/>
+                        Hasta
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -422,7 +432,7 @@ select.field {
 
                 <tr class="prop ${hasErrors(bean: responsableEjecucion, field: 'observaciones', 'error')}">
                     <td class="label " valign="middle">
-                        <g:message code="responsableProyecto.observaciones.label" default="Observaciones"/>
+                        Observaciones
                     </td>
                     <td class="indicator">
                         &nbsp;
@@ -457,7 +467,7 @@ select.field {
 
             <tr class="prop ${hasErrors(bean: responsableEjecucion, field: 'responsable', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="responsableSeguimiento.responsable.label" default="Responsable"/>
+                   Responsable
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -469,7 +479,7 @@ select.field {
 
             <tr class="prop ${hasErrors(bean: responsableSeguimiento, field: 'desde', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.desde.label" default="Desde"/>
+                    Desde
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -479,7 +489,7 @@ select.field {
                 </td>
 
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.hasta.label" default="Hasta"/>
+                    Hasta
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -491,7 +501,7 @@ select.field {
 
             <tr class="prop ${hasErrors(bean: responsableSeguimiento, field: 'observaciones', 'error')}">
                 <td class="label " valign="middle">
-                    <g:message code="responsableProyecto.observaciones.label" default="Observaciones"/>
+                  Observaciones
                 </td>
                 <td class="indicator">
                     &nbsp;
@@ -533,9 +543,23 @@ select.field {
                     $("#show_" + tipo).show();
 
                     $("#tipo_" + tipo).val("insert");
+                    $("#t_" + tipo).removeClass("colores");
 
                     return false;
                 });
+
+
+        $(".nuevo").button({
+            icons:{
+                primary:"ui-icon-plus"
+            }
+        }).click(function () {
+            var tipo = $(this).attr("tipo");
+            $("#id_" + tipo).val(null);
+            $("#t_" + tipo).addClass("colores");
+            return false;
+        });
+
 
         $(".save").button({
             icons:{
@@ -543,7 +567,7 @@ select.field {
             }
         }).click(function () {
                     var tipo = $(this).attr("tipo");
-
+                    $("#t_" + tipo).removeClass("colores");
                     var form = $("[name=" + tipo + "]");
                     var data = form.serialize();
 
@@ -569,23 +593,25 @@ select.field {
             dateFormat:'dd-mm-yy',
             minDate:new Date("${responsableIngreso?.desde?.format('yyyy')}", "${responsableIngreso?.desde?.format('MM') ? responsableIngreso?.desde?.format('MM').toInteger() - 1 : 0}", "${responsableIngreso?.desde?.format('dd')}").add(1).days(),
             onClose:function (dateText, inst) {
-                var date = $(this).datepicker('getDate');
-                var day, month, year;
-                if (date != null) {
-                    day = date.getDate();
-                    month = parseInt(date.getMonth()) + 1;
-                    year = date.getFullYear();
-                } else {
-                    day = '';
-                    month = '';
-                    year = '';
-                }
-                var id = $(this).attr('id');
-                $('#' + id + '_day').val(day);
-                $('#' + id + '_month').val(month);
-                $('#' + id + '_year').val(year);
+                if($(this).datepicker('getDate')){
+                    var date = $(this).datepicker('getDate');
+                    var day, month, year;
+                    if (date != null) {
+                        day = date.getDate();
+                        month = parseInt(date.getMonth()) + 1;
+                        year = date.getFullYear();
+                    } else {
+                        day = '';
+                        month = '';
+                        year = '';
+                    }
+                    var id = $(this).attr('id');
+                    $('#' + id + '_day').val(day);
+                    $('#' + id + '_month').val(month);
+                    $('#' + id + '_year').val(year);
 
-                $("#hasta").datepicker("option", "minDate", date.add(1).days());
+                    $("#hasta").datepicker("option", "minDate", date.add(1).days());
+                }
             }
         });
 
@@ -595,21 +621,23 @@ select.field {
             dateFormat:'dd-mm-yy',
             minDate:new Date("${responsableIngreso?.desde?.format('yyyy')}", "${responsableIngreso?.desde?.format('MM') ? responsableIngreso?.desde?.format('MM').toInteger() - 1 : 0}", "${responsableIngreso?.desde?.format('dd')}").add(2).days(),
             onClose:function (dateText, inst) {
-                var date = $(this).datepicker('getDate');
-                var day, month, year;
-                if (date != null) {
-                    day = date.getDate();
-                    month = parseInt(date.getMonth()) + 1;
-                    year = date.getFullYear();
-                } else {
-                    day = '';
-                    month = '';
-                    year = '';
+                if($(this).datepicker('getDate')){
+                    var date = $(this).datepicker('getDate');
+                    var day, month, year;
+                    if (date != null) {
+                        day = date.getDate();
+                        month = parseInt(date.getMonth()) + 1;
+                        year = date.getFullYear();
+                    } else {
+                        day = '';
+                        month = '';
+                        year = '';
+                    }
+                    var id = $(this).attr('id');
+                    $('#' + id + '_day').val(day);
+                    $('#' + id + '_month').val(month);
+                    $('#' + id + '_year').val(year);
                 }
-                var id = $(this).attr('id');
-                $('#' + id + '_day').val(day);
-                $('#' + id + '_month').val(month);
-                $('#' + id + '_year').val(year);
             }
         });
 
@@ -619,23 +647,27 @@ select.field {
             dateFormat:'dd-mm-yy',
             minDate:new Date("${responsableEjecucion?.desde?.format('yyyy')}", "${responsableEjecucion?.desde?.format('MM')?responsableEjecucion?.desde?.format('MM').toInteger() - 1:0}", "${responsableEjecucion?.desde?.format('dd')}").add(1).days(),
             onClose:function (dateText, inst) {
-                var date = $(this).datepicker('getDate');
-                var day, month, year;
-                if (date != null) {
-                    day = date.getDate();
-                    month = parseInt(date.getMonth()) + 1;
-                    year = date.getFullYear();
-                } else {
-                    day = '';
-                    month = '';
-                    year = '';
-                }
-                var id = $(this).attr('id');
-                $('#' + id + '_day').val(day);
-                $('#' + id + '_month').val(month);
-                $('#' + id + '_year').val(year);
 
-                $("#hasta2").datepicker("option", "minDate", date.add(1).days());
+                if($(this).datepicker('getDate')){
+                    var date = $(this).datepicker('getDate');
+                    var day, month, year;
+                    if (date != null) {
+                        day = date.getDate();
+                        month = parseInt(date.getMonth()) + 1;
+                        year = date.getFullYear();
+                    } else {
+                        day = '';
+                        month = '';
+                        year = '';
+                    }
+                    var id = $(this).attr('id');
+                    $('#' + id + '_day').val(day);
+                    $('#' + id + '_month').val(month);
+                    $('#' + id + '_year').val(year);
+
+                    $("#hasta2").datepicker("option", "minDate", date.add(1).days());
+                }
+
             }
         });
 
@@ -645,21 +677,23 @@ select.field {
             dateFormat:'dd-mm-yy',
             minDate:new Date("${responsableEjecucion?.desde?.format('yyyy')}", "${responsableEjecucion?.desde?.format('MM')?responsableEjecucion?.desde?.format('MM').toInteger() - 1:0}", "${responsableEjecucion?.desde?.format('dd')}").add(2).days(),
             onClose:function (dateText, inst) {
-                var date = $(this).datepicker('getDate');
-                var day, month, year;
-                if (date != null) {
-                    day = date.getDate();
-                    month = parseInt(date.getMonth()) + 1;
-                    year = date.getFullYear();
-                } else {
-                    day = '';
-                    month = '';
-                    year = '';
+                if($(this).datepicker('getDate')){
+                    var date = $(this).datepicker('getDate');
+                    var day, month, year;
+                    if (date != null) {
+                        day = date.getDate();
+                        month = parseInt(date.getMonth()) + 1;
+                        year = date.getFullYear();
+                    } else {
+                        day = '';
+                        month = '';
+                        year = '';
+                    }
+                    var id = $(this).attr('id');
+                    $('#' + id + '_day').val(day);
+                    $('#' + id + '_month').val(month);
+                    $('#' + id + '_year').val(year);
                 }
-                var id = $(this).attr('id');
-                $('#' + id + '_day').val(day);
-                $('#' + id + '_month').val(month);
-                $('#' + id + '_year').val(year);
             }
         });
 
@@ -669,23 +703,25 @@ select.field {
             dateFormat:'dd-mm-yy',
             minDate:new Date("${responsableSeguimiento?.desde?.format('yyyy')}", "${responsableSeguimiento?.desde?.format('MM')?responsableSeguimiento?.desde?.format('MM').toInteger() - 1:0}", "${responsableSeguimiento?.desde?.format('dd')}").add(1).days(),
             onClose:function (dateText, inst) {
-                var date = $(this).datepicker('getDate');
-                var day, month, year;
-                if (date != null) {
-                    day = date.getDate();
-                    month = parseInt(date.getMonth()) + 1;
-                    year = date.getFullYear();
-                } else {
-                    day = '';
-                    month = '';
-                    year = '';
-                }
-                var id = $(this).attr('id');
-                $('#' + id + '_day').val(day);
-                $('#' + id + '_month').val(month);
-                $('#' + id + '_year').val(year);
+                if($(this).datepicker('getDate')){
+                    var date = $(this).datepicker('getDate');
+                    var day, month, year;
+                    if (date != null) {
+                        day = date.getDate();
+                        month = parseInt(date.getMonth()) + 1;
+                        year = date.getFullYear();
+                    } else {
+                        day = '';
+                        month = '';
+                        year = '';
+                    }
+                    var id = $(this).attr('id');
+                    $('#' + id + '_day').val(day);
+                    $('#' + id + '_month').val(month);
+                    $('#' + id + '_year').val(year);
 
-                $("#hasta2").datepicker("option", "minDate", date.add(1).days());
+                    $("#hasta2").datepicker("option", "minDate", date.add(1).days());
+                }
             }
         });
 
@@ -695,21 +731,23 @@ select.field {
             dateFormat:'dd-mm-yy',
             minDate:new Date("${responsableSeguimiento?.desde?.format('yyyy')}", "${responsableSeguimiento?.desde?.format('MM')?responsableSeguimiento?.desde?.format('MM').toInteger() - 1:0}", "${responsableSeguimiento?.desde?.format('dd')}").add(2).days(),
             onClose:function (dateText, inst) {
-                var date = $(this).datepicker('getDate');
-                var day, month, year;
-                if (date != null) {
-                    day = date.getDate();
-                    month = parseInt(date.getMonth()) + 1;
-                    year = date.getFullYear();
-                } else {
-                    day = '';
-                    month = '';
-                    year = '';
+                if($(this).datepicker('getDate')){
+                    var date = $(this).datepicker('getDate');
+                    var day, month, year;
+                    if (date != null) {
+                        day = date.getDate();
+                        month = parseInt(date.getMonth()) + 1;
+                        year = date.getFullYear();
+                    } else {
+                        day = '';
+                        month = '';
+                        year = '';
+                    }
+                    var id = $(this).attr('id');
+                    $('#' + id + '_day').val(day);
+                    $('#' + id + '_month').val(month);
+                    $('#' + id + '_year').val(year);
                 }
-                var id = $(this).attr('id');
-                $('#' + id + '_day').val(day);
-                $('#' + id + '_month').val(month);
-                $('#' + id + '_year').val(year);
             }
         });
 

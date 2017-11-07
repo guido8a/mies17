@@ -32,12 +32,25 @@ class KerberosService {
      * @return
      */
     public delete(params, dominio, perfil, usuario) {
-        try {
+        println("params " + params + " " +  dominio)
+        def borrar
+        if(params.id){
+            borrar = dominio.get(params.id)
+            try {
+                borrar.delete(flush: true)
+                return true
+            } catch (e) {
+                println "error delete " + e
+                return false
+            }
+        }else{
+            try {
             dominio.delete(flush: true)
-            return true
-        } catch (e) {
-            println "error delete " + e
-            return false
+                return true
+            } catch (e) {
+                println "error delete " + e
+                return false
+            }
         }
     }
 

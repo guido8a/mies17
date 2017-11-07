@@ -545,8 +545,7 @@ class AsignacionController extends mies.seguridad.Shield {
 
 
     def eliminarAsignacion = {
-        println "params elim asignacion"
-        println params
+        println "params elim asignacion" + params
 
         if (params.id) {
             def band = true
@@ -574,9 +573,9 @@ class AsignacionController extends mies.seguridad.Shield {
                     p.id = obra.id
                     p.controllerName = "Asignacion"
                     p.actionName = "eliminarAsignacion"
-//                    if (!kerberosService.delete(p, Obra, session.perfil, session.usuario)) {
-//                        band = false
-//                    }
+                    if (!kerberosService.delete(p, Obra, session.perfil, session.usuario)) {
+                        band = false
+                    }
                 }
 
                 prgAsg.each { asg ->
@@ -585,9 +584,9 @@ class AsignacionController extends mies.seguridad.Shield {
                     p.id = asg.id
                     p.controllerName = "Asignacion"
                     p.actionName = "eliminarAsignacion"
-//                    if (!kerberosService.delete(p, ProgramacionAsignacion, session.perfil, session.usuario)) {
-//                        band = false
-//                    }
+                    if (!kerberosService.delete(p, ProgramacionAsignacion, session.perfil, session.usuario)) {
+                        band = false
+                    }
                 }
 
                 hijos.each { asg ->
@@ -603,9 +602,9 @@ class AsignacionController extends mies.seguridad.Shield {
                             pr.id = obra.id
                             pr.controllerName = "Asignacion"
                             pr.actionName = "eliminarAsignacion"
-//                            if (!kerberosService.delete(pr, Obra, session.perfil, session.usuario)) {
-//                                band = false
-//                            }
+                            if (!kerberosService.delete(pr, Obra, session.perfil, session.usuario)) {
+                                band = false
+                            }
                         }
 
                         ProgramacionAsignacion.findAllByAsignacion(hh).each { pasg ->
@@ -614,18 +613,18 @@ class AsignacionController extends mies.seguridad.Shield {
                             pr.id = pasg.id
                             pr.controllerName = "Asignacion"
                             pr.actionName = "eliminarAsignacion"
-//                            if (!kerberosService.delete(pr, ProgramacionAsignacion, session.perfil, session.usuario)) {
-//                                band = false
-//                            }
+                            if (!kerberosService.delete(pr, ProgramacionAsignacion, session.perfil, session.usuario)) {
+                                band = false
+                            }
                         }
 
 
                         hh.padre.planificado+=hh.planificado
                         valor+=hh.planificado
-//                        kerberosService.saveObject(hh.padre,Asignacion,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-//                        if (!kerberosService.delete(p, Asignacion, session.perfil, session.usuario)) {
-//                            band = false
-//                        }
+                        kerberosService.saveObject(hh.padre,Asignacion,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                        if (!kerberosService.delete(p, Asignacion, session.perfil, session.usuario)) {
+                            band = false
+                        }
                     }
                     def p = [:]
                     p.id = asg.id
@@ -638,9 +637,9 @@ class AsignacionController extends mies.seguridad.Shield {
                         pr.id = obra.id
                         pr.controllerName = "Asignacion"
                         pr.actionName = "eliminarAsignacion"
-//                        if (!kerberosService.delete(pr, Obra, session.perfil, session.usuario)) {
-//                            band = false
-//                        }
+                        if (!kerberosService.delete(pr, Obra, session.perfil, session.usuario)) {
+                            band = false
+                        }
                     }
 
                     ProgramacionAsignacion.findAllByAsignacion(asg).each { pasg ->
@@ -665,11 +664,11 @@ class AsignacionController extends mies.seguridad.Shield {
                 if (asig.padre){
                     asig.padre.planificado+=asig.planificado
 
-//                    kerberosService.saveObject(asig.padre,Asignacion,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                    kerberosService.saveObject(asig.padre,Asignacion,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
                 }
-//                if (!kerberosService.delete(params, Asignacion, session.perfil, session.usuario)) {
-//                    band = false
-//                }
+                if (!kerberosService.delete(params, Asignacion, session.perfil, session.usuario)) {
+                    band = false
+                }
 
                 if (band) {
                     println "1"
@@ -680,7 +679,7 @@ class AsignacionController extends mies.seguridad.Shield {
                         origen.unidad=unidad
                         origen.maxCorrientes=0
                         origen.maxInversion=total
-//                        kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                        kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
                     }
                     if (total>=origen.maxInversion){
                         println "total mas que origen"
@@ -698,20 +697,20 @@ class AsignacionController extends mies.seguridad.Shield {
                                     mod.usuario=session.usuario
                                     mod.fecha=new Date()
                                     mod.tipo=3
-//                                    kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                                    kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
                                     origen.maxInversion-=valor
                                     destino.maxInversion+=valor
-//                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
-//                                    kerberosService.saveObject(destino,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                                    kerberosService.saveObject(destino,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
                                 }else{
                                     def val = 0
                                     Asignacion.findAll("from Asignacion where unidad=${unidad.id} and anio=${anio.id} and marcoLogico is not null").each{ am->
                                         val+=am.getValorReal()
                                     }
                                     origen.maxInversion=val
-//                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
+                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
                                     destino.maxInversion+=valor
-//                                    kerberosService.saveObject(destino,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                                    kerberosService.saveObject(destino,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
                                 }
                             }else{
                                 println "con padre -- igual"
@@ -725,9 +724,9 @@ class AsignacionController extends mies.seguridad.Shield {
                                     mod.usuario=session.usuario
                                     mod.fecha=new Date()
                                     mod.tipo=3
-//                                    kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                                    kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
                                     origen.maxInversion-=valor
-//                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
                                 }else{
                                     println "con padre -- max inv nada "
                                     def val = 0
@@ -735,7 +734,7 @@ class AsignacionController extends mies.seguridad.Shield {
                                         val+=am.getValorReal()
                                     }
                                     origen.maxInversion=val
-//                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
+                                    kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
                                 }
                             }
 
@@ -751,9 +750,9 @@ class AsignacionController extends mies.seguridad.Shield {
                                 mod.usuario=session.usuario
                                 mod.fecha=new Date()
                                 mod.tipo=3
-//                                kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                                kerberosService.saveObject(mod,ModificacionTechos,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
                                 origen.maxInversion-=valor
-//                                kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
+                                kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion","asignacion",session)
                             }else{
                                 println "sin padre error"
                                 def val = 0
@@ -761,7 +760,7 @@ class AsignacionController extends mies.seguridad.Shield {
                                     val+=am.getValorReal()
                                 }
                                 origen.maxInversion=val
-//                                kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
+                                kerberosService.saveObject(origen,PresupuestoUnidad,session.perfil,session.usuario,"eliminarAsignacion-calculado","asignacion",session)
                             }
                         }
                     } else{

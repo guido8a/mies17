@@ -386,8 +386,10 @@ class MarcoLogicoController extends mies.seguridad.Shield {
                 supuesto.descripcion = params.datos
             } else {
                 def marco = MarcoLogico.get(params.ml)
-                supuesto = new Supuesto([descripcion: params.datos, MarcoLogico: marco])
-
+                supuesto = new Supuesto([descripcion: params.datos])
+                supuesto.modificacion = null
+                supuesto.estado = 0
+                supuesto.marcoLogico = marco
             }
 
             supuesto = kerberosService.saveObject(supuesto, Supuesto, session.perfil, session.usuario, "guadarDatosComponentes", "marcoLogico", session)

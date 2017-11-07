@@ -1333,224 +1333,131 @@ response.outputStream << file.newInputStream()
     } //responsable
 
     def saveResponsable = {
-        println "SAVE RESPONSABLE " + params
-//        params.each {
-//            println it
-//        }
-        def err = false
+//        println "SAVE RESPONSABLE " + params
+
+        //ingreso
         if (params.ingreso) {
             def proyecto = Proyecto.get(params.ingreso.proyecto.id)
 
-            def desde = params.ingreso.desde
-            def hasta = params.ingreso.hasta
+            if(params.ingreso.desde && params.ingreso.hasta){
+                def desde = params.ingreso.desde
+                def hasta = params.ingreso.hasta
+                def d = new Date().parse("dd-MM-yyyy", desde)
+                def h = new Date().parse("dd-MM-yyyy", hasta)
+                def responsable
 
-            def c = ResponsableProyecto.createCriteria()
-            def results = c.list {
-                eq("proyecto", proyecto)
-                tipo {
-                    eq("codigo", "I")
-                }
-                and {
-                    ge("desde", Date.parse("dd-MM-yyyy", desde))
-                    le("hasta", Date.parse("dd-MM-yyyy", hasta))
-                }
-            }
-
-            if (results.size() > 0) {
-                println results
-                render("!!")
-            } else {
-//                if (params.ingreso.tipo == "update") {
-//                    def ant = ResponsableProyecto.get(params.ingreso.id)
-//                    ant.hasta = Date.parse("dd-MM-yyyy", desde)
-//                    ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableIngreso", "proyecto", session)
-//                    err = ant.errors.getErrorCount() != 0
-//                }
-//                params.ingreso.id = null
-//                params.ingreso.tipo = TipoResponsable.findByCodigo("I")
-//                def obj = kerberosService.save(params.ingreso, ResponsableProyecto, session.perfil, session.usuario)
-//                if (obj.errors.getErrorCount() != 0 || err) {
-//                    render("NO")
-//                } else {
-//                    render("OK")
-//                }
-
-                if (params.ingreso.tipo == "update") {
-                    def ant = ResponsableProyecto.get(params.ingreso.id)
-                    ant.hasta = Date.parse("dd-MM-yyyy", desde)
-                    ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableIngreso", "proyecto", session)
-                    err = ant.errors.getErrorCount() != 0
+                if (params.ingreso.id) {
+                    responsable = ResponsableProyecto.get(params.ingreso.id)
+//                    responsable.hasta = Date.parse("dd-MM-yyyy", desde)
                 }else{
-                    def responsable = new ResponsableProyecto()
-                    def unidad = UnidadEjecutora.get(params."unidad.id")
-                    def tipo = TipoResponsable.findByCodigo("I")
-                    def usuario = Usro.get(session.usuario.id)
-                    def d = new Date().parse("dd-MM-yyyy", desde)
-                    def h = new Date().parse("dd-MM-yyyy", hasta)
+                    responsable = new ResponsableProyecto()
+//                    responsable.hasta  = h
+                }
 
-                    responsable.unidad = unidad
-                    responsable.proyecto = proyecto
-                    responsable.responsable = usuario
-                    responsable.tipo = tipo
-                    responsable.desde  = d
-                    responsable.hasta  = h
-                    responsable.observaciones = params.ingreso.observaciones
+                def unidad = UnidadEjecutora.get(params."unidad.id")
+                def tipo = TipoResponsable.findByCodigo("I")
+                def usuario = Usro.get(session.usuario.id)
 
-                    try{
-                        responsable.save(flush: true)
-                        println("res "  + responsable?.id)
-                        render "OK"
-                    }catch (e){
-                        println("error al guardar el responsable ingreso" + e)
-                        render "NO"
-                    }
+                responsable.unidad = unidad
+                responsable.proyecto = proyecto
+                responsable.responsable = usuario
+                responsable.tipo = tipo
+                responsable.desde  = d
+                responsable.hasta  = h
+                responsable.observaciones = params.ingreso.observaciones
+
+                try{
+                    responsable.save(flush: true)
+                    render "OK"
+                }catch (e){
+                    println("error al guardar el responsable ingreso" + e)
+                    render "NO"
                 }
             }
         }
+
+        //ejecucion
         if (params.ejecucion) {
             def proyecto = Proyecto.get(params.ejecucion.proyecto.id)
 
-            def desde = params.ejecucion.desde
-            def hasta = params.ejecucion.hasta
+            if(params.ejecucion.desde && params.ejecucion.hasta){
+                def desde = params.ejecucion.desde
+                def hasta = params.ejecucion.hasta
+                def d = new Date().parse("dd-MM-yyyy", desde)
+                def h = new Date().parse("dd-MM-yyyy", hasta)
+                def responsable
 
-
-            def c = ResponsableProyecto.createCriteria()
-            def results = c.list {
-                eq("proyecto", proyecto)
-                tipo {
-                    eq("codigo", "E")
-                }
-                and {
-                    ge("desde", Date.parse("dd-MM-yyyy", desde))
-                    le("hasta", Date.parse("dd-MM-yyyy", hasta))
-                }
-            }
-
-            if (results.size() > 0) {
-                println results
-                render("!!")
-            } else {
-//                if (params.ejecucion.tipo == "update") {
-//                    def ant = ResponsableProyecto.get(params.ejecucion.id)
-//                    ant.hasta = Date.parse("dd-MM-yyyy", desde)
-//                    ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableEjecucion", "proyecto", session)
-//                    err = ant.errors.getErrorCount() != 0
-//                }
-//                params.ejecucion.id = null
-//                params.ejecucion.tipo = TipoResponsable.findByCodigo("E")
-//                def obj = kerberosService.save(params.ejecucion, ResponsableProyecto, session.perfil, session.usuario)
-//                if (obj.errors.getErrorCount() != 0 || err) {
-//                    render("NO")
-//                } else {
-//                    render("OK")
-//                }
-
-
-                if (params.ejecucion.tipo == "update") {
-                    def ant = ResponsableProyecto.get(params.ejecucion.id)
-                    ant.hasta = Date.parse("dd-MM-yyyy", desde)
-                    ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableEjecucion", "proyecto", session)
-                    err = ant.errors.getErrorCount() != 0
+                if(params.ejecucion.id){
+                    responsable = ResponsableProyecto.get(params.ejecucion.id)
+//                    responsable.hasta = Date.parse("dd-MM-yyyy", desde)
                 }else{
+                    responsable = new ResponsableProyecto()
+//                    responsable.hasta  = h
+                }
 
-                    def responsable = new ResponsableProyecto()
-                    def unidad = UnidadEjecutora.get(params."unidad.id")
-                    def tipo = TipoResponsable.findByCodigo("E")
-                    def usuario = Usro.get(session.usuario.id)
-                    def d = new Date().parse("dd-MM-yyyy", desde)
-                    def h = new Date().parse("dd-MM-yyyy", hasta)
+                def unidad = UnidadEjecutora.get(params."unidad.id")
+                def tipo = TipoResponsable.findByCodigo("E")
+                def usuario = Usro.get(session.usuario.id)
 
-                    responsable.unidad = unidad
-                    responsable.proyecto = proyecto
-                    responsable.responsable = usuario
-                    responsable.tipo = tipo
-                    responsable.desde  = d
-                    responsable.hasta  = h
-                    responsable.observaciones = params.ejecucion.observaciones
+                responsable.unidad = unidad
+                responsable.proyecto = proyecto
+                responsable.responsable = usuario
+                responsable.tipo = tipo
+                responsable.desde  = d
+                responsable.hasta  = h
+                responsable.observaciones = params.ejecucion.observaciones
 
-                    try{
-                        responsable.save(flush: true)
-                        println("res "  + responsable?.id)
-                        render "OK"
-                    }catch (e){
-                        println("error al guardar el responsable ejecucion" + e)
-                        render "NO"
-                    }
+                try{
+                    responsable.save(flush: true)
+                    render "OK"
+                }catch (e){
+                    println("error al guardar el responsable ejecucion" + e)
+                    render "NO"
                 }
             }
         }
+
+        //seguimiento
         if (params.seguimiento) {
             def proyecto = Proyecto.get(params.seguimiento.proyecto.id)
 
-            def desde = params.seguimiento.desde
-            def hasta = params.seguimiento.hasta
+            if(params.seguimiento.desde && params.seguimiento.hasta){
+                def desde = params.seguimiento.desde
+                def hasta = params.seguimiento.hasta
+                def d = new Date().parse("dd-MM-yyyy", desde)
+                def h = new Date().parse("dd-MM-yyyy", hasta)
+                def responsable
 
-            def c = ResponsableProyecto.createCriteria()
-            def results = c.list {
-                eq("proyecto", proyecto)
-                tipo {
-                    eq("codigo", "S")
-                }
-                and {
-                    ge("desde", Date.parse("dd-MM-yyyy", desde))
-                    le("hasta", Date.parse("dd-MM-yyyy", hasta))
-                }
-            }
-
-            if (results.size() > 0) {
-                println results
-                render("!!")
-            } else {
-//                if (params.seguimiento.tipo == "update") {
-//                    def ant = ResponsableProyecto.get(params.seguimiento.id)
-//                    ant.hasta = Date.parse("dd-MM-yyyy", desde)
-//                    ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableSeguimiento", "proyecto", session)
-//                    err = ant.errors.getErrorCount() != 0
-//                }
-//                params.seguimiento.id = null
-//                params.seguimiento.tipo = TipoResponsable.findByCodigo("S")
-//                def obj = kerberosService.save(params.seguimiento, ResponsableProyecto, session.perfil, session.usuario)
-//                if (obj.errors.getErrorCount() != 0 || err) {
-//                    render("NO")
-//                } else {
-//                    render("OK")
-//                }
-
-
-                if (params.seguimiento.tipo == "update") {
-                    def ant = ResponsableProyecto.get(params.seguimiento.id)
-                    ant.hasta = Date.parse("dd-MM-yyyy", desde)
-                    ant = kerberosService.saveObject(ant, ResponsableProyecto, session.perfil, session.usuario, "saveResponsableSeguimiento", "proyecto", session)
-                    err = ant.errors.getErrorCount() != 0
+                if (params.seguimiento.id) {
+                    responsable = ResponsableProyecto.get(params.seguimiento.id)
+//                    responsable.hasta = Date.parse("dd-MM-yyyy", desde)
                 }else{
-                    def responsable = new ResponsableProyecto()
-                    def unidad = UnidadEjecutora.get(params."unidad.id")
-                    def tipo = TipoResponsable.findByCodigo("S")
-                    def usuario = Usro.get(session.usuario.id)
-                    def d = new Date().parse("dd-MM-yyyy", desde)
-                    def h = new Date().parse("dd-MM-yyyy", hasta)
+                    responsable = new ResponsableProyecto()
 
-                    responsable.unidad = unidad
-                    responsable.proyecto = proyecto
-                    responsable.responsable = usuario
-                    responsable.tipo = tipo
-                    responsable.desde  = d
-                    responsable.hasta  = h
-                    responsable.observaciones = params.seguimiento.observaciones
+                }
+                def unidad = UnidadEjecutora.get(params."unidad.id")
+                def tipo = TipoResponsable.findByCodigo("S")
+                def usuario = Usro.get(session.usuario.id)
 
-                    try{
-                        responsable.save(flush: true)
-                        println("res "  + responsable?.id)
-                        render "OK"
-                    }catch (e){
-                        println("error al guardar el responsable seguimiento" + e)
-                        render "NO"
-                    }
+                responsable.unidad = unidad
+                responsable.proyecto = proyecto
+                responsable.responsable = usuario
+                responsable.tipo = tipo
+                responsable.desde  = d
+                responsable.hasta  = h
+                responsable.observaciones = params.seguimiento.observaciones
+
+                try{
+                    responsable.save(flush: true)
+                    render "OK"
+                }catch (e){
+                    println("error al guardar el responsable seguimiento" + e)
+                    render "NO"
                 }
             }
         }
-
     }
+
 
     def historialResponsables = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
