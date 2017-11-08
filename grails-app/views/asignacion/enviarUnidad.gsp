@@ -5,7 +5,7 @@
     <th></th>
     </thead>
     <tbody>
-    <g:set var="tot" value="${0}"></g:set>
+    <g:set var="tot" value="${0}"/>
     <g:each in="${dist}" var="d">
         <tr>
             <td>${d.unidadEjecutora}</td>
@@ -13,7 +13,7 @@
             <td>
                 <a href="#" class="borrar" iden="${d.id}">Borrar</a>
             </td>
-            <g:set var="tot" value="${tot+d.valor}"></g:set>
+            <g:set var="tot" value="${tot+d.valor}"/>
         </tr>
     </g:each>
     </tbody>
@@ -22,7 +22,7 @@
 <input type="hidden" id="dist" value="${tot.toFloat().round(2)}">
 <script type="text/javascript">
     $(".borrar").button({icons:{ primary:"ui-icon-trash"},text:false}).click(function(){
-        if (confirm("Esta seguro de elminar este registro?")) {
+        if (confirm("Esta seguro de eliminar este registro?")) {
             $.ajax({
                 type:"POST", url:"${createLink(action:'eliminarDistribucion', controller: 'asignacion')}",
                 data:"id=" + $(this).attr("iden"),
@@ -32,9 +32,6 @@
 
                 }
             });
-
         }
     });
-
-
 </script>

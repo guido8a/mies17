@@ -307,18 +307,18 @@
                                  value="${usuario?.login}"/>
                 </td>
 
-                <td class="label" valign="middle">
+                <td class="label mandatory" valign="middle">
                     Contrase&ntilde;a
                 </td>
 
-                <td class="indicator">
-                    <span class="indicator"></span>
+                <td class="indicator madatory">
+                    <span class="indicator">*</span>
                 </td>
 
-                <td class="" valign="middle">
+                <td class="mandatory" valign="middle">
                     <g:passwordField name="usuario.usroPassword" id="usroPassword"
                                      title="${Usro.constraints.usroPassword.attributes.mensaje}"
-                                     class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="64"
+                                     class="field required ui-widget-content ui-corner-all" minLenght="1" maxLenght="64"
                                      value="${(usuario.usroPassword && usuario.usroPassword?.trim() != '') ? '****' : ''}"/>
                 </td>
 
@@ -362,18 +362,18 @@
 
             <tr class="prop ${hasErrors(bean: usuario, field: 'fechaPass', 'error')} ${hasErrors(bean: usuario, field: 'observaciones', 'error')}">
 
-                <td class="label" valign="middle">
+                <td class="label madantory" valign="middle">
                     <g:message code="usro.autorizacion.label" default="Autorización"/>
                 </td>
 
-                <td class="indicator">
-                    <span class="indicator"></span>
+                <td class="indicator mandatory">
+                    <span class="indicator">*</span>
                 </td>
 
-                <td class="" valign="middle">
+                <td class="mandatory" valign="middle">
                     <g:passwordField name="usuario.autorizacion" id="autorizacion"
                                      title="${Usro.constraints.autorizacion.attributes.mensaje}"
-                                     class="field ui-widget-content ui-corner-all" minLenght="1"
+                                     class="field required ui-widget-content ui-corner-all" minLenght="1"
                                      maxLenght="255"
                                      value="${(usuario.autorizacion && usuario.autorizacion?.trim() != '') ? '****' : ''}"/>
                 </td>

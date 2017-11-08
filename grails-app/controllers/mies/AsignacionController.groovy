@@ -204,6 +204,7 @@ class AsignacionController extends mies.seguridad.Shield {
     }
 
     def enviarUnidad = {
+        println("params " + params)
         def asgn = Asignacion.get(params.id)
         if(params.unidad){
 
@@ -217,7 +218,7 @@ class AsignacionController extends mies.seguridad.Shield {
             dist.valor=dist.valor+monto
             dist.unidadEjecutora=unidad
             dist.asignacion=asgn
-//            dist = kerberosService.saveObject(dist,DistribucionAsignacion,session.perfil,session.usuario,"enviarUnidad","asginacion",session)
+            dist = kerberosService.saveObject(dist,DistribucionAsignacion,session.perfil,session.usuario,"enviarUnidad","asginacion",session)
             if (asgn.reubicada!="S"){
                 asgn.reubicada="S"
                 asgn.save(flush: true)
@@ -234,7 +235,7 @@ class AsignacionController extends mies.seguridad.Shield {
 
     def eliminarDistribucion = {
         def asgn = DistribucionAsignacion.get(params.id).asignacion
-//        def dist = kerberosService.delete(params,DistribucionAsignacion,session.perfil,session.usuario)
+        def dist = kerberosService.delete(params,DistribucionAsignacion,session.perfil,session.usuario)
         if (!DistribucionAsignacion.findAllByAsignacion(asgn)){
             asgn.reubicada="N"
             asgn.save(flush: true)
@@ -270,7 +271,7 @@ class AsignacionController extends mies.seguridad.Shield {
         def asg = Asignacion.get(params.idAsg)
         def prog = ProgramaPresupuestario.get(params.progs)
         asg.programa = prog
-//        asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, actionName, controllerName, session)
+        asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, actionName, controllerName, session)
         if (asg.errors.getErrorCount() == 0) {
             flash.message = "Asignación cambiada al programa <b>" + prog.codigo+": "+prog.descripcion + "</b>"
             flash.clase = "ui-state-highlight ui-corner-all"
@@ -285,7 +286,7 @@ class AsignacionController extends mies.seguridad.Shield {
         def asg = Asignacion.get(params.idAsg)
         def prog = ProgramaPresupuestario.get(params.progs)
         asg.programa = prog
-//        asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, actionName, controllerName, session)
+        asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, actionName, controllerName, session)
         if (asg.errors.getErrorCount() == 0) {
             flash.message = "Asignación cambiada al programa <b>" + prog.codigo+": "+prog.descripcion + "</b>"
             flash.clase = "ui-state-highlight ui-corner-all"
@@ -535,7 +536,7 @@ class AsignacionController extends mies.seguridad.Shield {
 
     def save = {
         println "save " + params
-//        def asg = kerberosService.save(params, Asignacion, session.perfil, session.usuario)
+        def asg = kerberosService.save(params, Asignacion, session.perfil, session.usuario)
         if (asg.errors.getErrorCount() != 0) {
             render(view: "form", model: [asignacionInstance: asg])
         } else {
@@ -836,7 +837,7 @@ class AsignacionController extends mies.seguridad.Shield {
                 } else {
                     programacion.valor = valor + residuo
                 }
-//                programacion = kerberosService.saveObject(programacion, ProgramacionAsignacion, session.perfil, session.usuario, "guardarAsignacion", "asignacion", session)
+                programacion = kerberosService.saveObject(programacion, ProgramacionAsignacion, session.perfil, session.usuario, "guardarAsignacion", "asignacion", session)
             }
             return asg.id
         } else {
@@ -1376,7 +1377,6 @@ class AsignacionController extends mies.seguridad.Shield {
                 actual = Anio.findByAnio(new Date().format("yyyy"))
 
             def unidad = UnidadEjecutora.get(params.id)
-
             def corrientes = Asignacion.findAll("from Asignacion  where anio=${actual.id} and unidad=${unidad.id} and marcoLogico is null");
             [actual:actual,unidad: unidad,corrientes: corrientes,fuentes:Fuente.list([sort: "descripcion"])]
         }else{
@@ -1495,7 +1495,6 @@ class AsignacionController extends mies.seguridad.Shield {
         }
         if(Certificacion.findAllByAsignacion(asgn).size()>0)
             return false
-
 
         return true
     }

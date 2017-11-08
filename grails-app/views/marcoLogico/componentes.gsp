@@ -1,4 +1,4 @@
-<%@ page import="mies.Supuesto; mies.Indicador" %>
+<%@ page import="mies.MarcoLogico; mies.Supuesto; mies.Indicador" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -227,11 +227,13 @@
                                             </div>
                                         </div>
 
-                                        <div class="filaMedio der">
-                                            <div class=" texto agregado ui-corner-all md fin varios edicion" pref="mc_"
-                                                 id="mc_00${k}" ml="${comp.id}" div="mc_00${k}" indicador="0" tipo="3"
-                                                 identificador="0">Agregar</div>
-                                        </div>
+                                        %{--<g:if test="${!mies.MedioVerificacion.findAllByIndicadorInList(Indicador.findAllByMarcoLogico(mies.MarcoLogico.get(comp?.id)))}">--}%
+                                            <div class="filaMedio der">
+                                                <div class=" texto agregado ui-corner-all md fin varios edicion" pref="mc_"
+                                                     id="mc_00${k}" ml="${comp.id}" div="mc_00${k}" indicador="0" tipo="3"
+                                                     identificador="0">Agregar</div>
+                                            </div>
+                                        %{--</g:if>--}%
                                     </div>
 
                                 </div>%{--Fin de indicadores--}%
@@ -429,7 +431,7 @@
                                 reajustar()
                                 $("#dlg_combo").dialog("close")
                             } else {
-                                alert("algo salio mal")
+                                alert("Error")
                             }
                         }
                     });
@@ -451,6 +453,7 @@
             });
 
             $(".varios").click(function() {
+                console.log(" ---- " +   $(this).attr("indicador"))
                 if ($("#edicion").val() == "1") {
                     $("#txt_varios").val("")
                     $("#c_ml").val($(this).attr("ml"))
@@ -516,13 +519,12 @@
                                     if (msg != "no") {
                                         window.location.reload(true)
                                     } else {
-                                        alert("algo salio mal")
+                                        alert("Error")
                                     }
                                 }
                             });
 
                         }
-
                     }
                 }
             });

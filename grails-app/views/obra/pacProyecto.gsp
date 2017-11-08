@@ -10,7 +10,7 @@
           type="text/css"/>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}"
           type="text/css"/>
-    <title>P.A.C. del proyecto: ${proyecto.nombre}</title>
+    <title>P.A.C. del proyecto: '${proyecto.nombre}'</title>
 </head>
 
 <body style="font-size: 10px;">
@@ -42,238 +42,238 @@
 
 <div id="accordion" style="width:1030px">
 
-<g:each in="${acts}" var="act" status="k">
-<g:set var="asgs" value="${Asignacion.findAllByMarcoLogicoAndAnio(act,actual)}"></g:set>
+    <g:each in="${acts}" var="act" status="k">
+        <g:set var="asgs" value="${Asignacion.findAllByMarcoLogicoAndAnio(act,actual)}"/>
 
-<g:if test="${asgs.size()>0}">
+        <g:if test="${asgs.size()>0}">
 
-<fieldset class="ui-corner-all" style="position: relative;" id="act_${act.id}">
-<legend>Actividad ${k + 1}: ${(act?.objeto.length() > 40) ? act?.objeto.substring(0, 40) + "..." : act.objeto}</legend>
-<table style="/*width: 900px;*/ margin-top: 40px;">
-<thead>
-<th width="70">Fuente</th>
-<th width="75">Presupuesto</th>
-<th width="155">Descripci&oacute;n</th>
-<th width="100">Unidad</th>
-<th width="85">Codigo CPC</th>
-<th width="107">Tipo</th>
-<th width="48">Cant.</th>
-<th width="78">Costo</th>
-<th width="22">C1</th>
-<th width="22">C2</th>
-<th width="22">C3</th>
-<th width="16">Desc</th>
-<th width="16"></th>
-<th width="16"></th>
-<th width="16"></th>
-</thead>
-<tbody>
-<g:each in="${asgs}" var="asg" status="i">
-    <g:set var="obras" value="${mies.Obra.findAllByAsignacionAndObraIsNull(asg, [sort:'id'])}"/>
-    <g:if test="${obras.size() > 0}">
-        <g:set var="asigs" value="${0}"/>
-        <g:each in="${obras}" var="obra" status="j">
-            <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                <td class="fuente" style="font-size: 11px;">
-                    <g:if test="${asigs == 0}">
-                        ${(asg.fuente.toString().size() > 40) ? asg.fuente.toString().substring(0, 40) : asg.fuente}
-                    </g:if>
-                </td>
+            <fieldset class="ui-corner-all" style="position: relative;" id="act_${act.id}">
+                <legend>Actividad ${k + 1}: ${(act?.objeto.length() > 40) ? act?.objeto.substring(0, 40) + "..." : act.objeto}</legend>
+                <table style="/*width: 900px;*/ margin-top: 40px;">
+                    <thead>
+                    <th width="70">Fuente</th>
+                    <th width="75">Presupuesto</th>
+                    <th width="155">Descripci&oacute;n</th>
+                    <th width="100">Unidad</th>
+                    <th width="85">Codigo CPC</th>
+                    <th width="107">Tipo</th>
+                    <th width="48">Cant.</th>
+                    <th width="78">Costo</th>
+                    <th width="22">C1</th>
+                    <th width="22">C2</th>
+                    <th width="22">C3</th>
+                    <th width="16">Desc</th>
+                    <th width="16"></th>
+                    <th width="16"></th>
+                    <th width="16"></th>
+                    </thead>
+                    <tbody>
+                    <g:each in="${asgs}" var="asg" status="i">
+                        <g:set var="obras" value="${mies.Obra.findAllByAsignacionAndObraIsNull(asg, [sort:'id'])}"/>
+                        <g:if test="${obras.size() > 0}">
+                            <g:set var="asigs" value="${0}"/>
+                            <g:each in="${obras}" var="obra" status="j">
+                                <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                                    <td class="fuente" style="font-size: 11px;">
+                                        <g:if test="${asigs == 0}">
+                                            ${(asg.fuente.toString().size() > 40) ? asg.fuente.toString().substring(0, 40) : asg.fuente}
+                                        </g:if>
+                                    </td>
 
-                <td class="asg" style="font-size: 11px;">
-                    <g:if test="${asigs == 0}">
-                        <input type="hidden" class="asg" value="${asg.id}">
-                        <g:formatNumber number="${asg.planificado}" format="###,##0"
-                                        minFractionDigits="2" maxFractionDigits="2"/>
-                    </g:if>
-                </td>
+                                    <td class="asg" style="font-size: 11px;">
+                                        <g:if test="${asigs == 0}">
+                                            <input type="hidden" class="asg" value="${asg.id}">
+                                            <g:formatNumber number="${asg.planificado}" format="###,##0"
+                                                            minFractionDigits="2" maxFractionDigits="2"/>
+                                        </g:if>
+                                    </td>
 
-                <td>
-                    ${asg.presupuesto.descripcion} (${asg.presupuesto.numero})
-                </td>
-                <g:set var="asigs" value="${asigs+1}"/>
+                                    <td>
+                                        ${asg.presupuesto.descripcion} (${asg.presupuesto.numero})
+                                    </td>
+                                    <g:set var="asigs" value="${asigs+1}"/>
 
-                <td class="unidad">
-                    <g:select from="${unidades}" name="unidad"
-                              value="${obra.unidad}" optionKey="id"
-                              optionValue="descripcion"
-                              style="font-size: 9px;"/>
-                </td>
+                                    <td class="unidad">
+                                        <g:select from="${unidades}" name="unidad"
+                                                  value="${obra.unidad}" optionKey="id"
+                                                  optionValue="descripcion"
+                                                  style="font-size: 9px;"/>
+                                    </td>
 
-                <td class="cp">
-                    <input type="hidden" class="cpac"
-                           value="${obra.codigoComprasPublicas.id}">
+                                    <td class="cp">
+                                        <input type="hidden" class="cpac"
+                                               value="${obra.codigoComprasPublicas.id}">
 
-                    <input type="text" id="cpac_${k}${i}${j}" style="width: 100px;color:black"
-                           value="${obra.codigoComprasPublicas.numero}" ${(actual.estado != 0) ? "disabled" : 'class="buscar"'}>
-                </td>
+                                        <input type="text" id="cpac_${k}${i}${j}" style="width: 100px;color:black"
+                                               value="${obra.codigoComprasPublicas.numero}" ${(actual.estado != 0) ? "disabled" : 'class="buscar"'}>
+                                    </td>
 
-                <td class="tipo"><g:select from="${tipoCompra}" name="tipoCompra"
-                                           optionKey="id" optionValue="descripcion"
-                                           value="${obra.tipoCompra.id}"
-                                           style="font-size: 9px;"/></td>
+                                    <td class="tipo"><g:select from="${tipoCompra}" name="tipoCompra"
+                                                               optionKey="id" optionValue="descripcion"
+                                                               value="${obra.tipoCompra.id}"
+                                                               style="font-size: 9px;"/></td>
 
-                <td class="cantidad">
-                    <input type="text" style="width: 50px;color:black; text-align: right;"
-                           class="cantidad can_${asg.id}" asg="${asg.id}" max="${asg.planificado}"
-                           value="${g.formatNumber(number: obra.cantidad, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2)}" ${(actual.estado != 0) ? "disabled" : ""}>
-                </td>
+                                    <td class="cantidad">
+                                        <input type="text" style="width: 50px;color:black; text-align: right;"
+                                               class="cantidad can_${asg.id}" asg="${asg.id}" max="${asg.planificado}"
+                                               value="${g.formatNumber(number: obra.cantidad, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2)}" ${(actual.estado != 0) ? "disabled" : ""}>
+                                    </td>
 
-                <td class="costo">
-                    <input type="text" style="width: 60px;color:black; text-align: right;"
-                           class="costo costo_${asg.id}" asg="${asg.id}" max="${asg.planificado}"
-                           value="${g.formatNumber(number: obra.costo, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2)}" ${(actual.estado != 0) ? "disabled" : ""}>
-                </td>
+                                    <td class="costo">
+                                        <input type="text" style="width: 60px;color:black; text-align: right;"
+                                               class="costo costo_${asg.id}" asg="${asg.id}" max="${asg.planificado}"
+                                               value="${g.formatNumber(number: obra.costo, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2)}" ${(actual.estado != 0) ? "disabled" : ""}>
+                                    </td>
 
-                <td class="ctr1">
-                    <input type="checkbox"
-                           class="chk ctr1" ${(obra.cuatrimestre1 == "1") ? "checked" : ""} ${(actual.estado != 0) ? "disabled" : ""}>
-                </td>
+                                    <td class="ctr1">
+                                        <input type="checkbox"
+                                               class="chk ctr1" ${(obra.cuatrimestre1 == "1") ? "checked" : ""} ${(actual.estado != 0) ? "disabled" : ""}>
+                                    </td>
 
-                <td class="ctr2"><input type="checkbox"
-                                        class="chk ctr2" ${(obra.cuatrimestre2 == "1") ? "checked" : ""} ${(actual.estado != 0) ? "disabled" : ""}>
-                </td>
+                                    <td class="ctr2"><input type="checkbox"
+                                                            class="chk ctr2" ${(obra.cuatrimestre2 == "1") ? "checked" : ""} ${(actual.estado != 0) ? "disabled" : ""}>
+                                    </td>
 
-                <td class="ctr3"><input type="checkbox"
-                                        class="chk ctr3" ${(obra.cuatrimestre3 == "1") ? "checked" : ""} ${(actual.estado != 0) ? "disabled" : ""}>
-                </td>
+                                    <td class="ctr3"><input type="checkbox"
+                                                            class="chk ctr3" ${(obra.cuatrimestre3 == "1") ? "checked" : ""} ${(actual.estado != 0) ? "disabled" : ""}>
+                                    </td>
 
-                <td class="desc_obs">
-                    <input type="hidden" id="dscr_${k}${i}${j}" class="desc"
-                           value="${obra.descripcion}">
+                                    <td class="desc_obs">
+                                        <input type="hidden" id="dscr_${k}${i}${j}" class="desc"
+                                               value="${obra.descripcion}">
 
-                    <input type="hidden" id="obs_${k}${i}${j}" class="obs"
-                           value="${obra.observaciones}">
+                                        <input type="hidden" id="obs_${k}${i}${j}" class="obs"
+                                               value="${obra.observaciones}">
 
-                    <a href="#" class="btn_editar" desc="dscr_${k}${i}${j}"
-                       obs="obs_${k}${i}${j}">Editar</a>
-                </td>
+                                        <a href="#" class="btn_editar" desc="dscr_${k}${i}${j}"
+                                           obs="obs_${k}${i}${j}">Editar</a>
+                                    </td>
 
-                <td class="agr">
-                    <a href="#" class="btn_agregar" desc="agr_${k}${i}${j}" ml="${asg.id}" max="${asg.planificado}"
-                       obs="agr_${k}${i}${j}">Agregar</a>
+                                    <td class="agr">
+                                        <a href="#" class="btn_agregar" desc="agr_${k}${i}${j}" ml="${asg.id}" max="${asg.planificado}"
+                                           obs="agr_${k}${i}${j}">Agregar</a>
 
-                    <a href="#" class="btn_eliminar" desc="elm_${k}${i}${j}" ml="${asg.id}" max="${asg.planificado}" iden="${obra.id}"
-                       obs="elm_${k}${i}${j}">Eliminar</a>
-                </td>
+                                        <a href="#" class="btn_eliminar" desc="elm_${k}${i}${j}" ml="${asg.id}" max="${asg.planificado}" iden="${obra.id}"
+                                           obs="elm_${k}${i}${j}">Eliminar</a>
+                                    </td>
 
-                <td>
-                    <g:if test="${actual.estado==0}">
-                        <a href="#" class="btn guardar ajax ajax" ml="${asg.id}"
-                           iden="${obra.id}" icono="ico_${k}${i}${j}" max="${asg.planificado}"
-                           clase="_${asg.id}" asg="asignado_${asg.id}">Guardar</a>
-                    </g:if>
-                </td>
+                                    <td>
+                                        <g:if test="${actual.estado==0}">
+                                            <a href="#" class="btn guardar ajax ajax" ml="${asg.id}"
+                                               iden="${obra.id}" icono="ico_${k}${i}${j}" max="${asg.planificado}"
+                                               clase="_${asg.id}" asg="asignado_${asg.id}">Guardar2</a>
+                                        </g:if>
+                                    </td>
 
-                <td class="ui-state-active">
-                    <span class="" id="ico_${k}${i}${j}" title="asignado">
-                        <span class="ui-icon ui-icon-check"></span>
+                                    <td class="ui-state-active">
+                                        <span class="" id="ico_${k}${i}${j}" title="asignado">
+                                            <span class="ui-icon ui-icon-check"></span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </g:each>
+                        </g:if>
+                        <g:else>
+                            <g:if test="${actual.estado==0}">
+                                <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                                    <td class="fuente"
+                                        style="font-size: 11px;">${(asg.fuente.toString().size() > 40) ? asg.fuente.toString().substring(0, 40) : asg.fuente}</td>
+
+                                    <td class="asg" style="font-size: 11px;">
+                                        <input type="hidden" class="asg" value="${asg.id}">
+                                        <g:formatNumber number="${asg.planificado}" format="###,##0"
+                                                        minFractionDigits="2" maxFractionDigits="2"/>
+                                    </td>
+
+                                    <td>
+                                        ${asg.presupuesto.descripcion} (${asg.presupuesto.numero})
+                                    </td>
+
+                                    <td class="unidad"><g:select from="${unidades}" name="unidad" value=""
+                                                                 optionKey="id" optionValue="descripcion"
+                                                                 style="font-size: 9px;"/></td>
+
+                                    <td class="cp">
+                                        <input type="hidden" class="cpac" value="nan">
+
+                                        <input type="text" id="cpac_n${k}${i}" style="width: 100px;"
+                                               class="buscar">
+                                    </td>
+
+                                    <td class="tipo"><g:select from="${tipoCompra}" name="tipoCompra"
+                                                               optionKey="id" optionValue="descripcion"
+                                                               style="font-size: 9px;"/></td>
+
+                                    <td class="cantidad"><input type="text" style="width: 50px;"
+                                                                class="cantidad can_${asg.id}" value="1">
+                                    </td>
+
+                                    <td class="costo"><input type="text" style="width: 60px;"
+                                                             class="costo costo_${asg.id}">
+                                    </td>
+
+
+                                    <td class="ctr1"><input type="checkbox" class="chk ctr1"></td>
+
+                                    <td class="ctr2"><input type="checkbox" class="chk ctr2"></td>
+
+                                    <td class="ctr3"><input type="checkbox" class="chk ctr3"></td>
+
+                                    <td class="desc_obs">
+                                        <input type="hidden" id="dscr_${k}${i}" class="desc">
+
+                                        <input type="hidden" id="obs_${k}${i}" class="obs">
+
+                                        <a href="#" class="btn_editar" desc="dscr_${k}${i}"
+                                           obs="obs_${k}${i}">Editar</a>
+                                    </td>
+
+                                    <td class="agr">
+                                        <a href="#" class="btn_agregar" id="agr_${k}${i}${j}" desc="agr_${k}${i}${j}" ml="${asg.id}" style="display: none;" max="${asg.planificado}"
+                                           obs="agr_${k}${i}">Agregar</a>
+
+                                        <a href="#" class="btn_eliminar" id="elm_${k}${i}${j}" desc="elm_${k}${i}${j}" ml="${asg.id}" style="display: none;" max="${asg.planificado}"
+                                           obs="elm_${k}${i}">Eliminar</a>
+                                    </td>
+
+                                    <td><a href="#" class="btn guardar ajax" ml="${asg.id}" ident="${k}${i}${j}"
+                                           icono="ico_${k}${i}${j}" max="${asg.planificado}" clase="_${asg.id}"
+                                           asg="asignado_${asg.id}">Guardar</a></td>
+
+                                    <td class="ui-state-active"><span class="" id="ico_${k}${i}${j}"
+                                                                      title="asignado"
+                                                                      style="display: none"><span
+                                                class="ui-icon ui-icon-check"></span></span></td>
+                                </tr>
+                            </g:if>
+                        </g:else>
+                    </g:each>
+                    %{--</tr>--}%
+                    %{--</g:each>--}%
+                    </tbody>
+                </table>
+
+                <div id="divTotalPresupuestos" style="position: absolute; top: 15px; left: 2px;">
+                    <span style="font-weight: bold; margin-right: 5px;">Total Presupuestos:</span>
+                    <span class="totalPresupuestos">
+
                     </span>
-                </td>
-            </tr>
-        </g:each>
-    </g:if>
-    <g:else>
-        <g:if test="${actual.estado==0}">
-            <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                <td class="fuente"
-                    style="font-size: 11px;">${(asg.fuente.toString().size() > 40) ? asg.fuente.toString().substring(0, 40) : asg.fuente}</td>
+                </div>
 
-                <td class="asg" style="font-size: 11px;">
-                    <input type="hidden" class="asg" value="${asg.id}">
-                    <g:formatNumber number="${asg.planificado}" format="###,##0"
-                                    minFractionDigits="2" maxFractionDigits="2"/>
-                </td>
+                <div id="divTotalCostos" style="position: absolute; top: 2px; left: 300px;">
+                    <span style="font-weight: bold; margin-right: 5px;">Total Costos:</span>
+                    <span class="totalCostos">
 
-                <td>
-                    ${asg.presupuesto.descripcion} (${asg.presupuesto.numero})
-                </td>
+                    </span>
+                </div>
 
-                <td class="unidad"><g:select from="${unidades}" name="unidad" value=""
-                                             optionKey="id" optionValue="descripcion"
-                                             style="font-size: 9px;"/></td>
+                <div class="ui-corner-all" style="height: 15px;margin-top: 5px;">
+                    %{--<div style="width: 100px;float: left"><b>Monto:</b> ${act.monto}</div><div style="width: 100px;float: left;margin-left: 10px;"><b>Por asignar:</b></div> <div id="asignado_${act.id}" class="asignado" style="width: 100px;float: left" monto="${act.monto}">${(act.monto-asignado.toDouble()).toFloat().round(2)}</div><br>--}%
+                </div>
 
-                <td class="cp">
-                    <input type="hidden" class="cpac" value="nan">
-
-                    <input type="text" id="cpac_n${k}${i}" style="width: 100px;"
-                           class="buscar">
-                </td>
-
-                <td class="tipo"><g:select from="${tipoCompra}" name="tipoCompra"
-                                           optionKey="id" optionValue="descripcion"
-                                           style="font-size: 9px;"/></td>
-
-                <td class="cantidad"><input type="text" style="width: 50px;"
-                                            class="cantidad can_${asg.id}" value="1">
-                </td>
-
-                <td class="costo"><input type="text" style="width: 60px;"
-                                         class="costo costo_${asg.id}">
-                </td>
-
-
-                <td class="ctr1"><input type="checkbox" class="chk ctr1"></td>
-
-                <td class="ctr2"><input type="checkbox" class="chk ctr2"></td>
-
-                <td class="ctr3"><input type="checkbox" class="chk ctr3"></td>
-
-                <td class="desc_obs">
-                    <input type="hidden" id="dscr_${k}${i}" class="desc">
-
-                    <input type="hidden" id="obs_${k}${i}" class="obs">
-
-                    <a href="#" class="btn_editar" desc="dscr_${k}${i}"
-                       obs="obs_${k}${i}">Editar</a>
-                </td>
-
-                <td class="agr">
-                    <a href="#" class="btn_agregar" id="agr_${k}${i}${j}" desc="agr_${k}${i}${j}" ml="${asg.id}" style="display: none;" max="${asg.planificado}"
-                       obs="agr_${k}${i}">Agregar</a>
-
-                    <a href="#" class="btn_eliminar" id="elm_${k}${i}${j}" desc="elm_${k}${i}${j}" ml="${asg.id}" style="display: none;" max="${asg.planificado}"
-                       obs="elm_${k}${i}">Eliminar</a>
-                </td>
-
-                <td><a href="#" class="btn guardar ajax" ml="${asg.id}" ident="${k}${i}${j}"
-                       icono="ico_${k}${i}${j}" max="${asg.planificado}" clase="_${asg.id}"
-                       asg="asignado_${asg.id}">Guardar</a></td>
-
-                <td class="ui-state-active"><span class="" id="ico_${k}${i}${j}"
-                                                  title="asignado"
-                                                  style="display: none"><span
-                            class="ui-icon ui-icon-check"></span></span></td>
-            </tr>
+            </fieldset>
         </g:if>
-    </g:else>
-</g:each>
-%{--</tr>--}%
-%{--</g:each>--}%
-</tbody>
-</table>
-
-<div id="divTotalPresupuestos" style="position: absolute; top: 15px; left: 2px;">
-    <span style="font-weight: bold; margin-right: 5px;">Total Presupuestos:</span>
-    <span class="totalPresupuestos">
-
-    </span>
-</div>
-
-<div id="divTotalCostos" style="position: absolute; top: 2px; left: 300px;">
-    <span style="font-weight: bold; margin-right: 5px;">Total Costos:</span>
-    <span class="totalCostos">
-
-    </span>
-</div>
-
-<div class="ui-corner-all" style="height: 15px;margin-top: 5px;">
-    %{--<div style="width: 100px;float: left"><b>Monto:</b> ${act.monto}</div><div style="width: 100px;float: left;margin-left: 10px;"><b>Por asignar:</b></div> <div id="asignado_${act.id}" class="asignado" style="width: 100px;float: left" monto="${act.monto}">${(act.monto-asignado.toDouble()).toFloat().round(2)}</div><br>--}%
-</div>
-
-</fieldset>
-</g:if>
-</g:each>
+    </g:each>
 </div>
 
 <div id="buscar">
@@ -407,67 +407,67 @@
             },
             text:false
         }).css({
-                    width:18,
-                    height:18
-                }).click(function () {
-                    if (confirm("Desea eliminar esta entrada?")) {
-                        var btn = $(this);
-                        var id = btn.attr("iden");
+            width:18,
+            height:18
+        }).click(function () {
+            if (confirm("Desea eliminar esta entrada?")) {
+                var btn = $(this);
+                var id = btn.attr("iden");
 
-                        $.ajax({
-                            type:"POST",
-                            url:"${createLink(action:'eliminarFila',controller:'obra')}",
-                            data:{
-                                id:id
-                            },
-                            success:function (msg) {
-                                if (msg == "OK") {
-                                    window.location.reload(true);
-                                }
-                            }
-                        });
-
+                $.ajax({
+                    type:"POST",
+                    url:"${createLink(action:'eliminarFila',controller:'obra')}",
+                    data:{
+                        id:id
+                    },
+                    success:function (msg) {
+                        if (msg == "OK") {
+                            window.location.reload(true);
+                        }
                     }
                 });
+
+            }
+        });
         $(".btn_agregar").button({
             icons:{
                 primary:"ui-icon-plusthick"
             },
             text:false
         }).css({
-                    width:18,
-                    height:18
-                }).click(function () {
-                    if (confirm("Desea crear una nueva entrada en el plan de compras?")) {
-                        var band = true
-                        var mensaje = ""
-                        var error
-                        var max = $(this).attr("max") * 1
-                        var asignado = 0
-                        var padre = $(this).parent().parent()
-                        var boton = $(this)
-                        var costo = 0
-                        var cantidad = 1
-                        var unidad = padre.find(".unidad").children().val()
-                        var cp = padre.find(".cp").find(".cpac").val()
-                        var tipo = padre.find(".tipo").children().val()
-                        var c1 = 0
-                        var c2 = 0
-                        var c3 = 0
-                        var asg = boton.attr("ml")
-                        var icono = $("#" + $(this).attr("icono"))
-                        var valor = 0
+            width:18,
+            height:18
+        }).click(function () {
+            if (confirm("Desea crear una nueva entrada en el plan de compras?")) {
+                var band = true
+                var mensaje = ""
+                var error
+                var max = $(this).attr("max") * 1
+                var asignado = 0
+                var padre = $(this).parent().parent()
+                var boton = $(this)
+                var costo = 0
+                var cantidad = 1
+                var unidad = padre.find(".unidad").children().val()
+                var cp = padre.find(".cp").find(".cpac").val()
+                var tipo = padre.find(".tipo").children().val()
+                var c1 = 0
+                var c2 = 0
+                var c3 = 0
+                var asg = boton.attr("ml")
+                var icono = $("#" + $(this).attr("icono"))
+                var valor = 0
 
-                        $.ajax({
-                            type:"POST",
-                            url:"${createLink(action:'agregarFila',controller:'obra')}",
-                            data:"costo=" + costo + "&unidad.id=" + unidad + "&cantidad=" + cantidad + "&tipoCompra.id=" + tipo + "&codigoComprasPublicas.id=" + cp + "&cuatrimestre1=" + c1 + "&cuatrimestre2=" + c2 + "&cuatrimestre3=" + c3 + "&asignacion.id=" + asg + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
-                            success:function (msg) {
-                                window.location.reload(true);
-                            }
-                        });
+                $.ajax({
+                    type:"POST",
+                    url:"${createLink(action:'agregarFila',controller:'obra')}",
+                    data:"costo=" + costo + "&unidad.id=" + unidad + "&cantidad=" + cantidad + "&tipoCompra.id=" + tipo + "&codigoComprasPublicas.id=" + cp + "&cuatrimestre1=" + c1 + "&cuatrimestre2=" + c2 + "&cuatrimestre3=" + c3 + "&asignacion.id=" + asg + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
+                    success:function (msg) {
+                        window.location.reload(true);
                     }
                 });
+            }
+        });
 
         $("#breadCrumb").jBreadCrumb({
             beginingElementsToLeaveOpen:10
@@ -479,13 +479,13 @@
             },
             text:false
         }).click(function () {
-                    $("#hid_desc").val($(this).attr("desc"))
-                    $("#hid_obs").val($(this).attr("obs"))
-                    $("#dlg_desc").val($("#" + $(this).attr("desc")).val())
-                    $("#dlg_obs").val($("#" + $(this).attr("obs")).val())
-                    $("#dlg_error").hide().html("")
-                    $("#dlg_desc_obs").dialog("open")
-                })
+            $("#hid_desc").val($(this).attr("desc"))
+            $("#hid_obs").val($(this).attr("obs"))
+            $("#dlg_desc").val($("#" + $(this).attr("desc")).val())
+            $("#dlg_obs").val($("#" + $(this).attr("obs")).val())
+            $("#dlg_error").hide().html("")
+            $("#dlg_desc_obs").dialog("open")
+        })
         $(".guardar").button({
             icons:{
                 primary:"ui-icon-disk"

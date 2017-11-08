@@ -365,9 +365,7 @@ class MarcoLogicoController extends mies.seguridad.Shield {
                 medio = MedioVerificacion.get(params.id)
                 medio.descripcion = params.datos
             } else {
-
                 medio = new MedioVerificacion([indicador: Indicador.get(params.indicador), descripcion: params.datos])
-
             }
 
             medio = kerberosService.saveObject(medio, MedioVerificacion, session.perfil, session.usuario, "guadarDatosComponentes", "marcoLogico", session)

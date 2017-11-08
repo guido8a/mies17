@@ -144,15 +144,13 @@
         <fieldset style="width: 450px;height: 160px;" class="ui-corner-all">
             <legend>Ingreso de datos</legend>
             Monto: <input type="text" id="monto_env" style="width: 100px;height: 20px;margin-left: 7px" class="ui-corner-all"> Máximo: <span id="lbl_max"></span><br> <br>
-            Unidad: <g:select from="${mies.UnidadEjecutora.list([sort:'nombre'])}" id="cmb_env" name="unrb" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione...']" style="width: 400px" class="ui-corner-all"></g:select>  <br><br>
+            Unidad: <g:select from="${mies.UnidadEjecutora.list([sort:'nombre'])}" id="cmb_env" name="unrb" optionKey="id" optionValue="nombre" noSelection="['-1':'Seleccione...']" style="width: 400px" class="ui-corner-all"/>  <br><br>
             <a href="#" class="btn" id="env">Enviar</a>
         </fieldset>
         <fieldset style="width: 450px;height: 400px;" class="ui-corner-all">
             <legend>Detalle</legend>
             <div id="detalle" style="width: 430px;height:360px;overflow-y: auto;margin: auto "></div>
         </fieldset>
-
-
     </div>
 
 
@@ -232,25 +230,25 @@
         },
         text:false
     }).click(function(){
-                $("#monto_env").val("0,00")
-                $("#env_id").val($(this).attr("asgn"))
-                $("#cmb_env").val($(this).attr("env"))
-                $("#env_btn").val($(this).attr("id"))
-                $("#max").val($(this).attr("valor"))
-                //console.log("max 1" +$("#max").val())
-                $.ajax({
-                    type:"POST", url:"${createLink(action:'enviarUnidad', controller: 'asignacion')}",
-                    data:"id=" + $("#env_id").val(),
-                    success:function (msg) {
-                        $("#dlg_env").dialog("open")
-                        $("#detalle").html(msg).show("slide")
-                        $("#lbl_max").html(number_format($("#max").val()*1, 2, ",", "."))
-                        //console.log("dis 1 " +$("#dist").val()*1)
+        $("#monto_env").val("0,00")
+        $("#env_id").val($(this).attr("asgn"))
+        $("#cmb_env").val($(this).attr("env"))
+        $("#env_btn").val($(this).attr("id"))
+        $("#max").val($(this).attr("valor"))
+        //console.log("max 1" +$("#max").val())
+        $.ajax({
+            type:"POST", url:"${createLink(action:'enviarUnidad', controller: 'asignacion')}",
+            data:"id=" + $("#env_id").val(),
+            success:function (msg) {
+                $("#dlg_env").dialog("open")
+                $("#detalle").html(msg).show("slide")
+                $("#lbl_max").html(number_format($("#max").val()*1, 2, ",", "."))
+                //console.log("dis 1 " +$("#dist").val()*1)
 
-                    }
-                });
+            }
+        });
 
-            });
+    });
 
     $("#anio_asg").change(function () {
         location.href = "${createLink(controller:'asignacion',action:'asignacionProyectov2')}?id=${proyecto.id}&anio=" + $(this).val()
@@ -261,19 +259,19 @@
         },
         text:false
     }).click(function () {
-                //alert ("id:" +$(this).attr("asgn"))
-                if (confirm("Dividir esta asignación con otra partida")) {
-                    $.ajax({
-                        type:"POST", url:"${createLink(action:'agregaAsignacion', controller: 'asignacion')}",
-                        data:"id=" + $(this).attr("asgn") + "&proy=" + $(this).attr("proy") + "&anio=" + $(this).attr("anio"),
-                        success:function (msg) {
-                            $("#ajx_asgn").dialog("option", "title", "Dividir la asignación para ..")
-                            $("#ajx_asgn").html(msg).show("puff", 100)
-                        }
-                    });
-                    $("#ajx_asgn").dialog("open");
+        //alert ("id:" +$(this).attr("asgn"))
+        if (confirm("Dividir esta asignación con otra partida")) {
+            $.ajax({
+                type:"POST", url:"${createLink(action:'agregaAsignacion', controller: 'asignacion')}",
+                data:"id=" + $(this).attr("asgn") + "&proy=" + $(this).attr("proy") + "&anio=" + $(this).attr("anio"),
+                success:function (msg) {
+                    $("#ajx_asgn").dialog("option", "title", "Dividir la asignación")
+                    $("#ajx_asgn").html(msg).show("puff", 100)
                 }
             });
+            $("#ajx_asgn").dialog("open");
+        }
+    });
 
     $(".btn_borrar").button({
         icons:{
@@ -281,26 +279,26 @@
         },
         text:false
     }).click(function () {
-                $("#load").dialog("open")
-                if (confirm("Eliminar esta asignación: \n Su valor se sumará a su asignación original y\n la programación deberá revisarse. La asignación no se eliminara si tiene distribuciones derivadas")) {
+        $("#load").dialog("open")
+        if (confirm("Eliminar esta asignación: \n Su valor se sumará a su asignación original y\n la programación deberá revisarse. La asignación no se eliminara si tiene distribuciones derivadas")) {
 
-                    $.ajax({
-                        type:"POST", url:"${createLink(action:'borrarAsignacion', controller: 'asignacion')}",
-                        data:"id=" + $(this).attr("asgn"),
-                        success:function (msg) {
-                            if(msg=="ok")
-                                location.reload(true);
-                            else{
-                                $("#load").dialog("close")
-                                alert("Error al eliminar la asignación. Asegurese que no tenga distribuciones ni asignaciones hijas")
-                            }
+            $.ajax({
+                type:"POST", url:"${createLink(action:'borrarAsignacion', controller: 'asignacion')}",
+                data:"id=" + $(this).attr("asgn"),
+                success:function (msg) {
+                    if(msg=="ok")
+                        location.reload(true);
+                    else{
+                        $("#load").dialog("close")
+                        alert("Error al eliminar la asignación. Asegurese que no tenga distribuciones ni asignaciones hijas")
+                    }
 
-                        }
-                    });
-                }else{
-                    $("#load").dialog("close")
                 }
             });
+        }else{
+            $("#load").dialog("close")
+        }
+    });
 
 
     $("#dlg_env").dialog({
@@ -336,7 +334,7 @@
             $(".ui-dialog-titlebar-close").hide();
         },
         buttons:{
-            "Grabar":function () {
+            "Guardar":function () {
                 var asgn = $('#padre').val()
                 var mxmo = parseFloat($('#maximo').val());
                 var valor = str_replace(".", "", $('#vlor').val());

@@ -36,8 +36,10 @@
             </td>
 
             <td>
-                <input type="number" name="maxInversion" class="ui-widget-content ui-corner-all" id="maxInversion"
-                       value="${presupuesto ? g.formatNumber(number: presupuesto.maxInversion, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
+                %{--<input type="number" name="maxInversion" class="ui-widget-content ui-corner-all" id="maxInversion"--}%
+                       %{--value="${presupuesto ? g.formatNumber(number: presupuesto.maxInversion, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>--}%
+                <g:textField name="maxInversion" class="ui-widget-content ui-corner-all" id="maxInversion"
+                             value="${presupuesto ? g.formatNumber(number: presupuesto.maxInversion, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
             </td> <!-- campo -->
 
             <td class="label">Max. Corrientes:</td>
@@ -49,15 +51,18 @@
             <td>
                 <g:if test="${presupuesto}">
                     <g:if test="${presupuesto.aprobadoCorrientes==0}">
-                        <input type="number" name="maxCorrientes" class="ui-widget-content ui-corner-all" id="maxCorrientes"
-                               value="${presupuesto ? g.formatNumber(number: presupuesto.maxCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
+                        %{--<input type="number" name="maxCorrientes" class="ui-widget-content ui-corner-all" id="maxCorrientes"--}%
+                               %{--value="${presupuesto ? g.formatNumber(number: presupuesto.maxCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>--}%
+                        <g:textField name="maxCorrientes" class="ui-widget-content ui-corner-all" id="maxCorrientes"
+                                     value="${presupuesto ? g.formatNumber(number: presupuesto.maxCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
                     </g:if>
                     <g:else>
                        ${g.formatNumber(number: presupuesto.maxCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2)}
                     </g:else>
                 </g:if>
                 <g:else>
-                    <input type="number" name="maxCorrientes" class="ui-widget-content ui-corner-all" id="maxCorrientes"  value=""/>
+                    <g:textField name="maxCorrientes" class="ui-widget-content ui-corner-all" id="maxCorrientes"  value="${0.00}"/>
+                    %{--<input type="number" name="maxCorrientes" class="ui-widget-content ui-corner-all" id="maxCorrientes"  value=""/>--}%
                 </g:else>
             </td> <!-- campo -->
         </tr>
@@ -69,8 +74,10 @@
             </td>
 
             <td>
-                <input type="number" name="originalInversion" class="ui-widget-content ui-corner-all" id="orgInversion"
-                       value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
+                %{--<input type="number" name="originalInversion" class="ui-widget-content ui-corner-all" id="orgInversion"--}%
+                       %{--value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>--}%
+                <g:textField name="originalInversion" class="ui-widget-content ui-corner-all" id="orgInversion"
+                             value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
             </td> <!-- campo -->
 
             <td class="label">Original corrientes:</td>
@@ -80,8 +87,10 @@
             </td>
 
             <td>
-                <input type="number" name="originalCorrientes" class="ui-widget-content ui-corner-all" id="orgCorrientes"
-                       value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
+                %{--<input type="number" name="originalCorrientes" class="ui-widget-content ui-corner-all" id="orgCorrientes"--}%
+                       %{--value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>--}%
+                <g:textField name="originalCorrientes" class="ui-widget-content ui-corner-all" id="orgCorrientes"
+                             value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
             </td> <!-- campo -->
         </tr>
 
@@ -94,7 +103,7 @@
 
             <td colspan="4">
                 <g:select from="${ObjetivoGobiernoResultado.list([sort:'descripcion'])}" name="objetivoGobiernoResultado.id" id="selObjetivoGob" optionKey="id" optionValue="descripcion"
-                          value="" class="ui-widget-content ui-corner-all combo" style="height: 75px;"/>
+                          value="" class="ui-widget-content ui-corner-all combo" style="width: 550px;"/>
             </td> <!-- campo -->
         </tr>
 
@@ -107,7 +116,7 @@
 
             <td colspan="4">
                 <g:select from="${ObjetivoEstrategicoProyecto.list([sort:'descripcion'])}" name="objetivoEstrategico.id" id="selObjetivoEst" optionKey="id" optionValue="descripcion"
-                          value="" class="ui-widget-content ui-corner-all"/>
+                          value="" class="ui-widget-content ui-corner-all" style="width: 550px"/>
             </td> <!-- campo -->
         </tr>
 
@@ -120,7 +129,7 @@
 
             <td colspan="4">
                 <g:select from="${EjeProgramatico.list([sort:'descripcion'])}" name="ejeProgramatico.id" id="selEje" optionKey="id" optionValue="descripcion"
-                          value="" class="ui-widget-content ui-corner-all"/>
+                          value="" class="ui-widget-content ui-corner-all" style="width: 550px"/>
             </td> <!-- campo -->
 
         </tr>
@@ -134,7 +143,7 @@
 
             <td colspan="4">
                 <g:select from="${Politica.list([sort:'descripcion'])}" name="politica.id" id="selPolitica" optionKey="id" optionValue="descripcion"
-                          value="" class="ui-widget-content ui-corner-all"/>
+                          value="" class="ui-widget-content ui-corner-all" style="width: 550px"/>
             </td> <!-- campo -->
         </tr>
 
@@ -147,6 +156,7 @@
 <script type="text/javascript">
 
     function reload() {
+
         var anioId = $("#selAnio").val();
         var unidadId = ${unidad.id};
 
@@ -169,7 +179,6 @@
                 $("#selObjetivoEst").selectmenu("value", parts[4]);
                 $("#selObjetivoGob").selectmenu("value", parts[5]);
                 $("#selPolitica").selectmenu("value", parts[6]);
-
             }
         });
     }
@@ -177,7 +186,10 @@
     $(function () {
         reload();
         $("#selAnio").selectmenu({width:80});
-        $("#selEje, #selObjetivoEst, #selObjetivoGob, #selPolitica").selectmenu({width:640});
+        $("#selEje").selectmenu({width:540});
+        $("#selObjetivoEst").selectmenu({width:540});
+        $("#selObjetivoGob").selectmenu({width:540});
+        $("#selPolitica").selectmenu({width:540});
 
         $("#selAnio").change(function () {
             reload();
