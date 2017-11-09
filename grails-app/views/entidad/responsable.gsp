@@ -181,7 +181,7 @@ select.field {
         $(".btnDeleteRes").livequery(function () {
             $(".btnDeleteRes").button({
                 icons : {
-                    primary : "ui-icon-triangle-1-s"
+                    primary : "ui-icon-trash"
                 },
                 text  : false
             }).css({

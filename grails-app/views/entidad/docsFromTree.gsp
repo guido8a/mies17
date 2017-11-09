@@ -10,7 +10,7 @@
         <script type="text/javascript"
                 src="${resource(dir: 'js/jquery/plugins/validation', file: 'messages_es.js')}"></script>
 
-        <title>Documentos de ${unidad.nombre}</title>
+        <title>Documentos de '${unidad.nombre}'</title>
         <style type="text/css">
         .field {
             width : 350px;

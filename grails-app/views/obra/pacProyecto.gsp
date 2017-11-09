@@ -301,11 +301,11 @@
     <b>Descripción (255 caracteres):</b><br>
 
     <textArea name="desc" rows="6" cols="40" id="dlg_desc" ${(actual.estado != 0) ? "disabled" : ""}
-              style="color: black"></textArea>
+              style="color: black; resize: none"></textArea>
     <b>Observaciones (127 caracteres):</b><br>
 
     <textArea name="desc" rows="4" cols="40" id="dlg_obs" ${(actual.estado != 0) ? "disabled" : ""}
-              style="color: black"></textArea> <br>
+              style="color: black; resize: none"></textArea> <br>
 
     <div id="dlg_error"
          style="width: 350px;height: 60px;margin-top: 5px;margin-left: 2px;display: none;padding: 3px;line-height: 24px;border:1px solid red;"
@@ -631,10 +631,11 @@
         })
         $("#dlg_desc_obs").dialog({
             title:"Editar descripción y observaciones",
-            width:400,
-            height:400,
+            width:375,
+            height:360,
             autoOpen:false,
             modal:true,
+            resizable: false,
             buttons:{
                 "Aceptar":function () {
                     if ($("#dlg_desc").val().length < 255) {

@@ -464,7 +464,7 @@
                             type:"POST", url:"${createLink(action:'agregaAsignacionMod', controller: 'asignacion')}",
                             data:"id=" + $(this).attr("asgn") + "&proy=" + $(this).attr("proy") + "&anio=" + $(this).attr("anio")+"&unidad=${unidad.id}",
                             success:function (msg) {
-                                $("#ajx_asgn").dialog("option", "title", "Dividir la asignación para ..")
+                                $("#ajx_asgn").dialog("option", "title", "Dividir la asignación")
                                 $("#ajx_asgn").html(msg).show("puff", 100)
                             }
                         });

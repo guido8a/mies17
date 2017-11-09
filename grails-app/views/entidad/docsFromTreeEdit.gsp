@@ -42,7 +42,7 @@
                 <td class="campo" valign="middle">
                     <g:textArea class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="1024"
                                 name="resumen" id="resumen" title="resumen" cols="40" rows="5"
-                                value="${documentoInstance?.resumen}"/>
+                                value="${documentoInstance?.resumen}" style="resize: none"/>
                 </td>
             </tr>
 

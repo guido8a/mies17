@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Modificaciones al presupuesto de la unidad: ${unidad}</title>
+    <title>Modificaciones al presupuesto de la unidad: '${unidad}'</title>
 
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}" style="" type="text/css"/>
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}" type="text/css"/>
@@ -39,7 +39,7 @@
 
         </g:if>
         <g:else>
-            El presupuesto para la unidad ${unidad} de gastos corrientes del año ${actual} aun no ha sido aprobado.
+            El presupuesto para la unidad '${unidad}' de gastos corrientes del año '${actual}' aun no ha sido aprobado.
         </g:else>
     </fieldset>
     <fieldset class="ui-corner-all">

@@ -273,7 +273,7 @@
                         data:"id=" + $(this).attr("asgn") + "&proy=" + $(this).attr("proy") + "&anio=" + $(this).attr("anio")+"&dist="+$(this).attr("dist"),
                         success:function (msg) {
 
-                            $("#ajx_asgn").dialog("option", "title", "Dividir la asignación para ..")
+                            $("#ajx_asgn").dialog("option", "title", "Dividir la asignación")
                             $("#ajx_asgn").html(msg)
                             $("#ajx_asgn").dialog("open");
 

@@ -84,14 +84,14 @@ class ObraController extends mies.seguridad.Shield {
             actual = Anio.list([sort: 'anio', order: 'desc']).pop()
 
         while(unej!=null){
-           // println "unej "+unej
+            // println "unej "+unej
             def resp=ResponsableProyecto.findAllByUnidadAndTipo(unej,TipoResponsable.findByCodigo("A"))
-           // println "responsables "+resp
+            // println "responsables "+resp
             resp.each {r->
                 if(r.desde.before(ahora) && r.hasta.after(ahora)){
-                  //  println "si es ahora "+r.desde+"  "+r.hasta
+                    //  println "si es ahora "+r.desde+"  "+r.hasta
                     if (r.responsable.id.toInteger()==usuario.id.toInteger()){
-                       // println "si es responsable"
+                        // println "si es responsable"
                         band=true
                     }
                 }
@@ -143,11 +143,25 @@ class ObraController extends mies.seguridad.Shield {
     }
 
     def guardarObra = {
-        //println "params guardar obra!! " + params
-        def obra = kerberosService.save(params, Obra, session.perfil, session.usuario)
-        //println " errores " + obra.errors
-        render obra.id
+        println "params guardar obra!! " + params
+        def obra
+        if(params.id){
+            obra = Obra.get(params.id)
+        }else{
+//            obra = kerberosService.save(params, Obra, session.perfil, session.usuario)
+            obra = new Obra()
+        }
 
+        obra.properties = params
+        obra.costo = params.costo.toDouble()
+
+        try{
+            obra.save(flush: true)
+        }catch (e){
+            println("error al guardar costo de asignacion corriente " + e)
+        }
+        //println " errores " + obra.errors
+        render obra?.id
     }
 
     def guardarObraMod = {
