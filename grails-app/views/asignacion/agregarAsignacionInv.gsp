@@ -117,7 +117,7 @@
     <legend>
         Detalle
     </legend>
-    <g:set var="total" value="0"></g:set>
+    <g:set var="total" value="0"/>
     <table style="width: 100%; margin-bottom: 10px;">
         <thead>
         <th style="width: 40px;">ID</th>

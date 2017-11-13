@@ -44,7 +44,8 @@ class AnioController   extends mies.seguridad.Shield{
                     temp.add(d.cont)
             }
 
-            cn.eachRow("select count(asgn__id) as cont,sum(asgnplan) as suma from asgn where unej__id=${it.id} and anio__id = ${anio.id} and actv__id is not null "){d->
+//            cn.eachRow("select count(asgn__id) as cont,sum(asgnplan) as suma from asgn where unej__id=${it.id} and anio__id = ${anio.id} and actv__id is not null "){d->
+            cn.eachRow("select count(asgn__id) as cont,sum(asgnplan) as suma from asgn where unej__id=${it.id} and anio__id = ${anio.id}"){d->
                 if(d.suma==null)
                     temp.add(0)
                 else
@@ -54,7 +55,8 @@ class AnioController   extends mies.seguridad.Shield{
                 else
                     temp.add(d.cont)
             }
-            cn.eachRow("select count(obra__id) as cont,sum(obracntd*obracsto) as suma from obra,asgn where asgn.asgn__id=obra.asgn__id and   asgn.unej__id=${it.id} and asgn.anio__id = ${anio.id} and asgn.actv__id is not null "){d->
+//            cn.eachRow("select count(obra__id) as cont,sum(obracntd*obracsto) as suma from obra,asgn where asgn.asgn__id=obra.asgn__id and   asgn.unej__id=${it.id} and asgn.anio__id = ${anio.id} and asgn.actv__id is not null "){d->
+            cn.eachRow("select count(obra__id) as cont,sum(obracntd*obracsto) as suma from obra,asgn where asgn.asgn__id=obra.asgn__id and   asgn.unej__id=${it.id} and asgn.anio__id = ${anio.id}"){d->
                 if(d.suma==null)
                     temp.add(0)
                 else

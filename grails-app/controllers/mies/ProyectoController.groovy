@@ -218,8 +218,7 @@ class ProyectoController extends mies.seguridad.Shield {
             proyectos = Proyecto.list(params)
         }
 
-
-        [proyectos: proyectos, total: proyectos.count(), parametro: params.parametro]
+        [proyectos: proyectos, total: proyectos.size(), parametro: params.parametro]
     }
 
 

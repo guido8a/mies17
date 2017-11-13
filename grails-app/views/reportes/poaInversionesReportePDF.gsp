@@ -16,11 +16,11 @@
         <style type="text/css">
         @page {
             size   : 29.7cm 21cm;  /*width height */
-            margin : 2cm;
+            margin : 1.5cm;
         }
 
         .hoja {
-            width : 24cm;
+            width : 25cm;
         }
 
         .titulo {

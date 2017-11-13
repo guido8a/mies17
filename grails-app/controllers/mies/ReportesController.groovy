@@ -622,9 +622,6 @@ class ReportesController {
             total += d[6]
         }
 
-
-
-
         cn.close()
         [anio: anio, resultados: resultados, total: total]
     }
@@ -719,7 +716,7 @@ class ReportesController {
             sheet.addCell(label);
             label = new Label(2, columna, "Planta Central");
             sheet.addCell(label);
-            label = new Label(3, columna, "" + ((d[3].toString().size() < 3) ? "0" + d[3] : d[3]) + ((d[4].toString().size() < 3) ? "0" + d[4] : d[4]) + "000" + ((d[3]) ? d[3] : "000") + d[1]);
+            label = new Label(3, columna, "" + (((d[3].toString().size() < 3) ? "0" + d[3] : d[3]) ?: '') + ((d[4].toString().size() < 3) ? "0" + d[4] : d[4]) + "000" + ((d[3]) ? d[3] : "000") + d[1]);
             sheet.addCell(label);
             number = new Number(4, columna, d[5]);
             sheet.addCell(number);
@@ -1831,7 +1828,7 @@ class ReportesController {
                 arbol += treeLabel("Proyecto: " + proyecto.nombre, tipo, "class='proyecto' style='font-weight:bold;'")
                 arbol += "<ul class='ulFinPropositoComponentes'>" //<ul> Fin Proposito Componentes
                 arbol += "<li rel='fin' class='liFin'>" //<li> fin
-                arbol += treeLabel("<span style='font-weight:bold;'>Fin:</span> " + fin.objeto, tipo)
+                arbol += treeLabel("<span style='font-weight:bold;'>Fin:</span> " + fin.objeto, tipo, "")
                 arbol += "<ul class='ulIndicadoresSupuestos'>" //<ul> indicadores supuestos
                 arbol += "<li rel='indicadores' class='liIndicadores'>" //<li> indicadores
                 arbol += treeLabel("Indicadores", tipo, "style='font-weight:bold;'")
@@ -1840,7 +1837,7 @@ class ReportesController {
                     arbol += "<ul class='ulIndicadores'>"
                     indicadores.each { indi ->
                         arbol += "<li rel='indicador' class='liIndicador'>" //<li> indicador
-                        arbol += treeLabel(indi.descripcion, tipo)
+                        arbol += treeLabel(indi.descripcion, tipo, '')
                         arbol += "<ul class='ulMedios'>" //<ul> medios
                         arbol += "<li rel='medios' class='liMedios'>" //<li> medios
                         arbol += treeLabel("Medios de verificación", tipo, "style='font-weight:bold;'")
@@ -1849,7 +1846,7 @@ class ReportesController {
                         if (medios.size() > 0) {
                             medios.each { md ->
                                 arbol += "<li rel='medio' class='liMedio'>" //<li> medio
-                                arbol += treeLabel(md.descripcion, tipo)
+                                arbol += treeLabel(md.descripcion, tipo, '')
                                 arbol += "</li>" //</li> medio
                             } //medios.eachs
                         } //if medios.size > 0
@@ -1869,7 +1866,7 @@ class ReportesController {
                     arbol += "<ul class='ulSupuestos'>" //<ul> supuestos
                     supuestos.each { sup ->
                         arbol += "<li rel='supuesto' class='liSupuesto'>" //<li> supuesto
-                        arbol += treeLabel(sup.descripcion, tipo)
+                        arbol += treeLabel(sup.descripcion, tipo,'')
                         arbol += "</li>" //</li> supuesto
                     } //supuestos.each
                     arbol += "</ul>" //</ul> supuestos
@@ -1879,7 +1876,7 @@ class ReportesController {
                 arbol += "</li>" //</li> fin
 
                 arbol += "<li rel='propositos' class='liPropositos'>" //<li> propositos
-                arbol += treeLabel("<span style='font-weight:bold;'>Propósito:</span> " + prop.objeto, tipo)
+                arbol += treeLabel("<span style='font-weight:bold;'>Propósito:</span> " + prop.objeto, tipo, "")
                 arbol += "<ul class='ulIndicadoresSupuestos'>" //<ul> indicadores
                 arbol += "<li rel='indicadores' class='liIndicadores'>" //<li> indicadores
                 arbol += treeLabel("Indicadores", tipo, "style='font-weight:bold;'")
@@ -1888,7 +1885,7 @@ class ReportesController {
                     arbol += "<ul class='ulIndicadores'>" //<ul> indicadores
                     indicadores.each { indi ->
                         arbol += "<li rel='indicador' class='liIndicador'>" //<li> indicador
-                        arbol += treeLabel(indi.descripcion, tipo)
+                        arbol += treeLabel(indi.descripcion, tipo, '')
                         arbol += "<ul class='ulMedios'>" //<ul> medios
                         arbol += "<li rel='medios' class='liMedios'>" //<li> medios
                         arbol += treeLabel("Medios de verificación", tipo, "style='font-weight:bold;'")
@@ -1897,7 +1894,7 @@ class ReportesController {
                             arbol += "<ul class='ulMedios'>" //<ul> medios
                             medios.each { md ->
                                 arbol += "<li class='liMedio' rel='medio'>" //<li> medio
-                                arbol += treeLabel(md.descripcion, tipo)
+                                arbol += treeLabel(md.descripcion, tipo, '')
                                 arbol += "</li>" //</li> medio
                             } //medios.each
                             arbol += "</ul>" //</ul> medios
@@ -1916,7 +1913,7 @@ class ReportesController {
                     arbol += "<ul class='ulSupuestos'>" //<ul> supuestos
                     supuestos.each { sup ->
                         arbol += "<li class='liSupuesto' rel='supuesto'>" //<li> supuesto
-                        arbol += treeLabel(sup.descripcion, tipo)
+                        arbol += treeLabel(sup.descripcion, tipo, '')
                         arbol += "</li>" //</li> supuesto
                     } //supuestos.each
                     arbol += "</ul>" //</ul> supuestos
@@ -1933,7 +1930,7 @@ class ReportesController {
                     componentes.eachWithIndex { cmp, i ->
                         if (cmp.estado == 0) {
                             arbol += "<li rel='componente' class='liComponente'>" //<li> componente
-                            arbol += treeLabel("<span style='font-weight:bold;'>Componente # " + (i + 1) + "</span>: " + cmp.objeto, tipo)
+                            arbol += treeLabel("<span style='font-weight:bold;'>Componente # " + (i + 1) + "</span>: " + cmp.objeto, tipo, '')
                             arbol += "<ul class='ulIndicadoresSupuestosActividades'>" //<ul> Indicadores Supuestos Actividades
                             arbol += "<li rel='indicadores' class='liIndicadores'>" //<li> indicadores
                             arbol += treeLabel("Indicadores", tipo, "style='font-weight:bold;'")
@@ -1942,7 +1939,7 @@ class ReportesController {
                                 arbol += "<ul class='ulIndicadores'>" //<ul> indicadores
                                 indicadores.each { indi ->
                                     arbol += "<li rel='indicador' class='liIndicador'>" //<li> indicador
-                                    arbol += treeLabel(indi.descripcion, tipo)
+                                    arbol += treeLabel(indi.descripcion, tipo, '')
                                     arbol += "<ul class='ulMedios'>" //<ul> medios
                                     arbol += "<li rel='medios' class='liMedios'>" //<li> medios
                                     arbol += treeLabel("Medios de verificación", tipo, "style='font-weight:bold;'")
@@ -1951,7 +1948,7 @@ class ReportesController {
                                         arbol += "<ul class='ulMedios'>" //<ul> medios
                                         medios.each { md ->
                                             arbol += "<li rel='medio' class='liMedio'>" //<li> medio
-                                            arbol += treeLabel(md.descripcion, tipo)
+                                            arbol += treeLabel(md.descripcion, tipo, '')
                                             arbol += "</li>" //</li> medio
                                         } //medios.each
                                         arbol += "</ul>" //</ul> medios
@@ -1971,7 +1968,7 @@ class ReportesController {
                                 arbol += "<ul class='ulSupuestos'>" //<ul> supuestos
                                 supuestos.each { sup ->
                                     arbol += "<li rel='supuesto' class='liSupuesto'>" //<li> supuesto
-                                    arbol += treeLabel(sup.descripcion, tipo)
+                                    arbol += treeLabel(sup.descripcion, tipo, '')
                                     arbol += "</li>" //</li> supuesto
                                 } //supuestos.each
                                 arbol += "</ul>" //</ul> supuestos
@@ -1985,7 +1982,7 @@ class ReportesController {
                                 arbol += "<ul class='ilActividades'>" //<ul> actividades
                                 actividades.eachWithIndex { a, j ->
                                     arbol += "<li rel='actividad' class='liActividad'>" //<li> actividad
-                                    arbol += treeLabel("<span style='font-weight:bold;'>Actividad #" + (j + 1) + ":</span> " + a.objeto, tipo)
+                                    arbol += treeLabel("<span style='font-weight:bold;'>Actividad #" + (j + 1) + ":</span> " + a.objeto, tipo, '')
                                     arbol += "<ul class='ulIndicadoresSupuestos'>" //<ul> indicadores supuestos
                                     arbol += "<li rel='indicadores' class='liIndicadores'>" //<li> indicadores
                                     arbol += treeLabel("Indicadores", tipo, "style='font-weight:bold;'")
@@ -1994,7 +1991,7 @@ class ReportesController {
                                         arbol += "<ul class='ulIndicadores'>" //<ul> indicadores
                                         indicadores.each { indi ->
                                             arbol += "<li rel='indicador' class='liIndicador'>" //<li> indicador
-                                            arbol += treeLabel(indi.descripcion, tipo)
+                                            arbol += treeLabel(indi.descripcion, tipo, '')
                                             arbol += "</li>" //</li> indicador
                                         } //indicadores.each
                                         arbol += "</ul>" //</ul> indicadores
@@ -2008,7 +2005,7 @@ class ReportesController {
                                         arbol += "<ul class='ulSupuestos'>" //<ul> supuestos
                                         supuestos.each { sup ->
                                             arbol += "<li rel='supuesto' class='liSupuesto'>" //<li> supuesto
-                                            arbol += treeLabel(sup.descripcion, tipo)
+                                            arbol += treeLabel(sup.descripcion, tipo, '')
                                             arbol += "</li>" //</li> supuesto
                                         } //supuestos.each
                                         arbol += "</ul>" //</ul> supuestos
@@ -2260,12 +2257,6 @@ class ReportesController {
                     }
                 } //ml criteria
 
-//                def tdCup = [:]
-//                tdCup.valor = proy.codigoProyecto
-//                tdCup.rowSpan = 0
-//                tdCup.tipo = "text"
-//                tdCup.style = ""
-
                 def tdNombre = [:]
                 tdNombre.valor = proy.nombre + (proy.codigoProyecto ? "<br/><b>CUP: " + proy.codigoProyecto + "</b>" : "")
                 tdNombre.rowSpan = 0
@@ -2286,11 +2277,8 @@ class ReportesController {
                     tdNoDatos.tipo = "text"
                     tdNoDatos.style = ""
                     tdNoDatos.extras = "class='tdNoDatos'"
-
-//                    tdCup.rowSpan = 1
                     tdNombre.rowSpan = 1
 
-//                    fila.add(tdCup)
                     fila.add(tdNombre)
                     fila.add(tdNoDatos)
 
@@ -2307,48 +2295,11 @@ class ReportesController {
                         tdActividad.tipo = "text"
                         tdActividad.style = ""
                         tdActividad.extras = "class='tdActividad'"
-
-//                        tdCup.rowSpan += asignaciones.size()
                         tdNombre.rowSpan += asignaciones.size()
 
                         def contAsg = 0
                         if (asignaciones.size() == 0) {
-//                            tdCup.rowSpan++
-//                            tdNombre.rowSpan++
-//                            tdActividad.rowSpan++
-//
-//                            def tdAsignacion = [:]
-//                            tdAsignacion.valor = "WTF"
-//                            tdAsignacion.rowSpan = 1
-//                            tdAsignacion.tipo = "text"
-//                            tdAsignacion.style = ""
-//
-//                            def programacion = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-//                            if (contAct == 0 && contAsg == 0) {
-//                                fila.add(tdCup)
-//                                fila.add(tdNombre)
-//                            } else {
-//                                fila = []
-//                            }
-//                            if (contAsg == 0) {
-//                                fila.add(tdActividad)
-//                            } else {
-//                                fila = []
-//                            }
-//                            fila.add(tdAsignacion)
-//                            programacion.each { prgr ->
-//                                def tdProgramacion = [:]
-//                                tdProgramacion.valor = prgr
-//                                tdProgramacion.colSpan = 1
-//                                tdProgramacion.tipo = "text"
-//                                tdProgramacion.style = ""
-//
-//                                fila.add(tdProgramacion)
-//                            }
-//                            filas.add(fila)
-//                            if (programacion.size() > 0) {
-//                                contAsg++
-//                            }
+
                         } else {
                             asignaciones.each { asgn ->
                                 def tdAsignacion = [:]
@@ -2399,16 +2350,6 @@ class ReportesController {
                                     fila.add(tdProgramacion)
                                 }
 
-//                                programacion.each { prgr ->
-//                                    def tdProgramacion = [:]
-//                                    tdProgramacion.valor = g.formatNumber(number: prgr.valor, format: "###,##0", minFractionDigits: "2", maxFractionDigits: "2")
-//                                    tdProgramacion.colSpan = 1
-//                                    tdProgramacion.tipo = "text"
-//                                    tdProgramacion.style = "text-align:right;"
-////                                    tdProgramacion.extras = "class='tdProgramacion_act-" + act.id + "_asg-" + asgn.id + "_prgr-" + prgr.id + "_" + prgr.mes.descripcion + "'"
-//
-//                                    fila.add(tdProgramacion)
-//                                }
                                 filas.add(fila)
 //                                if (programacion.size() > 0) {
                                 contAsg++
@@ -4009,12 +3950,12 @@ class ReportesController {
 
                 if (params.mes == "true") {
                     12.times() { mes ->
-                        corriente += format(totalMeses[mes]) + sep
+                        corriente += format(totalMeses[mes], "number") + sep
                         number = new Number(18 + mes, columna, totalMeses[mes]);
                         sheet.addCell(number);
                     }
                 }
-                corriente += format(totalTotal) + sep
+                corriente += format(totalTotal, "number") + sep
                 if (params.mes == "true")
                     number = new Number(30, columna, totalTotal);
                 else
@@ -4700,6 +4641,8 @@ class ReportesController {
             m.value = sig.mes.descripcion + " " + sig.anio.anio
             meses << m
         }
+
+
         return [meses: meses]
     }
 
