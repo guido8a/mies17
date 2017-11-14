@@ -89,6 +89,8 @@ class AsignacionController extends mies.seguridad.Shield {
         }
         maxInv=PresupuestoUnidad.findByAnioAndUnidad(actual,proyecto.unidadEjecutora)?.maxInversion
 
+        println("--- " + proyecto.unidadEjecutora.nombre)
+
         [asignaciones: asignaciones, actual: actual, proyecto: proyecto,total: total,totalUnidad: totalUnidad,maxInv:maxInv]
 
 

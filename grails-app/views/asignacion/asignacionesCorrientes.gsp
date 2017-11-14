@@ -1,4 +1,4 @@
-<%@ page import="mies.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="mies.Anio; mies.Actividad; mies.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -56,7 +56,8 @@
         <tbody>
         <g:set var="asignado" value="0"></g:set>
         <g:each in="${cinco}" var="act" status="i">
-            <g:set var="asg" value="${mies.Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>
+            %{--<g:set var="asg" value="${mies.Asignacion.findAll('from Asignacion where actividad='+act.id+ ' and unidad=' +unidad.id+ ' and anio=' +actual.id)}"/>--}%
+            <g:set var="asg" value="${mies.Asignacion.findAllByActividadAndUnidadAndAnio(act, unidad, actual)}"/>
 
             <g:if test="${asg}">
                 <g:set var="asg" value="${asg.pop()}"></g:set>
@@ -69,7 +70,7 @@
                     <td class="programa">
                         <g:select from="${programas}" id="programac_${i}" optionKey="id" optionValue="descripcion" name="programa" value="${asg.programa?.id}" class="programa"  />
                     </td>
-                    <g:set var="asignado" value="${asignado.toDouble()+asg.planificado}"></g:set>
+                    <g:set var="asignado" value="${asignado.toDouble() + asg.planificado?.toDouble()}"/>
                     <td class="anio">
                         %{--<g:select--}%
                         %{--from="${mies.Anio.list([sort:'anio',order:'desc'])}" name="anio"--}%
@@ -176,7 +177,9 @@
         <tbody>
         <g:set var="asignado" value="0"></g:set>
         <g:each in="${ocho}" var="act" status="i">
-            <g:set var="asg" value="${mies.Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>
+            %{--<g:set var="asg" value="${mies.Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>--}%
+            <g:set var="asg" value="${mies.Asignacion.findAllByActividadAndUnidadAndAnio(act, unidad, actual)}"/>
+
             <g:if test="${asg}">
                 <g:set var="asg" value="${asg.pop()}"></g:set>
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
@@ -291,7 +294,8 @@
         <tbody>
         <g:set var="asignado" value="0"></g:set>
         <g:each in="${nueve}" var="act" status="i">
-            <g:set var="asg" value="${mies.Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>
+            %{--<g:set var="asg" value="${mies.Asignacion.findAll('from Asignacion where actividad='+act.id+' and unidad= '+unidad.id+' and anio = '+actual.id)}"></g:set>--}%
+            <g:set var="asg" value="${mies.Asignacion.findAllByActividadAndUnidadAndAnio(act, unidad, actual)}"/>
             <g:if test="${asg}">
                 <g:set var="asg" value="${asg.pop()}"></g:set>
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
@@ -303,7 +307,7 @@
                         <g:select from="${programas}" id="programa_n${i}" optionKey="id" optionValue="descripcion" name="programa" value="${asg.programa?.id}" class="programa"  />
                     </td>
                     <g:set var="asignado"
-                           value="${asignado.toDouble()+asg.planificado}"></g:set>
+                           value="${asignado.toDouble()+asg.planificado}"/>
                     <td class="anio">
                         ${actual.anio}
                         <input type="hidden" name="anio" value="${actual.id}">

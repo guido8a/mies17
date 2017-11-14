@@ -657,10 +657,10 @@
                             } else {
                                 var fin = new Date()
                                 fin.addMinutes(20)
-                                $('#countdown').countdown('change', {until: fin});
+//                                $('#countdown').countdown('change', {until: fin});
                                 var check = new Date()
                                 check.addMinutes(15)
-                                $('#countdown').countdown('change', {until: check});
+//                                $('#countdown').countdown('change', {until: check});
                                 $("#load").dialog("open")
                                 $.ajax({
                                     type: "POST",

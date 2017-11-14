@@ -15,8 +15,8 @@
         <tbody>
         <g:each in="${metas}" var="meta" status="i">
             <tr>
-                <td title="${meta.marcoLogico.proyecto.toStringCompleto()}">${meta.marcoLogico.proyecto}</td>
-                <td title="${meta.marcoLogico.toStringCompleto()}">${meta.marcoLogico}</td>
+                <td title="${meta?.marcoLogico?.proyecto?.toStringCompleto()}">${meta?.marcoLogico?.proyecto}</td>
+                <td title="${meta?.marcoLogico?.toStringCompleto()}">${meta.marcoLogico}</td>
                 <td>${meta.tipoMeta}</td>
                 <td>${meta?.parroquia?.canton?.provincia}</td>
                 <td>${meta?.parroquia?.canton}</td>
@@ -31,8 +31,8 @@
                                                        format="###,##0"
                                                        minFractionDigits="2" maxFractionDigits="2"/>
                 </td>
-                <td><g:link controller="marcoLogico" action="ingresoMetas" params="${[id:meta.marcoLogico.id,meta:meta.id]}" class="ver">Ver</g:link></td>
-                <td><g:link controller="marcoLogico" action="mapaMeta" id="${meta.id}" class="mapa">Mapa</g:link></td>
+                <td><g:link controller="marcoLogico" action="ingresoMetas" params="${[id:meta?.marcoLogico?.id,meta:meta?.id]}" class="ver">Ver</g:link></td>
+                <td><g:link controller="marcoLogico" action="mapaMeta" id="${meta?.id}" class="mapa">Mapa</g:link></td>
 
             </tr>
         </g:each>

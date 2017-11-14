@@ -19,8 +19,8 @@ class MapasController {
                 (Canton.findAllByProvincia(prov)).each { canton ->
                     (Parroquia.findAllByCanton(canton)).each { parr ->
                         (Meta.findAllByParroquia(parr)).each { meta ->
-                            if (!proys.contains(meta.marcoLogico.proyecto)) {
-                                proys.add(meta.marcoLogico.proyecto)
+                            if (!proys.contains(meta?.marcoLogico?.proyecto)) {
+                                proys.add(meta?.marcoLogico?.proyecto)
                             }
                             metas.add(meta)
                         }
