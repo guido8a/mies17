@@ -6,7 +6,9 @@ class MenuTagLib {
 
     String createMenu(perfil, bordeAlertas, divs) {
 
-        def borde = bordeAlertas ? "style='border:2px red solid'" : ""
+//        def borde = bordeAlertas ? "style='color: red solid'" : ""
+        def borde = bordeAlertas ? "style='background-color: #ff1e25' " : ""
+//        def borde = bordeAlertas ?: ""
 
         def clase = !divs ? 'class="ui-helper-hidden"' : ''
 

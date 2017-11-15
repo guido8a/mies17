@@ -30,7 +30,8 @@ class ModificacionProyectoController extends mies.seguridad.Shield {
         session.modificacion.solicitante=session.usuario
         session.modificacion.proyecto = session.proyecto
         session.modificacion.fecha = new Date()
-        redirect(action: "informeModificacion")
+//        redirect(action: "informeModificacion")
+        redirect(action: "informeModificacionV2")
     }
     def guardarSolicitudUnidad = {
         println "guardar unidad " + params
@@ -65,6 +66,39 @@ class ModificacionProyectoController extends mies.seguridad.Shield {
         }
 
         println "res " + res + " proy  " + session.proyecto.id
+        def resp = []
+        res.each {
+            println "hasta " + it.hasta
+            if (it.desde.before(new Date()) && it.hasta.after(new Date())) {
+                resp.add(it)
+                session.resp = it.responsable
+                println "seesion " + session
+            }
+        }
+
+        [resp: resp]
+    }
+
+    def informeModificacionV2 = {
+        def res = ResponsableProyecto.findAllByProyectoAndTipo(session.proyecto, TipoResponsable.get(2))
+
+        def c = ResponsableProyecto.createCriteria()
+        res = c.list {
+//            maxResults(params.max)
+            tipo {
+                eq("codigo", "S")
+            }
+            and {
+                proyecto {
+                    eq("id", session.proyecto.id)
+                }
+                order("desde", "asc")
+                order("hasta", "asc")
+                order("tipo", "asc")
+            }
+        }
+
+//        println "res " + res + " proy  " + session.proyecto.id
         def resp = []
         res.each {
             println "hasta " + it.hasta

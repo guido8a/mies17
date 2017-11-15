@@ -1,4 +1,5 @@
 <%@ page import="mies.Informe" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -6,10 +7,13 @@
 
     <script type="text/javascript"
             src="${resource(dir: 'js/jquery/plugins/validation', file: 'jquery.validate.min.js')}"></script>
+
     <script type="text/javascript"
             src="${resource(dir: 'js/jquery/plugins/validation', file: 'additional-methods.js')}"></script>
+
     <script type="text/javascript"
             src="${resource(dir: 'js/jquery/plugins/validation', file: 'messages_es.js')}"></script>
+
 
     <script type="text/javascript"
             src="${resource(dir: 'js/jquery/plugins/qtip', file: 'jquery.qtip.min.js')}"></script>
@@ -17,6 +21,7 @@
 
     <script type="text/javascript"
             src="${resource(dir: 'js/jquery/plugins/slider', file: 'selectToUISlider.jQuery.js')}"></script>
+
 
     <script type="text/javascript"
             src="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.js')}"></script>
@@ -27,10 +32,15 @@
 
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
 
-
-    <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/ckeditor', file: 'ckeditor.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery/js', file: 'jquery-1.6.2.min.js')}"></script>
     <script type="text/javascript"
-            src="${resource(dir: 'js/jquery/plugins/ckeditor/adapters', file: 'jquery.js')}"></script>
+            src="${resource(dir: 'js/jquery/js', file: 'jquery-ui-1.8.16.custom.min.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins/ckeditor', file: 'ckeditor.js')}"></script>
+    %{--<script type="text/javascript"--}%
+            %{--src="${resource(dir: 'js/jquery/plugins/ckeditor/adapters', file: 'jquery.js')}"></script>--}%
+
+    <script type="text/javascript"
+            src="${resource(dir: 'js/jquery/js', file: 'jquery.ui.datepicker-es.js')}"></script>
 
     <title>Informe de solicitud de modificación</title>
 
@@ -74,7 +84,8 @@
                 <tr class="prop ${hasErrors(bean: informeInstance, field: 'responsableProyecto', 'error')}">
 
                     <td class="label mandatory" valign="middle">
-                        <g:message code="informe.responsableProyecto.label" default="Responsable Proyecto"/>
+                        %{--<g:message code="informe.responsableProyecto.label" default="Responsable Proyecto"/>--}%
+                        Responsable Proyecto
                         %{----}%
                     </td>
                     <td class="indicator mandatory">
@@ -83,7 +94,7 @@
                     <td class="" valign="middle">
                         <g:select class="ui-widget-content ui-corner-all required requiredCmb" name="responsableProyecto.id"
                                   id="responsable" title="${Informe.constraints.responsableProyecto.attributes.mensaje}"
-                                  from="${resp}" optionKey="id"
+                                  from="${resp}" optionKey=""
                                   optionValue="" value="${informeInstance?.responsableProyecto?.id}"/>
                         %{----}%
                     </td>
@@ -91,7 +102,8 @@
 
 
                     <td class="label " valign="middle">
-                        <g:message code="informe.tipo.label" default="Tipo"/>
+                        %{--<g:message code="informe.tipo.label" default="Tipo"/>--}%
+                        Tipo
                         %{----}%
                     </td>
                     <td class="indicator">
@@ -108,7 +120,8 @@
                 <tr class="prop ${hasErrors(bean: informeInstance, field: 'fecha', 'error')}" style="height: 50px;">
 
                     <td class="label " valign="middle">
-                        <g:message code="informe.fecha.label" default="Fecha"/>
+                        %{--<g:message code="informe.fecha.label" default="Fecha"/>--}%
+                        Fecha
                         %{----}%
                     </td>
                     <td class="indicator">
@@ -135,7 +148,8 @@
                 <tr class="prop ${hasErrors(bean: informeInstance, field: 'link', 'error')}">
 
                     <td class="label " valign="middle">
-                        <g:message code="informe.link.label" default="Link"/>
+                        %{--<g:message code="informe.link.label" default="Link"/>--}%
+                        Link
                         %{----}%
                     </td>
                     <td class="indicator">
@@ -154,7 +168,8 @@
                 <tr class="prop ${hasErrors(bean: informeInstance, field: 'dificultades', 'error')}">
 
                     <td class="label " valign="middle">
-                        <g:message code="informe.dificultades.label" default="Dificultades"/>
+                        %{--<g:message code="informe.dificultades.label" default="Dificultades"/>--}%
+                        Dificultades
                         %{----}%
                     </td>
                     <td class="indicator">
@@ -165,7 +180,11 @@
                                     name="dificultades" id="dificultades"
                                     title="${Informe.constraints.dificultades.attributes.mensaje}" cols="40" rows="3"
                                     value="${informeInstance?.dificultades}"/>
-                        %{----}%
+
+                        %{--<textarea name="editor1" id="editor1" rows="10" cols="80">--}%
+                            %{--This is my textarea to be replaced with CKEditor.--}%
+                        %{--</textarea>--}%
+
                     </td>
 
                 </tr>
@@ -205,6 +224,20 @@
 </div>
 
 <script type="text/javascript">
+
+
+
+    CKEDITOR.replace( 'dificultades', {
+        customConfig : '${resource(dir: 'js/jquery/plugins/ckeditor', file: 'config_min.js')}'
+    });
+
+
+    CKEDITOR.replace( 'avance', {
+        customConfig : '${resource(dir: 'js/jquery/plugins/ckeditor', file: 'config_min.js')}'
+    });
+
+
+
     //a custom format option callback
     var proyectoFormatting = function(text) {
         var newText = text;
@@ -255,40 +288,41 @@
     }
 
     function refreshPrct() {
-        var porc = $("#porc").slider("value");
-        $("#porc").find(".ui-slider-range, .ui-slider-handle").css({
-            background: calcColor(porc),
-            borderColor: "black"
-        });
-        $("#prc").val(porc);
+//        var porc = $("#porc").slider("value");
+//        $("#porc").find(".ui-slider-range, .ui-slider-handle").css({
+//            background: calcColor(porc),
+//            borderColor: "black"
+//        });
+//        $("#prc").val(porc);
     }
 
     function changePrct() {
-        var porc = $("#prc").val();
-        $("#porc").find(".ui-slider-range, .ui-slider-handle").css({
-            background: calcColor(porc),
-            borderColor: "black"
-        });
-        $("#porc").slider("option", "value", porc);
+//        var porc = $("#prc").val();
+//        $("#porc").find(".ui-slider-range, .ui-slider-handle").css({
+//            background: calcColor(porc),
+//            borderColor: "black"
+//        });
+//        $("#porc").slider("option", "value", porc);
     }
 
     $(function() {
 
-        $('textarea').ckeditor(function() { /* callback code */
-                },
-                {
-                    customConfig : '${resource(dir: 'js/jquery/plugins/ckeditor', file: 'config_min.js')}'
-                });
+        %{--$('textArea').ckeditor(function() { /* callback code */--}%
+                %{--},--}%
+                %{--{--}%
+                    %{--customConfig : '${resource(dir: 'js/jquery/plugins/ckeditor', file: 'config_min.js')}'--}%
+                %{--});--}%
 
 
-        $("#porc").slider({
-            orientation: "horizontal",
-            range: "min",
-            max: 100,
-            slide: refreshPrct,
-            change: refreshPrct,
-            value: $("#prc").val()
-        });
+
+//        $("#porc").slider({
+//            orientation: "horizontal",
+//            range: "min",
+//            max: 100,
+//            slide: refreshPrct,
+//            change: refreshPrct,
+//            value: $("#prc").val()
+//        });
 
 
         $("#prc").change(function() {
@@ -298,13 +332,14 @@
         refreshPrct();
 
         /***********************************************/
-        $('#responsable').selectmenu({
-            width: 250,
-            format: proyectoFormatting
-        });
-        $('#tipo').selectmenu({
-            width: 250
-        });
+//        $('#responsable').selectmenu({
+//            width: 250,
+//            format: proyectoFormatting
+//        });
+//
+//        $('#tipo').selectmenu({
+//            width: 250
+//        });
 
 //        $('#prc').selectToUISlider({
 //            labels: 5,

@@ -3,7 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Marco logico del proyecto (${proyecto.codigoProyecto}): ${(proyecto?.nombre.length() > 40) ? proyecto?.nombre.substring(0, 40) + "..." : proyecto.nombre}</title>
+    %{--<title>Marco logico del proyecto (${proyecto.codigoProyecto}): ${(proyecto?.nombre.length() > 40) ? proyecto?.nombre.substring(0, 40) + "..." : proyecto.nombre}</title>--}%
+    <title>Marco logico del proyecto: '${proyecto?.nombre ?: ''}'</title>
 
 
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
