@@ -74,6 +74,7 @@ class ModificacionController extends mies.seguridad.Shield {
             actual = Anio.findByAnio(new Date().format("yyyy"))
         }
         def techo = PresupuestoUnidad.findByUnidadAndAnio(unidad,actual)
+        println("techo " + techo)
         [unidad:unidad,techo:techo,actual: actual]
     }
 

@@ -103,7 +103,7 @@
 
             <td colspan="4">
                 <g:select from="${ObjetivoGobiernoResultado.list([sort:'descripcion'])}" name="objetivoGobiernoResultado.id" id="selObjetivoGob" optionKey="id" optionValue="descripcion"
-                          value="" class="ui-widget-content ui-corner-all combo" style="width: 550px;"/>
+                          value="${presupuesto?.objetivoGobiernoResultado?.id}" class="ui-widget-content ui-corner-all combo" style="width: 550px;"/>
             </td> <!-- campo -->
         </tr>
 
@@ -116,7 +116,7 @@
 
             <td colspan="4">
                 <g:select from="${ObjetivoEstrategicoProyecto.list([sort:'descripcion'])}" name="objetivoEstrategico.id" id="selObjetivoEst" optionKey="id" optionValue="descripcion"
-                          value="" class="ui-widget-content ui-corner-all" style="width: 550px"/>
+                          value="${presupuesto?.objetivoEstrategico?.id}" class="ui-widget-content ui-corner-all" style="width: 550px"/>
             </td> <!-- campo -->
         </tr>
 
@@ -129,7 +129,7 @@
 
             <td colspan="4">
                 <g:select from="${EjeProgramatico.list([sort:'descripcion'])}" name="ejeProgramatico.id" id="selEje" optionKey="id" optionValue="descripcion"
-                          value="" class="ui-widget-content ui-corner-all" style="width: 550px"/>
+                          value="${presupuesto?.ejeProgramatico?.id}" class="ui-widget-content ui-corner-all" style="width: 550px"/>
             </td> <!-- campo -->
 
         </tr>
@@ -143,7 +143,7 @@
 
             <td colspan="4">
                 <g:select from="${Politica.list([sort:'descripcion'])}" name="politica.id" id="selPolitica" optionKey="id" optionValue="descripcion"
-                          value="" class="ui-widget-content ui-corner-all" style="width: 550px"/>
+                          value="${presupuesto?.politica?.id}" class="ui-widget-content ui-corner-all" style="width: 550px"/>
             </td> <!-- campo -->
         </tr>
 
@@ -185,11 +185,11 @@
 
     $(function () {
         reload();
-        $("#selAnio").selectmenu({width:80});
-        $("#selEje").selectmenu({width:540});
-        $("#selObjetivoEst").selectmenu({width:540});
-        $("#selObjetivoGob").selectmenu({width:540});
-        $("#selPolitica").selectmenu({width:540});
+//        $("#selAnio").selectmenu({width:80});
+//        $("#selEje").selectmenu({width:540});
+//        $("#selObjetivoEst").selectmenu({width:540});
+//        $("#selObjetivoGob").selectmenu({width:540});
+//        $("#selPolitica").selectmenu({width:540});
 
         $("#selAnio").change(function () {
             reload();

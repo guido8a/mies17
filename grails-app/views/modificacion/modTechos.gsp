@@ -32,10 +32,10 @@
 
     <fieldset style="" class="ui-corner-all">
         <legend>Gastos correintes</legend>
-        <g:if test="${techo.aprobadoCorrientes==1}">
+        <g:if test="${techo?.aprobadoCorrientes==1}">
 
-            Presupuesto de gasto corrientes: <input type="text" style="width: 120px;text-align: right" class="ui-corner-all" id="maxCor" value="${formatNumber(number:techo.maxCorrientes,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}">
-            <a href="#" id="btn_cor" iden="${techo.id}">Modificar</a>
+            Presupuesto de gasto corrientes: <input type="text" style="width: 120px;text-align: right" class="ui-corner-all" id="maxCor" value="${formatNumber(number:techo?.maxCorrientes,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}">
+            <a href="#" id="btn_cor" iden="${techo?.id}">Modificar</a>
 
         </g:if>
         <g:else>
@@ -45,8 +45,8 @@
     <fieldset class="ui-corner-all">
         <legend>Inversiones</legend>
 
-        Presupuesto de inversiones: <input type="text" style="width: 120px;;text-align: right;margin-left: 25px" id="maxInv" class="ui-corner-all" value="${formatNumber(number:techo.maxInversion,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}">
-        <a href="#" id="btn_inv" iden="${techo.id}">Modificar</a>
+        Presupuesto de inversiones: <input type="text" style="width: 120px;;text-align: right;margin-left: 25px" id="maxInv" class="ui-corner-all" value="${formatNumber(number:techo?.maxInversion,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}">
+        <a href="#" id="btn_inv" iden="${techo?.id}">Modificar</a>
 
         %{--<g:else>--}%
         %{--El presupuesto para la unidad ${unidad} de inversiones del año ${actual} aun no ha sido aprobado.--}%
@@ -72,7 +72,7 @@
                             "url"     : "${createLink(action: 'modTechoCorreintes')}",
                             "data"    : {
                                 "valor" : val,
-                                "id"   : "${techo.id}"
+                                "id"   : "${techo?.id}"
                             },
                             "success" : function (msg) {
                                 location.reload(true)
@@ -101,7 +101,7 @@
                             "url"     : "${createLink(action: 'modTechoInversiones')}",
                             "data"    : {
                                 "valor" : val,
-                                "id"   : "${techo.id}"
+                                "id"   : "${techo?.id}"
                             },
                             "success" : function (msg) {
                                 location.reload(true)
