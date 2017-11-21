@@ -35,7 +35,7 @@
     &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${mies.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
 </div>
 
-<div id="accordion" style="width:1080px;margin-top: 5px;font-size: 11px;">
+<div id="accordion" style="width:1180px;margin-top: 5px;font-size: 11px;">
     <ul>
 
         %{--<li><a href="#tabs-1">Inversión</a></li>--}%

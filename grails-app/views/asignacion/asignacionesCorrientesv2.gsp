@@ -50,7 +50,8 @@
 
                 <td><g:select from="${programas}" id="programa" optionKey="id" name="programa" class="programa" value="${programa.id}"/></td>
 
-                <td><g:select from="${componentes}" id="componente" optionKey="id" name="componente" class="componente" noSelection="['-1':'Seleccione...']"/></td>
+                %{--<td><g:select from="${componentes}" id="componente" optionKey="id" name="componente" class="componente" noSelection="['-1':'Seleccione...']"/></td>--}%
+                <td><g:select from="${componentes}" id="componente" optionKey="id" name="componente" class="componente"/></td>
             </tr>
         </table>
 

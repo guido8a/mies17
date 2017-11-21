@@ -175,10 +175,14 @@
                 $("#maxInversion").val(parts[2]);
                 $("#orgCorrientes").val(parts[7]);
                 $("#orgInversion").val(parts[8]);
-                $("#selEje").selectmenu("value", parts[3]);
-                $("#selObjetivoEst").selectmenu("value", parts[4]);
-                $("#selObjetivoGob").selectmenu("value", parts[5]);
-                $("#selPolitica").selectmenu("value", parts[6]);
+//                $("#selEje").selectmenu("value", parts[3]);
+//                $("#selObjetivoEst").selectmenu("value", parts[4]);
+//                $("#selObjetivoGob").selectmenu("value", parts[5]);
+//                $("#selPolitica").selectmenu("value", parts[6]);
+                $("#selEje").val(parts[3]);
+                $("#selObjetivoEst").val(parts[4]);
+                $("#selObjetivoGob").val(parts[5]);
+                $("#selPolitica").val(parts[6]);
             }
         });
     }
