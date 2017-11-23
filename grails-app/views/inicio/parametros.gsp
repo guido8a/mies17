@@ -29,9 +29,9 @@
                 <div class="item" texto="obes">
                     <g:link  controller="objetivoEstrategicoProyecto" action="list">Objetivos Estratégicos</g:link> con los cuales se alinean los proyectos
                 </div><br>
-                <div class="item" texto="obes">
-                    <g:link  controller="objetivoEstrategicoProyecto" action="list">Objetivos Estratégicos</g:link> con los cuales se alinean los proyectos
-                </div><br>
+                %{--<div class="item" texto="obes">--}%
+                    %{--<g:link  controller="objetivoEstrategicoProyecto" action="list">Objetivos Estratégicos</g:link> con los cuales se alinean los proyectos--}%
+                %{--</div><br>--}%
                 <div class="item" texto="obgr">
                     <g:link  controller="objetivoGobiernoResultado" action="list">Objetivos del Gobierno por Resultados</g:link> de acuerdo al sistema de Gobierno por Resultados
                 </div><br>
@@ -57,6 +57,9 @@
 --}%
                 <div class="item" texto="tpmt">
                     <g:link  controller="tipoMeta" action="list">Tipo de Meta</g:link> para la desagregaci&oacute;n de las metas a modo de unidad de medida del efecto social.
+                </div><br>
+                <div class="item" texto="mtbv">
+                    <g:link  controller="metaBuenVivir" action="list">Metas Buen Vivir</g:link>
                 </div><br>
             </div>
 
@@ -226,6 +229,11 @@
       presupuesto y al PAC.</p>
     <p class="label">No se debe editar este parámetro.</p>
 </div>
+
+    <div id="mtbv" style="display:none">
+        <h1>Metas del Buen Vivir</h1><br>
+        <p>Edición y Creación de Metas del Buen Vivir</p>
+    </div>
 
 <div id="tpmt" style="display:none">
     <h1>Tipo de Meta</h1><br>

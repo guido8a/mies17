@@ -6,12 +6,12 @@
         <meta name="layout" content="main" />
         <g:set var="entityName"
                value="${message(code: 'metaBuenVivir.label', default: 'MetaBuenVivir')}" />
-        <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <title>Detalles Meta del Buen Vivir</title>
     </head>
 
     <body>
 
-        <div class="dialog" title="${title}">
+        <div class="dialog" title="Meta del Buen Vivir">
 
 
             <div class="body">
@@ -23,7 +23,7 @@
                     <fieldset class="ui-corner-all">
                         <legend class="ui-widget ui-widget-header ui-corner-all">
                             <g:message code="metaBuenVivir.show.legend"
-                                       default="MetaBuenVivir details" />
+                                       default="Meta del Buen Vivir" />
                         </legend>
 
                         
@@ -45,15 +45,17 @@
                             <div class="prop">
                                 <label>
                                     <g:message code="metaBuenVivir.politica.label"
-                                               default="Politica" />
+                                               default="Política" />
                                 </label>
 
                                 <div class="campo">
                                     
-                                    <g:link controller="politicaBuenVivir" action="show"
-                                                         id="${metaBuenVivirInstance?.politica?.id}">
-                                        ${metaBuenVivirInstance?.politica?.encodeAsHTML()}
-                                    </g:link>
+                                    %{--<g:link controller="politicaBuenVivir" action="show"--}%
+                                                         %{--id="${metaBuenVivirInstance?.politica?.id}">--}%
+                                        %{--${metaBuenVivirInstance?.politica?.encodeAsHTML()}--}%
+                                    %{--</g:link>--}%
+
+                                    ${metaBuenVivirInstance?.politica?.encodeAsHTML()}
                                     
                                 </div> <!-- campo -->
                             </div> <!-- prop -->
@@ -62,7 +64,7 @@
                             <div class="prop">
                                 <label>
                                     <g:message code="metaBuenVivir.codigo.label"
-                                               default="Codigo" />
+                                               default="Código" />
                                 </label>
 
                                 <div class="campo">
@@ -76,7 +78,7 @@
                             <div class="prop">
                                 <label>
                                     <g:message code="metaBuenVivir.descripcion.label"
-                                               default="Descripcion" />
+                                               default="Descripción" />
                                 </label>
 
                                 <div class="campo">
@@ -89,10 +91,10 @@
 
                         <div class="buttons">
                             <g:link class="button edit" action="edit" id="${metaBuenVivirInstance?.id}">
-                                <g:message code="default.button.update.label" default="Edit" />
+                                Editar
                             </g:link>
                             <g:link class="button delete" action="delete" id="${metaBuenVivirInstance?.id}">
-                                <g:message code="default.button.delete.label" default="Delete" />
+                               Eliminar
                             </g:link>
                         </div>
 
@@ -110,7 +112,7 @@
 
                 $(".edit").button("option", "icons", {primary:'ui-icon-pencil'});
                 $(".delete").button("option", "icons", {primary:'ui-icon-trash'}).click(function() {
-                    if(confirm("${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}")) {
+                    if(confirm("está seguro de eliminar la Meta del Buen Vivir?")) {
                         return true;
                     }
                     return false;

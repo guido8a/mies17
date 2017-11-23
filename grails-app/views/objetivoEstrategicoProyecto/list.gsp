@@ -6,7 +6,7 @@
         <meta name="layout" content="main" />
         <g:set var="entityName"
                value="${message(code: 'objetivoEstrategicoProyecto.label', default: 'Objetivos Estrategicos de Proyectos')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title>Lista de Objetivos Estratégicos</title>
     </head>
 
     <body>
