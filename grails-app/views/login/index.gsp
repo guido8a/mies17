@@ -33,10 +33,10 @@
 
 <body>
 
-<div class="esquinas" style="width: 600px;height: 450px; margin: auto;margin-top:150px;background: #fff">
+<div class="esquinas" style="width: 640px;height: 450px; margin: auto;margin-top:150px;background: #fff">
 
-    <div style="margin-left: 30px;margin-top: 45px;float: left;width: 300px; height: 300px;" class="ui-corner-all">
-        <img src="${resource(dir: 'images', file: 'mies_logo.png')}" alt="mies" width="100%" height="100%"></div>
+    <div style="margin-left: 0px;margin-top: 45px;float: left;width: 360px; height: 393px;" class="ui-corner-all">
+        <img src="${resource(dir: 'images', file: 'mies_logo.png')}" alt="mies" width="338px" height="393px"></div>
 
     <div style=" width: 250px;height: 300px;margin-top: 25px;float: left;margin-left: 5px; ;background:#2191c0"
          class="esquinas">
