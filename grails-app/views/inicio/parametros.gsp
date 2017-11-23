@@ -59,6 +59,9 @@
                     <g:link  controller="tipoMeta" action="list">Tipo de Meta</g:link> para la desagregaci&oacute;n de las metas a modo de unidad de medida del efecto social.
                 </div><br>
                 <div class="item" texto="mtbv">
+                    <g:link  controller="politicaBuenVivir" action="list">Políticas Buen Vivir</g:link>
+                </div><br>
+                <div class="item" texto="mtbv">
                     <g:link  controller="metaBuenVivir" action="list">Metas Buen Vivir</g:link>
                 </div><br>
             </div>

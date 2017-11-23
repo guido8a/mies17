@@ -1,5 +1,12 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: gato
+  Date: 23/11/17
+  Time: 12:14
+--%>
 
-<%@ page import="mies.MetaBuenVivir" %>
+
+<%@ page import="mies.PoliticaBuenVivir" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -17,11 +24,11 @@
 
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/qtip', file: 'jquery.qtip.css')}" />
 
-    <title>Editar Meta del Buen Vivir</title>
+    <title>Editar Política del Buen Vivir</title>
 </head>
 
 <body>
-<div class="dialog" title="${title}">
+<div class="dialog">
 
 
     <div class="body">
@@ -30,71 +37,67 @@
                 <g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" />
             </div>
         </g:if>
-        <g:hasErrors bean="${metaBuenVivirInstance}">
+        <g:hasErrors bean="${politicaBuenVivirInstance}">
             <div class="errors ui-state-error ui-corner-all">
-                <g:renderErrors bean="${metaBuenVivirInstance}" as="list" />
+                <g:renderErrors bean="${politicaBuenVivirInstance}" as="list" />
             </div>
         </g:hasErrors>
-        <g:form action="save" class="frmMetaBuenVivir"
+        <g:form action="save" class="frmPoliticaBuenVivir"
                 method="post"  >
-            <g:hiddenField name="id" value="${metaBuenVivirInstance?.id}"/>
-            <g:hiddenField name="version" value="${metaBuenVivirInstance?.version}" />
+            <g:hiddenField name="id" value="${politicaBuenVivirInstance?.id}"/>
+            <g:hiddenField name="version" value="${politicaBuenVivirInstance?.version}" />
             <div>
                 <fieldset class="ui-corner-all" style="width: 1000px">
                     <legend class="ui-widget ui-widget-header ui-corner-all">
-                        <g:if test="${source == 'edit'}">
-                            <g:message code="metaBuenVivir.edit.legend" default="Meta del Buen Vivir"/>
-                        </g:if>
-                        <g:else>
-                            <g:message code="metaBuenVivir.create.legend" default="Meta Buen Vivir"/>
-                        </g:else>
+                        Política del Buen Vivir
                     </legend>
 
-                    <div class="prop mandatory ${hasErrors(bean: metaBuenVivirInstance, field: 'politica', 'error')}">
-                        <label for="politica">
-                            <g:message code="metaBuenVivir.politica.label" default="Política" />
+                    <div class="prop mandatory ${hasErrors(bean: politicaBuenVivirInstance, field: 'objetivo', 'error')}">
+                        <label>
+                            Objetivo
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all" style="width: 800px" name="politica.id" title="Meta del buen vivir" from="${mies.PoliticaBuenVivir.list()}" optionKey="id" value="${metaBuenVivirInstance?.politica?.id}"  />
+                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all"
+                                      style="width: 800px" name="objetivo.id" title="Objetivo del buen vivir" from="${mies.ObjetivoBuenVivir.list()}"
+                                      optionKey="id" value="${politicaBuenVivirInstance?.objetivo?.id}"  />
                         </div>
                     </div>
 
-                    <div class="prop mandatory ${hasErrors(bean: metaBuenVivirInstance, field: 'codigo', 'error')}">
+                    <div class="prop mandatory ${hasErrors(bean: politicaBuenVivirInstance, field: 'codigo', 'error')}">
                         <label for="codigo">
-                            <g:message code="metaBuenVivir.codigo.label" default="Código" />
+                            Código
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:textField class="field number required ui-widget-content ui-corner-all" name="codigo" title="Código de la meta" id="codigo" value="${fieldValue(bean: metaBuenVivirInstance, field: 'codigo')}" />
+                            <g:textField class="field number required ui-widget-content ui-corner-all" name="codigo" title="Código de la política" id="codigo" value="${fieldValue(bean: politicaBuenVivirInstance, field: 'codigo')}" />
                         </div>
                     </div>
 
-                    <div class="prop ${hasErrors(bean: metaBuenVivirInstance, field: 'descripcion', 'error')}">
+                    <div class="prop ${hasErrors(bean: politicaBuenVivirInstance, field: 'descripcion', 'error')}">
                         <label for="descripcion">
-                            <g:message code="metaBuenVivir.descripcion.label" default="Descripción" />
-
+                            Descripción
                         </label>
                         <div class="campo">
-                            <g:textField  name="descripcion" id="descripcion" style="width: 800px" title="Descripción de la meta" class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="127" value="${metaBuenVivirInstance?.descripcion}" />
+                            <g:textField  name="descripcion" id="descripcion" style="width: 800px" title="Descripción de la política" class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="127" value="${politicaBuenVivirInstance?.descripcion}" />
                         </div>
                     </div>
 
                     <div class="buttons">
                         <g:if test="${source == 'edit'}">
                             <a href="#" class="button save">
-                                <g:message code="update" default="Guardar" />
+                                Guardar
                             </a>
-                            <g:link class="button delete" action="delete" id="${metaBuenVivirInstance?.id}">
-                               Eliminar
+                            <g:link class="button delete" action="delete" id="${politicaBuenVivirInstance?.id}">
+                                Eliminar
                             </g:link>
-                            <g:link class="button show" action="show" id="${metaBuenVivirInstance?.id}">
-                                <g:message code="default.button.show.label" default="Detalles" />
+                            <g:link class="button show" action="show" id="${politicaBuenVivirInstance?.id}">
+                                Detalles
                             </g:link>
                         </g:if>
                         <g:else>
                             <a href="#" class="button save">
-                                <g:message code="create" default="Guardar" />
+                                Guardar
                             </a>
                         </g:else>
                     </div>
@@ -107,7 +110,7 @@
 
 <script type="text/javascript">
     $(function() {
-        var myForm = $(".frmMetaBuenVivir");
+        var myForm = $(".frmPoliticaBuenVivir");
 
         // Tooltip de informacion para cada field (utiliza el atributo title del textfield)
         var elems = $('.field')
@@ -201,7 +204,7 @@
             return false;
         });
         $(".delete").button("option", "icons", {primary:'ui-icon-trash'}).click(function() {
-            if(confirm("está seguro de eliminar la Meta del Buen Vivir?")) {
+            if(confirm("está seguro de eliminar la Política del Buen Vivir?")) {
                 return true;
             }
             return false;

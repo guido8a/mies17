@@ -21,7 +21,7 @@ class PoliticaBuenVivir implements Serializable {
     static constraints = {
         objetivo(blank: false, nullable: false, attributes: [mensaje: 'Objetivo cel buen vivir'])
         codigo(blank: false, nullable: false, attributes: [mensaje: 'Código de la política'])
-        descripcion(size: 1..127, blank: true, nullable: true, attributes: [mensaje: 'Descripción de la política'])
+        descripcion(size: 1..510, blank: true, nullable: true, attributes: [mensaje: 'Descripción de la política'])
     }
 
     String toString() {
