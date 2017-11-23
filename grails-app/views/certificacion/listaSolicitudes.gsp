@@ -153,8 +153,10 @@
             if(acuerdo==""){
                 alert("Ingrese el número del acuerdo ministerial ")
             }
-            var url = "${createLink(controller: 'reportes', action: 'certificacion')}/?id="+$("#cerAprob").val()+"Wacuerdo="+acuerdo+"Wmemo="+$("#memorandoCertificado").val()+"Wusu=${session.usuario.id}";
-            location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+"&filename=certificacion_MIES-"+$("#memorandoCertificado").val()+".pdf"
+            var url = "${createLink(controller: 'reportes', action: 'certificacion')}/?id="+$("#cerAprob").val()+
+                    "Wacuerdo="+acuerdo+"Wmemo="+$("#memorandoCertificado").val()+"Wusu=${session.usuario.id}";
+            location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url+
+                    "&filename=certificacion_MIES-"+$("#memorandoCertificado").val()+".pdf"
         });
 
         $("#aprobar").dialog({

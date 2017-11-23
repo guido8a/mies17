@@ -93,6 +93,14 @@ class LoginController {
         }
     }
 
+    def validarSesion() {
+        if (session.usuario) {
+            render "OK"
+        } else {
+            flash.message = "Su sesión ha caducado, por favor ingrese nuevamente."
+            render "NO"
+        }
+    }
 
 
 }

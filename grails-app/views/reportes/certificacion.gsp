@@ -107,7 +107,7 @@
     </div>
     <g:if test="${usuario.id.toInteger()==3}">
         <div style="margin-top: 100px;float: left;font-size: 12pt;">
-            <p>Lcd. Ruth Gisella Narváez Vega</p>
+            <p>Mgs. Allison Berenice Quintanilla Izurieta</p>
             <p>
                 <b>DIRECTORA DE PLANIFICACIÓN E INVERSIÓN</b>
             </p>
