@@ -120,7 +120,7 @@ class MetaBuenVivirController {
         redirect(action: "form", params: params)
     }
 
-    def delete = {
+    def delete_ajax = {
         def metaBuenVivirInstance = MetaBuenVivir.get(params.id)
         if (metaBuenVivirInstance) {
             try {

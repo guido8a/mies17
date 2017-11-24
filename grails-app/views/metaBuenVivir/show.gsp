@@ -93,7 +93,7 @@
                             <g:link class="button edit" action="edit" id="${metaBuenVivirInstance?.id}">
                                 Editar
                             </g:link>
-                            <g:link class="button delete" action="delete" id="${metaBuenVivirInstance?.id}">
+                            <g:link class="button delete" action="delete_ajax" id="${metaBuenVivirInstance?.id}">
                                Eliminar
                             </g:link>
                         </div>

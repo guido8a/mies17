@@ -3,9 +3,9 @@ package mies
 
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
-@Transactional(readOnly = true)
+//import grails.transaction.Transactional
+//
+//@Transactional(readOnly = true)
 class PoliticaBuenVivirController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -22,7 +22,7 @@ class PoliticaBuenVivirController {
 
     def list = {
         def title = g.message(code: "default.list.label", args: ["Politica"], default: "Politica List")
-        params.max = Math.min(params.max ? params.int('max') : 25, 100)
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [politicaInstanceList: PoliticaBuenVivir.list(params), politicaInstanceTotal: PoliticaBuenVivir.count(), title: title, params: params]
     }
 
@@ -83,7 +83,7 @@ class PoliticaBuenVivirController {
                     redirect(action: "show", id: politicaBuenVivirInstance.id)
                 }
                 else {
-                    render(view: "form", model: [metaBuenVivirInstance: politicaBuenVivirInstance, title: title, source: "edit"])
+                    render(view: "form", model: [politicaBuenVivirInstance: politicaBuenVivirInstance, title: title, source: "edit"])
                 }
             }
             else {
@@ -99,13 +99,14 @@ class PoliticaBuenVivirController {
                 redirect(action: "show", id: politicaBuenVivirInstance.id)
             }
             else {
-                render(view: "form", model: [metaBuenVivirInstance: politicaBuenVivirInstance, title: title, source: "create"])
+                render(view: "form", model: [politicaBuenVivirInstance: politicaBuenVivirInstance, title: title, source: "create"])
             }
         }
     }
 
-    def delete = {
-        println("params " + params)
+
+    def delete_ajax = {
+//        println("params " + params)
         def politicaBuenVivirInstance = PoliticaBuenVivir.get(params.id)
         if (politicaBuenVivirInstance) {
             try {

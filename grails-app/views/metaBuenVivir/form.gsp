@@ -85,7 +85,7 @@
                             <a href="#" class="button save">
                                 <g:message code="update" default="Guardar" />
                             </a>
-                            <g:link class="button delete" action="delete" id="${metaBuenVivirInstance?.id}">
+                            <g:link class="button delete" action="delete_ajax" id="${metaBuenVivirInstance?.id}">
                                Eliminar
                             </g:link>
                             <g:link class="button show" action="show" id="${metaBuenVivirInstance?.id}">

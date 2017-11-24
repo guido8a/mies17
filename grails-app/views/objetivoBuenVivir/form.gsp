@@ -1,12 +1,19 @@
 <%--
   Created by IntelliJ IDEA.
   User: gato
+  Date: 24/11/17
+  Time: 11:36
+--%>
+
+<%--
+  Created by IntelliJ IDEA.
+  User: gato
   Date: 23/11/17
   Time: 12:14
 --%>
 
 
-<%@ page import="mies.PoliticaBuenVivir" %>
+<%@ page import="mies.ObjetivoBuenVivir" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -24,7 +31,7 @@
 
     <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/qtip', file: 'jquery.qtip.css')}" />
 
-    <title>Editar Política del Buen Vivir</title>
+    <title>Editar Objetivo del Buen Vivir</title>
 </head>
 
 <body>
@@ -37,49 +44,37 @@
                 <g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}" />
             </div>
         </g:if>
-        <g:hasErrors bean="${politicaBuenVivirInstance}">
+        <g:hasErrors bean="${objetivoBuenVivirInstance}">
             <div class="errors ui-state-error ui-corner-all">
-                <g:renderErrors bean="${politicaBuenVivirInstance}" as="list" />
+                <g:renderErrors bean="${objetivoBuenVivirInstance}" as="list" />
             </div>
         </g:hasErrors>
         <g:form action="save" class="frmPoliticaBuenVivir"
                 method="post"  >
-            <g:hiddenField name="id" value="${politicaBuenVivirInstance?.id}"/>
-            <g:hiddenField name="version" value="${politicaBuenVivirInstance?.version}" />
+            <g:hiddenField name="id" value="${objetivoBuenVivirInstance?.id}"/>
+            <g:hiddenField name="version" value="${objetivoBuenVivirInstance?.version}" />
             <div>
                 <fieldset class="ui-corner-all" style="width: 1000px">
                     <legend class="ui-widget ui-widget-header ui-corner-all">
-                        Política del Buen Vivir
+                        Objetivo del Buen Vivir
                     </legend>
 
-                    <div class="prop mandatory ${hasErrors(bean: politicaBuenVivirInstance, field: 'objetivo', 'error')}">
-                        <label>
-                            Objetivo
-                            <span class="indicator">*</span>
-                        </label>
-                        <div class="campo">
-                            <g:select class="field required requiredCmb ui-widget-content ui-corner-all"
-                                      style="width: 800px" name="objetivo.id" title="Objetivo del buen vivir" from="${mies.ObjetivoBuenVivir.list()}"
-                                      optionKey="id" value="${politicaBuenVivirInstance?.objetivo?.id}"  />
-                        </div>
-                    </div>
-
-                    <div class="prop mandatory ${hasErrors(bean: politicaBuenVivirInstance, field: 'codigo', 'error')}">
+                    <div class="prop mandatory ${hasErrors(bean: objetivoBuenVivirInstance, field: 'codigo', 'error')}">
                         <label for="codigo">
                             Código
                             <span class="indicator">*</span>
                         </label>
                         <div class="campo">
-                            <g:textField class="field number required ui-widget-content ui-corner-all" name="codigo" title="Código de la política" id="codigo" value="${fieldValue(bean: politicaBuenVivirInstance, field: 'codigo')}" />
+                            <g:textField class="field number required ui-widget-content ui-corner-all" name="codigo" title="Código dwl objetivo" id="codigo" value="${fieldValue(bean: objetivoBuenVivirInstance, field: 'codigo')}" />
                         </div>
                     </div>
 
-                    <div class="prop ${hasErrors(bean: politicaBuenVivirInstance, field: 'descripcion', 'error')}">
+                    <div class="prop ${hasErrors(bean: objetivoBuenVivirInstance, field: 'descripcion', 'error')}">
                         <label for="descripcion">
                             Descripción
                         </label>
                         <div class="campo">
-                            <g:textField  name="descripcion" id="descripcion" style="width: 800px" title="Descripción de la política" class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="127" value="${politicaBuenVivirInstance?.descripcion}" />
+                            <g:textField  name="descripcion" id="descripcion" style="width: 800px" title="Descripción del objetivo" class="field ui-widget-content ui-corner-all" minLenght="1" maxLenght="127" value="${objetivoBuenVivirInstance?.descripcion}" />
                         </div>
                     </div>
 
@@ -88,10 +83,10 @@
                             <a href="#" class="button save">
                                 Guardar
                             </a>
-                            <g:link class="button delete" action="delete_ajax" id="${politicaBuenVivirInstance?.id}">
+                            <g:link class="button delete" action="delete_ajax" id="${objetivoBuenVivirInstance?.id}">
                                 Eliminar
                             </g:link>
-                            <g:link class="button show" action="show" id="${politicaBuenVivirInstance?.id}">
+                            <g:link class="button show" action="show" id="${objetivoBuenVivirInstance?.id}">
                                 Detalles
                             </g:link>
                         </g:if>
@@ -204,7 +199,7 @@
             return false;
         });
         $(".delete").button("option", "icons", {primary:'ui-icon-trash'}).click(function() {
-            if(confirm("está seguro de eliminar la Política del Buen Vivir?")) {
+            if(confirm("está seguro de eliminar el Objetivo del Buen Vivir?")) {
                 return true;
             }
             return false;
