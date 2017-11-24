@@ -120,7 +120,7 @@
             <tr class="prop ${hasErrors(bean: usuario.persona, field: 'discapacitado', 'error')} ${hasErrors(bean: usuario.persona, field: 'fechaNacimiento', 'error')}">
 
                 <td class="label " valign="middle">
-                    <g:message code="persona.discapacitado.label" default="Discapacitado"/>
+                   Persona con discapacidad
                 </td>
 
                 <td class="indicator">

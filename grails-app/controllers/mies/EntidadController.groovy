@@ -863,6 +863,22 @@ class EntidadController extends mies.seguridad.Shield {
             def paramsPersona = params.persona
             def paramsUsuario = params.usuario
 
+            def tx_fcha
+            def fcha
+            if(paramsPersona.fechaNacimiento){
+                tx_fcha = "${paramsPersona.fechaNacimiento_day}-${paramsPersona.fechaNacimiento_month}-${paramsPersona.fechaNacimiento_year}"
+                fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
+                paramsPersona.fechaNacimiento = fcha
+            }
+
+            def tx_fcha2
+            def fcha2
+            if(paramsUsuario.fechaPass){
+                tx_fcha2 = "${paramsUsuario.fechaPass_day}-${paramsUsuario.fechaPass_month}-${paramsUsuario.fechaPass_year}"
+                fcha2 = new Date().parse("dd-MM-yyyy", tx_fcha2)
+                paramsUsuario.fechaPass = fcha2
+            }
+
             if (paramsUsuario.usroPassword.trim() != "" && paramsUsuario.usroPassword.trim() != "****") {
                 paramsUsuario.usroPassword = paramsUsuario.usroPassword.trim().encodeAsMD5()
             } else {
@@ -874,37 +890,44 @@ class EntidadController extends mies.seguridad.Shield {
                 paramsUsuario.remove("autorizacion")
             }
 
-//            if(paramsPersona.fechaNacimiento != "") {
-            //                paramsPersona.fechaNacimiento = paramsPersona.fechaNacimiento.
-            //            }
 
+            def persona
 
-            def persona = kerberosService.save(paramsPersona, Persona, session.perfil, session.usuario)
+            if(paramsPersona.id){
+                persona = Persona.get(paramsPersona.id)
+            }else{
+                persona = new Persona ()
+            }
 
-            paramsPersona.id = persona.id
+            persona.properties = paramsPersona
 
-            if (persona.errors.getErrorCount() != 0) {
+            try{
+                persona.save(flush: true)
+            }catch (e){
+                println("error al guardar la persona " + e)
                 err = true
-                println "errores persona: ${persona.errors}"
-            } else {
+            }
+
+
                 def usro
                 if (paramsUsuario.id) {
                     usro = Usro.get(paramsUsuario.id)
                 } else {
                     usro = new Usro()
+
                 }
                 usro.properties = paramsUsuario
                 usro.persona = persona
 
-//                usro = kerberosService.saveObject(usro, Usro, session.perfil, session.usuario, actionName, controllerName, session)
 
-                if (!usro.save(flush: true, failOnError: true)) {
-                    println "ERRORES USRO"
-                    if (!paramsUsuario.id) {
-                        kerberosService.delete(paramsPersona, Persona, session.perfil, session.usuario)
-                    }
+                try{
+                    usro.save(flush:true)
+                }catch (e){
+                    println("error al guardar el usuario " + e)
                     err = true
-                } else {
+                }
+
+
                     def sesns = Sesn.findAllByUsuario(usro)
                     def perfilesId = sesns.perfil.id
 
@@ -937,8 +960,7 @@ class EntidadController extends mies.seguridad.Shield {
                         }
                     }
 
-                }
-            }
+
             if (err) {
                 render("NO")
             } else {
