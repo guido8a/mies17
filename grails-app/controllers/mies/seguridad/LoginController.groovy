@@ -1,7 +1,7 @@
 package mies.seguridad
 
 
-class LoginController extends mies.seguridad.Shield{
+class LoginController {
 
     def loginService
 
