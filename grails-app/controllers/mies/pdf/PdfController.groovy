@@ -1,6 +1,6 @@
 package mies.pdf
 
-class PdfController {
+class PdfController extends mies.seguridad.Shield{
 
     PdfService pdfService
 

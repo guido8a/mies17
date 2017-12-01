@@ -1,6 +1,6 @@
 package mies
 
-class MetaController {
+class MetaController extends mies.seguridad.Shield{
 
     def kerberosService
 

@@ -1,6 +1,6 @@
 package mies
 
-class RegionController {
+class RegionController extends mies.seguridad.Shield{
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

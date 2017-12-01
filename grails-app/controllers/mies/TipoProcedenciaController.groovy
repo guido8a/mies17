@@ -1,6 +1,6 @@
 package mies
 
-class TipoProcedenciaController {
+class TipoProcedenciaController extends mies.seguridad.Shield{
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

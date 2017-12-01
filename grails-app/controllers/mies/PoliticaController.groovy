@@ -1,6 +1,6 @@
 package mies
 
-class PoliticaController {
+class PoliticaController extends mies.seguridad.Shield{
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

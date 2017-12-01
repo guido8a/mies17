@@ -5,7 +5,7 @@ import jxl.WorkbookSettings
 import jxl.write.*
 import mies.seguridad.Usro
 
-class Reportes2Controller {
+class Reportes2Controller extends mies.seguridad.Shield {
 
 //    def format(val, tipo = "text") {
     def format(val, tipo) {

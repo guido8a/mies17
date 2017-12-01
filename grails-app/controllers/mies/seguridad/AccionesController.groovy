@@ -1,6 +1,6 @@
 package mies.seguridad
 
-class AccionesController {
+class AccionesController extends mies.seguridad.Shield{
 
     def dbConnectionService
 

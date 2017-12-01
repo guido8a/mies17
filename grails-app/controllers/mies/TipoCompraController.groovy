@@ -1,6 +1,6 @@
 package mies
 
-class TipoCompraController {
+class TipoCompraController extends mies.seguridad.Shield{
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

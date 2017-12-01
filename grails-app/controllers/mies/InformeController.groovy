@@ -2,7 +2,7 @@ package mies
 
 import mies.seguridad.Usro
 
-class InformeController {
+class InformeController extends mies.seguridad.Shield{
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

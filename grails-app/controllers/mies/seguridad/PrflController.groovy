@@ -1,6 +1,6 @@
 package mies.seguridad
 
-class PrflController {
+class PrflController extends mies.seguridad.Shield{
 
     def dbConnectionService
     def loginService

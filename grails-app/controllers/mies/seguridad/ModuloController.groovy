@@ -1,6 +1,6 @@
 package mies.seguridad
 
-class ModuloController {
+class ModuloController extends mies.seguridad.Shield{
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

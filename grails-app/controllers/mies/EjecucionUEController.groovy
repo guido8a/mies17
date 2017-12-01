@@ -1,6 +1,6 @@
 package mies
 
-class EjecucionUEController {
+class EjecucionUEController extends mies.seguridad.Shield{
 
     def dbConnectionService
 

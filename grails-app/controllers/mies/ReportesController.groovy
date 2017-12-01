@@ -5,7 +5,7 @@ import jxl.WorkbookSettings
 import jxl.write.*
 import mies.seguridad.Usro
 
-class ReportesController {
+class ReportesController extends mies.seguridad.Shield{
 
     def dbConnectionService
 

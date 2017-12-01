@@ -2,7 +2,7 @@ package mies.reportes
 
 import mies.*
 
-class MapasController {
+class MapasController extends mies.seguridad.Shield {
 
     def index = {
         def map = ""
