@@ -9,6 +9,15 @@ class Shield{
     def auth() {
         println "an "+actionName+" cn "+ controllerName+"  "
         if(!session.usuario || !session.perfil){
+
+            if(controllerName != "inicio" && actionName != "index") {
+                flash.message = "Usted ha superado el tiempo de inactividad máximo de la sesión"
+            }
+            render "<script type='text/javascript'> window.location.href = '${createLink(controller:'login', action:'login')}'; </script>"
+            session.finalize()
+            return false
+
+/*
             if(actionName=~"verificarSession"){
                 session.an="inicio"
                 session.cn="inicio"
@@ -18,10 +27,13 @@ class Shield{
                 session.cn=controllerName
                 session.pr=params
             }
+*/
             //println "session .pr "+session.pr
+/*
             redirect(controller:'login',action:'login')
             session.finalize()
             return false
+*/
 
         } else {
 
