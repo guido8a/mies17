@@ -615,6 +615,7 @@ class EntidadController extends mies.seguridad.Shield {
 
         return [unidad: unidad]
     }
+
     def docsFromTreeVer = {
         def documentoInstance = Documento.get(params.id)
         if (!documentoInstance) {
@@ -909,56 +910,56 @@ class EntidadController extends mies.seguridad.Shield {
             }
 
 
-                def usro
-                if (paramsUsuario.id) {
-                    usro = Usro.get(paramsUsuario.id)
-                } else {
-                    usro = new Usro()
+            def usro
+            if (paramsUsuario.id) {
+                usro = Usro.get(paramsUsuario.id)
+            } else {
+                usro = new Usro()
 
+            }
+            usro.properties = paramsUsuario
+            usro.persona = persona
+
+
+            try{
+                usro.save(flush:true)
+            }catch (e){
+                println("error al guardar el usuario " + e)
+                err = true
+            }
+
+
+            def sesns = Sesn.findAllByUsuario(usro)
+            def perfilesId = sesns.perfil.id
+
+            def perfiles_add = params.perfiles_add.split(",")
+            def perfiles_remove = params.perfiles_remove.split(",")
+
+            perfiles_add.each { id ->
+                if (id != "" && !perfilesId.contains(id)) {
+                    def perfil = Prfl.get(id.toLong())
+                    def sesn = new Sesn()
+                    sesn.perfil = perfil
+                    sesn.usuario = usro
+
+                    sesn = kerberosService.saveObject(sesn, Sesn, session.perfil, session.usuario, actionName, controllerName, session)
                 }
-                usro.properties = paramsUsuario
-                usro.persona = persona
+            }
 
+            perfiles_remove.each { perfId ->
+                sesns.each { sesn ->
+                    if (perfId != "") {
+                        if (sesn.id.toLong() == perfId.toLong()) {
 
-                try{
-                    usro.save(flush:true)
-                }catch (e){
-                    println("error al guardar el usuario " + e)
-                    err = true
-                }
-
-
-                    def sesns = Sesn.findAllByUsuario(usro)
-                    def perfilesId = sesns.perfil.id
-
-                    def perfiles_add = params.perfiles_add.split(",")
-                    def perfiles_remove = params.perfiles_remove.split(",")
-
-                    perfiles_add.each { id ->
-                        if (id != "" && !perfilesId.contains(id)) {
-                            def perfil = Prfl.get(id.toLong())
-                            def sesn = new Sesn()
-                            sesn.perfil = perfil
-                            sesn.usuario = usro
-
-                            sesn = kerberosService.saveObject(sesn, Sesn, session.perfil, session.usuario, actionName, controllerName, session)
+                            def prm = [:]
+                            prm.id = sesn.id
+                            prm.actionName = actionName
+                            prm.controllerName = controllerName
+                            kerberosService.delete(prm, Sesn, session.perfil, session.usuario)
                         }
                     }
-
-                    perfiles_remove.each { perfId ->
-                        sesns.each { sesn ->
-                            if (perfId != "") {
-                                if (sesn.id.toLong() == perfId.toLong()) {
-
-                                    def prm = [:]
-                                    prm.id = sesn.id
-                                    prm.actionName = actionName
-                                    prm.controllerName = controllerName
-                                    kerberosService.delete(prm, Sesn, session.perfil, session.usuario)
-                                }
-                            }
-                        }
-                    }
+                }
+            }
 
 
             if (err) {
@@ -972,6 +973,21 @@ class EntidadController extends mies.seguridad.Shield {
             println params
             println ""
             def unidad = UnidadEjecutora.get(params.unidad)
+
+            def padre
+            def inversionPadre
+            def unidades
+            def inversionesTodas
+            def valorActualInversion = PresupuestoUnidad.findByUnidad(unidad)?.maxInversion
+
+//            println("valor actual inversion " + valorActualInversion)
+
+            if(unidad.padre){
+                padre = UnidadEjecutora.get(unidad.padre.id)
+                inversionPadre = PresupuestoUnidad.findByUnidad(padre).maxInversion
+                unidades = UnidadEjecutora.findAllByPadre(padre)
+                inversionesTodas = (PresupuestoUnidad.findAllByUnidadInList(unidades).maxInversion.sum() ?: 0)
+            }
 
             def presupuestoUnidad = new PresupuestoUnidad()
             def anio = Anio.get(params.anio.id)
@@ -1021,12 +1037,75 @@ class EntidadController extends mies.seguridad.Shield {
             println presupuestoUnidad.objetivoGobiernoResultado
             println "\n\n"
 
-            presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
-            if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
-                render("OK")
-            } else {
-                render("NO")
+
+            if(unidad.padre){
+//                def padre = UnidadEjecutora.get(unidad.padre.id)
+//                def inversionPadre = PresupuestoUnidad.findByUnidad(padre).maxInversion
+//                def unidades = UnidadEjecutora.findAllByPadre(padre)
+//                println("unidades " + unidades.id)
+//                def inversionesTodas = (PresupuestoUnidad.findAllByUnidadInList(unidades).maxInversion.sum() ?: 0)
+                def subtotalInv = inversionPadre - inversionesTodas
+                def inversionDisponible = Math.round(subtotalInv*100)/100
+
+//                println("inv padre " + inversionPadre)
+//                println("inv todas " + inversionesTodas)
+//                println("inv disponible " + inversionDisponible)
+
+                params.maxInversion = params.maxInversion.replaceAll('\\.','')
+                params.maxInversion = params.maxInversion.replaceAll(',','\\.')
+
+//                println("--> " + params.maxInversion.toDouble())
+
+                if(valorActualInversion){
+
+                    if(params.maxInversion.toDouble() <= valorActualInversion){
+                        presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
+                        if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
+                            render("OK")
+                        } else {
+                            render("NO")
+                        }
+                    }else{
+                        def diferenciaInversion = params.maxInversion.toDouble() - valorActualInversion
+
+                        if(diferenciaInversion < inversionDisponible){
+                            presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
+                            if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
+                                render("OK")
+                            } else {
+                                render("NO")
+                            }
+                        }else{
+                            render "NO"
+                        }
+                    }
+                }else{
+
+                    if(inversionPadre < params.maxInversion.toDouble()){
+                        render "NO"
+                    }else{
+
+                        if(inversionDisponible < params.maxInversion.toDouble()){
+                            render "NO"
+                        }else{
+                            presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
+                            if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
+                                render("OK")
+                            } else {
+                                render("NO")
+                            }
+                        }
+                    }
+                }
+            }else{
+                presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
+                if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
+                    render("OK")
+                } else {
+                    render("NO")
+                }
             }
+
         } //guardar presupuesto entidad
         else {
 

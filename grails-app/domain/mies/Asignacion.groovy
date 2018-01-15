@@ -14,8 +14,9 @@ class Asignacion implements Serializable {
     String reubicada = "N"
     ProgramaPresupuestario programa
     Asignacion padre
-    String meta
+    int meta
     String indicador
+    String modalidad
     static auditable=[ignore:[]]
     static mapping = {
         table 'asgn'
@@ -40,6 +41,7 @@ class Asignacion implements Serializable {
             padre    column: 'asgnpdre'
             meta column: 'asgnmeta'
             indicador column: 'asgnindi'
+            modalidad column: 'asgnmdsr'
         }
     }
     static constraints = {
@@ -55,8 +57,9 @@ class Asignacion implements Serializable {
         unidad(blank: true,nullable: true)
         reubicada(blank: true,nullable: true,size: 1..2)
         programa(nullable: true,blank: true)
-        meta(nullable: true,blank: true,size: 1..255)
+//        meta(nullable: true,blank: true,size: 1..255)
         indicador(nullable: true,blank: true,size: 1..255)
+        modalidad(nullable: true, blank: true)
     }
 
     String toString(){

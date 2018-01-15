@@ -787,7 +787,7 @@ class AsignacionController extends mies.seguridad.Shield {
     }
 
     def guardarAsignacion = {
-        println "params guadr asignacion " + params
+        println "params guardar asignacion " + params
 
         params.planificado = params.planificado.replaceAll("\\.", "")
         params.planificado = params.planificado.replaceAll(",", "\\.")
@@ -801,14 +801,28 @@ class AsignacionController extends mies.seguridad.Shield {
         def asg
         if (params.id) {
             asg = Asignacion.get(params.id)
-            asg.properties = params
+
+            asg.indicador = params.indicador
+            asg.modalidad = params.met
+            if(params.meta){
+                asg.meta = params.meta.toInteger()
+            }
+
             if (!band) {
                 asg.componente = null
             }
         } else {
-            asg = new Asignacion(params)
+            asg = new Asignacion()
+
+            params.indicador = params.indicador
+            if(params.meta){
+                asg.meta = params.meta.toInteger()
+            }
+             asg.modalidad = params.met
 
         }
+
+        asg.properties = params
 
         asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, "guardarAsignacion", "asignacion", session)
         if (asg.errors.getErrorCount() == 0) {

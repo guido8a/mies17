@@ -93,7 +93,7 @@
                         <input type="text" id="prsp_num" class="buscar" style="width: 50px;color:black">
                     </td>
 
-                    <td class="desc" id="desc" style="width: 200"></td>
+                    <td class="desc" id="desc" style="width: 200px"></td>
 
                     <td class="fuente">
                         <g:select from="${fuentes}" id="fuente" optionKey="id" optionValue="descripcion" name="fuente" class="fuente" style="width: 160px;"/>
@@ -106,10 +106,10 @@
 
                     <td class="meta_indi" style="text-align: center">
                         <input type="hidden" id="meta" class="desc">
-
                         <input type="hidden" id="indi" class="obs" value="">
+                        <input type="hidden" id="met" class="met" value="">
 
-                        <a href="#" class="btn_editar" desc="meta" obs="indi">Editar</a>
+                        <a href="#" class="btn_editar" desc="meta" obs="indi" met="met">Editar</a>
                     </td>
 
                     <td>
@@ -122,16 +122,27 @@
 
             <div id="dlg_desc_obs">
                 <input type="hidden" id="hid_desc">
-
                 <input type="hidden" id="hid_obs">
-                <b>Meta (255 caracteres):</b><br>
+                <input type="hidden" id="hid_met">
 
-                <textArea name="desc" rows="6" cols="40" id="dlg_desc" ${(max?.aprobadoCorrientes!= 0) ? "disabled" : ""}
-                          style="color: black"></textArea>
+
+                <b>Modalidad de Servicios (255 caracteres):</b><br>
+
+                %{--<textArea name="desc" rows="5" cols="40" id="dlg_desc" ${(max?.aprobadoCorrientes!= 0) ? "disabled" : ""}--}%
+                          %{--style="color: black; resize: none"></textArea>--}%
+
+                <textArea name="met" rows="5" cols="40" id="dlg_met" ${(max?.aprobadoCorrientes!= 0) ? "disabled" : ""}
+                          style="color: black; resize: none"></textArea>
+
+                <b>Meta (numérico):</b>
+
+                <input type="text" id="dlg_desc" name="desc" class="" style="width: 70px;color:black"> <br>
+
+
                 <b>Indicador (255 caracteres):</b><br>
 
-                <textArea name="desc" rows="6" cols="40" id="dlg_obs" ${(max?.aprobadoCorrientes!= 0) ? "disabled" : ""}
-                          style="color: black"></textArea> <br>
+                <textArea name="desc" rows="5" cols="40" id="dlg_obs" ${(max?.aprobadoCorrientes!= 0) ? "disabled" : ""}
+                          style="color: black; resize: none"></textArea> <br>
 
                 <div id="dlg_error"
                      style="width: 350px;height: 60px;margin-top: 5px;margin-left: 2px;display: none;padding: 3px;line-height: 24px;border:1px solid red;"
@@ -150,7 +161,7 @@
     <legend>
         Detalle
     </legend>
-    <g:set var="total" value="0"></g:set>
+    <g:set var="total" value="0"/>
     <table style="width: 100%; margin-bottom: 10px;">
         <thead>
 
@@ -188,7 +199,7 @@
                     ${asg.presupuesto.numero}
                 </td>
 
-                <td class="desc" style="width: 200">
+                <td class="desc" style="width: 200px">
                     ${asg.presupuesto.descripcion}
                 </td>
 
@@ -205,7 +216,7 @@
 
                 <td style="text-align: center">
                     <g:if test="${max?.aprobadoCorrientes==0}">
-                        <a href="#" class="btn editar ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.programa.id}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente.id}" valor="${(asg.redistribucion == 0) ? asg.planificado.toDouble().round(2) : asg.redistribucion.toDouble().round(2)}" actv="${asg.actividad}" meta="${asg.meta}" indi="${asg.indicador}" comp="${asg?.componente?.id}">Editar</a>
+                        <a href="#" class="btn editar ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.programa.id}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente.id}" valor="${(asg.redistribucion == 0) ? asg.planificado.toDouble().round(2) : asg.redistribucion.toDouble().round(2)}" actv="${asg.actividad}" meta="${asg.meta}" indi="${asg.indicador}" met="${asg?.modalidad}" comp="${asg?.componente?.id}">Editar</a>
                     </g:if>
                 </td>
 
@@ -359,11 +370,11 @@
                     band = false;
                     error = actField;
                 }
-                if (meta.length < 2) {
-                    mensaje = "Error: Debe llenar el campo meta";
-                    band = false;
-                    error = $(".btn_editar");
-                }
+//                if (meta.length < 2) {
+//                    mensaje = "Error: Debe llenar el campo meta";
+//                    band = false;
+//                    error = $(".btn_editar");
+//                }
                 if (indi.length < 2) {
                     mensaje = "Error: Debe llenar el campo indicador";
                     band = false;
@@ -412,14 +423,14 @@
             },
             text:false
         }).click(function () {
-                    var id = $(this).attr("id");
-                    var parts = id.split("_");
-                    var act = $(this).parents("tr").find(".actividad").text().trim();
-                    $("#idAsg").val(parts[1]);
-                    $("#pTexto").html("Seleccione el nuevo programa para la asignación:<br/> <b>" + act + "</b>");
-                    $("#dlgProg").dialog("open");
-                    return false;
-                });
+            var id = $(this).attr("id");
+            var parts = id.split("_");
+            var act = $(this).parents("tr").find(".actividad").text().trim();
+            $("#idAsg").val(parts[1]);
+            $("#pTexto").html("Seleccione el nuevo programa para la asignación:<br/> <b>" + act + "</b>");
+            $("#dlgProg").dialog("open");
+            return false;
+        });
 
         $(".btn_editar").button({
             icons:{
@@ -427,22 +438,24 @@
             },
             text:false
         }).click(function () {
-                    $("#hid_desc").val($(this).attr("desc"))
-                    $("#hid_obs").val($(this).attr("obs"))
-                    $("#dlg_desc").val($("#" + $(this).attr("desc")).val())
-                    $("#dlg_obs").val($("#" + $(this).attr("obs")).val())
-                    $("#dlg_error").hide().html("")
-                    $("#dlg_desc_obs").dialog("open")
-                });
+            $("#hid_desc").val($(this).attr("desc"))
+            $("#hid_obs").val($(this).attr("obs"))
+            $("#hid_met").val($(this).attr("met"))
+            $("#dlg_desc").val($("#" + $(this).attr("desc")).val())
+            $("#dlg_met").val($("#" + $(this).attr("met")).val())
+            $("#dlg_obs").val($("#" + $(this).attr("obs")).val())
+            $("#dlg_error").hide().html("")
+            $("#dlg_desc_obs").dialog("open")
+        });
 
         $("#btnReporte").button({
             icons:{
                 primary:"ui-icon-calculator"
             }
         }).click(function () {
-                    var url = "${createLink(controller: 'reportes', action: 'poaReporteWeb', id: unidad.id)}?anio=" + $("#anio_asg").val();
-                    window.open(url);
-                });
+            var url = "${createLink(controller: 'reportes', action: 'poaReporteWeb', id: unidad.id)}?anio=" + $("#anio_asg").val();
+            window.open(url);
+        });
 
 
         $("#dlg_desc_obs").dialog({
@@ -455,10 +468,12 @@
                 "Aceptar":function () {
                     if ($("#dlg_desc").val().length < 255) {
                         if ($("#dlg_obs").val().length < 127) {
-                            $("#" + $("#hid_desc").val()).val($("#dlg_desc").val())
-                            $("#dlg_desc").val("")
-                            $("#" + $("#hid_obs").val()).val($("#dlg_obs").val())
-                            $("#dlg_obs").val("")
+                            $("#" + $("#hid_desc").val()).val($("#dlg_desc").val());
+                            $("#dlg_desc").val("");
+                            $("#" + $("#hid_obs").val()).val($("#dlg_obs").val());
+                            $("#dlg_obs").val("");
+                            $("#" + $("#hid_met").val()).val($("#dlg_met").val());
+                            $("#dlg_met").val("");
                             $("#dlg_desc_obs").dialog("close")
                         } else {
                             $("#dlg_error").html("El campo meta no puede contener mas de 255 caracteres. Actual(" + $("#dlg_obs").val().length + ")")
@@ -494,23 +509,24 @@
             text:false
         }).click(function () {
 
-                    valorEditar = $(this).attr("valor");
-                    if ($(this).attr("comp") * 1 > 0) {
-                        $("#componente").selectmenu("value", $(this).attr("comp"));
-                    } else {
-                        $("#componente").selectmenu("value", "-1");
-                    }
-                    $("#programa").selectmenu("value", $(this).attr("prog"));
-                    $("#fuente").val($(this).attr("fuente"));
-                    $("#valor_txt").val(number_format($(this).attr("valor"), 2, ",", "."));
-                    $("#prsp_id").val($(this).attr("prsp_id"));
-                    $("#prsp_num").val($(this).attr("prsp_num"));
-                    $("#desc").html($(this).attr("desc"));
-                    $("#guardar_btn").attr("iden", $(this).attr("iden"));
-                    $("#actv").val($(this).attr("actv"));
-                    $("#meta").val($(this).attr("meta"));
-                    $("#indi").val($(this).attr("indi"));
-                });
+            valorEditar = $(this).attr("valor");
+            if ($(this).attr("comp") * 1 > 0) {
+                $("#componente").selectmenu("value", $(this).attr("comp"));
+            } else {
+                $("#componente").selectmenu("value", "-1");
+            }
+            $("#programa").selectmenu("value", $(this).attr("prog"));
+            $("#fuente").val($(this).attr("fuente"));
+            $("#valor_txt").val(number_format($(this).attr("valor"), 2, ",", "."));
+            $("#prsp_id").val($(this).attr("prsp_id"));
+            $("#prsp_num").val($(this).attr("prsp_num"));
+            $("#desc").html($(this).attr("desc"));
+            $("#guardar_btn").attr("iden", $(this).attr("iden"));
+            $("#actv").val($(this).attr("actv"));
+            $("#meta").val($(this).attr("meta"));
+            $("#indi").val($(this).attr("indi"));
+            $("#met").val($(this).attr("met"));
+        });
 
         $(".eliminar").button({
             icons:{
@@ -518,26 +534,26 @@
             },
             text:false
         }).click(function () {
-                    if (confirm("Está seguro de querer eliminar esta asignación?\nSe eliminarán las asignaciones hijas, el PAC, y la programación asociadas.")) {
-                        var id = $(this).attr("iden");
-                        var btn = $(this);
-                        $.ajax({
-                            type:"POST",
-                            url:"${createLink(action:'eliminarAsignacion')}",
-                            data:{
-                                id:id
-                            },
-                            success:function (msg) {
-                                if (msg == "OK") {
+            if (confirm("Está seguro de querer eliminar esta asignación?\nSe eliminarán las asignaciones hijas, el PAC, y la programación asociadas.")) {
+                var id = $(this).attr("iden");
+                var btn = $(this);
+                $.ajax({
+                    type:"POST",
+                    url:"${createLink(action:'eliminarAsignacion')}",
+                    data:{
+                        id:id
+                    },
+                    success:function (msg) {
+                        if (msg == "OK") {
 //                                            btn.parents("tr").remove();
-                                    window.location.reload(true);
-                                } else {
-                                    alert("Ha ocurrido un error.")
-                                }
-                            }
-                        });
+                            window.location.reload(true);
+                        } else {
+                            alert("Ha ocurrido un error.")
+                        }
                     }
                 });
+            }
+        });
 
         $("#anio_asg, #programa").change(function () {
             location.href = "${createLink(controller:'asignacion',action:'asignacionesCorrientesv2')}?id=${unidad.id}&anio=" + $("#anio_asg").val() + "&programa=" + $("#programa").val();
@@ -554,6 +570,7 @@
             var comp = $("#componente").val()
             var meta = $("#meta").val();
             var indi = $("#indi").val();
+            var met = $("#met").val();
             var boton = $(this);
             if (validar(0)) {
                 var anio = boton.attr("anio")
@@ -562,7 +579,7 @@
                 $.ajax({
                     type:"POST",
                     url:"${createLink(action:'guardarAsignacion',controller:'asignacion')}",
-                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&componente.id=" + comp + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
+                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&componente.id=" + comp + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
                     success:function (msg) {
                         if (msg * 1 >= 0) {
                             location.reload(true);

@@ -1,7 +1,7 @@
 package mies.seguridad
 
 
-class LoginController {
+class LoginController{
 
     def loginService
 
