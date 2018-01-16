@@ -116,7 +116,7 @@
             </g:link>
 
         </div>
-        <div style="height: 25px;width: 200px;position:absolute;bottom: 1px;right: 5px;text-align: right">Versión 1.1.30</div>
+        <div style="height: 25px;width: 200px;position:absolute;bottom: 1px;right: 5px;text-align: right">Versión 1.1.30a</div>
     </div>
 </div>
 <script type="text/javascript">
