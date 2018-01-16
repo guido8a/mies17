@@ -136,7 +136,7 @@
 
                 <b>Meta (numérico):</b>
 
-                <input type="text" id="dlg_desc" name="desc" class="" style="width: 70px;color:black"> <br>
+                <input type="text" id="dlg_desc" name="desc" class="validacionNumeroSinPuntos" style="width: 70px;color:black"> <br>
 
 
                 <b>Indicador (255 caracteres):</b><br>
@@ -314,6 +314,37 @@
 </div>
 
 <script type="text/javascript">
+
+
+
+    function validarNumSinPuntos(ev) {
+        /*
+         48-57      -> numeros
+         96-105     -> teclado numerico
+         188        -> , (coma)
+         190        -> . (punto) teclado
+         110        -> . (punto) teclado numerico
+         8          -> backspace
+         46         -> delete
+         9          -> tab
+         37         -> flecha izq
+         39         -> flecha der
+         */
+        return ((ev.keyCode >= 48 && ev.keyCode <= 57) ||
+        (ev.keyCode >= 96 && ev.keyCode <= 105) ||
+        ev.keyCode == 8 || ev.keyCode == 46 || ev.keyCode == 9 ||
+        ev.keyCode == 37 || ev.keyCode == 39 );
+    }
+
+    $(".validacionNumeroSinPuntos").keydown(function (ev) {
+        return validarNumSinPuntos(ev);
+    }).keyup(function () {
+    });
+
+
+
+
+
 
     var valorEditar = 0;
 

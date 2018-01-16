@@ -674,15 +674,21 @@
                                     "url"     : url,
                                     "data"    : data,
                                     "success" : function (msg) {
-                                        ////console.log(msg);
-                                        if (msg == "OK") {
+                                        console.log(msg);
+                                        var parts = msg.split("_");
+//                                        if (msg == "OK") {
+                                        if (parts[0] == "OK") {
                                             initTree();
                                             loadedId = -1;
                                             $('.jstree-clicked').click();
                                             $("#dlg_editar").dialog("close");
 //                                            window.location.reload(true);
                                         } else {
-                                            alert("Ha ocurrido un error al guardar");
+                                            if(parts[1]){
+                                                alert(parts[1])
+                                            }else{
+                                                alert("Ha ocurrido un error al guardar");
+                                            }
                                         }
                                     }
                                 });

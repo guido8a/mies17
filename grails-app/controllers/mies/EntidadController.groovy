@@ -980,6 +980,12 @@ class EntidadController extends mies.seguridad.Shield {
             def unidades
             def inversionesTodas
             def valorActualInversion = PresupuestoUnidad.findByUnidadAndAnio(unidad, anio)?.maxInversion
+            def valorActualCorriente = PresupuestoUnidad.findByUnidadAndAnio(unidad, anio)?.maxCorrientes
+            def corrientePadre
+            def corrientesTodas
+
+            def bandInv
+            def bandCorr
 
 //            println("valor actual inversion " + valorActualInversion)
 
@@ -988,6 +994,10 @@ class EntidadController extends mies.seguridad.Shield {
                 inversionPadre = PresupuestoUnidad.findByUnidadAndAnio(padre, anio).maxInversion
                 unidades = UnidadEjecutora.findAllByPadre(padre)
                 inversionesTodas = (PresupuestoUnidad.findAllByUnidadInListAndAnio(unidades, anio).maxInversion.sum() ?: 0)
+
+                corrientePadre = PresupuestoUnidad.findByUnidadAndAnio(padre, anio).maxCorrientes
+                corrientesTodas = (PresupuestoUnidad.findAllByUnidadInListAndAnio(unidades, anio).maxCorrientes.sum() ?: 0)
+
             }
 
             def presupuestoUnidad = new PresupuestoUnidad()
@@ -1040,13 +1050,11 @@ class EntidadController extends mies.seguridad.Shield {
 
 
             if(unidad.padre){
-//                def padre = UnidadEjecutora.get(unidad.padre.id)
-//                def inversionPadre = PresupuestoUnidad.findByUnidad(padre).maxInversion
-//                def unidades = UnidadEjecutora.findAllByPadre(padre)
-//                println("unidades " + unidades.id)
-//                def inversionesTodas = (PresupuestoUnidad.findAllByUnidadInList(unidades).maxInversion.sum() ?: 0)
                 def subtotalInv = inversionPadre - inversionesTodas
                 def inversionDisponible = Math.round(subtotalInv*100)/100
+
+                def subtotalCorr = corrientePadre - corrientesTodas
+                def corrienteDisponible = Math.round(subtotalCorr*100)/100
 
 //                println("inv padre " + inversionPadre)
 //                println("inv todas " + inversionesTodas)
@@ -1055,19 +1063,26 @@ class EntidadController extends mies.seguridad.Shield {
                 params.maxInversion = params.maxInversion.replaceAll('\\.','')
                 params.maxInversion = params.maxInversion.replaceAll(',','\\.')
 
+                params.maxCorrientes = params.maxCorrientes.replaceAll('\\.','')
+                params.maxCorrientes = params.maxCorrientes.replaceAll(',','\\.')
+
 //                println("--> " + params.maxInversion.toDouble())
 
                 if(valorActualInversion){
 
                     if(params.maxInversion.toDouble() <= valorActualInversion){
-                        presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
-                        if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
-                            render("OK")
-                        } else {
-                            render("NO")
-                        }
+//                        presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
+//                        if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
+//                            render("OK")
+//                        } else {
+//                            render("NO")
+//                        }
+
+
+                        bandInv = 'OK'
+
                     }else{
-                        def diferenciaInversion = params.maxInversion.toDouble() - valorActualInversion
+//                        def diferenciaInversion = params.maxInversion.toDouble() - valorActualInversion
 
                         def totalDisponible = valorActualInversion + inversionDisponible
 
@@ -1076,44 +1091,108 @@ class EntidadController extends mies.seguridad.Shield {
 
 //                        if(diferenciaInversion < inversionDisponible){
                         if(params.maxInversion.toDouble() <= totalDisponible){
-                            presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
-                            if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
-                                render("OK")
-                            } else {
-                                render("NO")
-                            }
+//                            presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
+//                            if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
+//                                render("OK")
+//                            } else {
+//                                render("NO")
+//                            }
+
+
+                            bandInv = 'OK'
+
                         }else{
-                            render "NO"
+//                            render "NO_Ingrese un valor menor o igual a ${Math.round(totalDisponible*100)/100}"
+                            bandInv = "NO_Ingrese un valor menor o igual a ${Math.round(totalDisponible*100)/100}"
                         }
                     }
                 }else{
-
                     if(inversionPadre < params.maxInversion.toDouble()){
-                        render "NO"
+//                        render "NO_Ingrese un valor menor a ${Math.round(inversionPadre*100)/100}"
+                        bandInv = "NO_Ingrese un valor menor a ${Math.round(inversionPadre*100)/100}"
                     }else{
-
                         if(inversionDisponible < params.maxInversion.toDouble()){
-                            render "NO"
+//                            render "NO_Ingrese un valor menor a ${Math.round(inversionDisponible*100)/100}"
+                            bandInv = "NO_Ingrese un valor menor a ${Math.round(inversionDisponible*100)/100}"
                         }else{
-                            presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
-                            if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
-                                render("OK")
-                            } else {
-                                render("NO")
-                            }
+//                            presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
+//                            if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
+//                                render("OK")
+//                            } else {
+//                                render("NO")
+//                            }
+                            bandInv = 'OK'
+                        }
+                    }
+
+                }
+
+                //validación corrientes
+
+                if(valorActualCorriente){
+
+                    if(params.maxCorrientes.toDouble() <= valorActualCorriente){
+                        bandCorr = 'OK'
+                    }else{
+                        def totalDisponibleCorriente = valorActualCorriente + corrienteDisponible
+                        if(params.maxCorrientes.toDouble() <= totalDisponibleCorriente){
+                            bandCorr = 'OK'
+                        }else{
+                            bandCorr = "NO_Ingrese un valor corriente menor o igual a ${Math.round(totalDisponibleCorriente*100)/100}"
+                        }
+                    }
+                }else{
+                    if(corrientePadre < params.maxCorrientes.toDouble()){
+                        bandCorr = "NO_Ingrese un valor corriente menor a ${Math.round(corrientePadre*100)/100}"
+                    }else{
+                        if(corrienteDisponible < params.maxCorrientes.toDouble()){
+                            bandCorr = "NO_Ingrese un valor corriente menor a ${Math.round(corrienteDisponible*100)/100}"
+                        }else{
+                            bandCorr = 'OK'
                         }
                     }
                 }
+
             }else{
+//                presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
+//                if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
+//                    render("OK")
+//                } else {
+//                    render("NO")
+//                }
+                bandInv = 'OK'
+                bandCorr = 'OK'
+            }
+
+
+            def partesInv = bandInv.split("_")
+            def partesCorr = bandCorr.split("_")
+
+            println("inv " + partesInv + " " + "corr" + partesCorr)
+
+
+            if( partesInv[0] == 'OK' && partesCorr[0] == 'OK'){
                 presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
                 if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
                     render("OK")
                 } else {
                     render("NO")
                 }
+            }else{
+                if(partesInv[0] == 'NO'){
+                    render("NO_" + partesInv[1])
+                }else{
+                    if(partesCorr[0] == 'NO'){
+                        render("NO_" + partesCorr[1])
+                    }else{
+                        render "NO"
+                    }
+                }
             }
 
-        } //guardar presupuesto entidad
+        }
+
+//        } //guardar presupuesto entidad
         else {
 
             def pUnidad = params.unidad
@@ -1130,13 +1209,9 @@ class EntidadController extends mies.seguridad.Shield {
             } else {
                 render("NO")
             }
-//            } else {
-            //                render("NO")
-            //            }
         } //save entidad
-
-
     }
+
 
     def deleteFromTree = {
         def unidad = UnidadEjecutora.get(params.id)
