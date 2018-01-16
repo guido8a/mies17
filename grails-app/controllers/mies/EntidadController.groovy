@@ -1068,7 +1068,13 @@ class EntidadController extends mies.seguridad.Shield {
                     }else{
                         def diferenciaInversion = params.maxInversion.toDouble() - valorActualInversion
 
-                        if(diferenciaInversion < inversionDisponible){
+                        def totalDisponible = valorActualInversion + inversionDisponible
+
+//                        println("inversion actual " + valorActualInversion)
+//                        println("disponible para esta inversion " + totalDisponible)
+
+//                        if(diferenciaInversion < inversionDisponible){
+                        if(params.maxInversion.toDouble() <= totalDisponible){
                             presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
                             if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
                                 render("OK")
