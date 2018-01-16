@@ -973,24 +973,25 @@ class EntidadController extends mies.seguridad.Shield {
             println params
             println ""
             def unidad = UnidadEjecutora.get(params.unidad)
+            def anio = Anio.get(params.anio.id)
 
             def padre
             def inversionPadre
             def unidades
             def inversionesTodas
-            def valorActualInversion = PresupuestoUnidad.findByUnidad(unidad)?.maxInversion
+            def valorActualInversion = PresupuestoUnidad.findByUnidadAndAnio(unidad, anio)?.maxInversion
 
 //            println("valor actual inversion " + valorActualInversion)
 
             if(unidad.padre){
                 padre = UnidadEjecutora.get(unidad.padre.id)
-                inversionPadre = PresupuestoUnidad.findByUnidad(padre).maxInversion
+                inversionPadre = PresupuestoUnidad.findByUnidadAndAnio(padre, anio).maxInversion
                 unidades = UnidadEjecutora.findAllByPadre(padre)
-                inversionesTodas = (PresupuestoUnidad.findAllByUnidadInList(unidades).maxInversion.sum() ?: 0)
+                inversionesTodas = (PresupuestoUnidad.findAllByUnidadInListAndAnio(unidades, anio).maxInversion.sum() ?: 0)
             }
 
             def presupuestoUnidad = new PresupuestoUnidad()
-            def anio = Anio.get(params.anio.id)
+
             def inversion = params.maxInversion
             def corriente = params.maxCorrientes
             def orgInversion = params.originalInversion
