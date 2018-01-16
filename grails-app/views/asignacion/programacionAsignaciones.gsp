@@ -17,9 +17,10 @@
         <script type="text/javascript"
                 src="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.js')}"></script>
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/select', file: 'jquery.ui.selectmenu.css')}"/>
+
         <style type="text/css">
         .valor {
-            width      : 60px;
+            width      : 50px;
             text-align : center;
             margin     : 0px;
             color      : #000000;
@@ -36,31 +37,28 @@
             &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${mies.Anio.list([sort: 'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
         </div>
 
-        <div id="accordion" style="width:1080px;margin-top: 5px;font-size: 11px;">
+        <div id="accordion" style="width:1030px;margin-top: 5px;font-size: 11px;">
             <ul>
-
-                %{--<li><a href="#tabs-1">Inversión</a></li>--}%
                 <li><a href="#tabs-1">Gasto corriente</a></li>
-
             </ul>
 
 
             <div id="tabs-1">
-                <table style="width: 1000px;">
+                <table style="width: 80% !important;">
                     <thead>
-                        <th style="width: 70px;">Enero</th>
-                        <th style="width: 70px;">Feb.</th>
-                        <th style="width: 70px;">Marzo</th>
-                        <th style="width: 70px;">Abril</th>
-                        <th style="width: 70px;">Mayo</th>
-                        <th style="width: 70px;">Junio</th>
-                        <th style="width: 70px;">Julio</th>
-                        <th style="width: 70px;">Agos.</th>
-                        <th style="width: 70px;">Sept.</th>
-                        <th style="width: 70px;">Oct.</th>
-                        <th style="width: 70px;">Nov.</th>
-                        <th style="width: 70px;">Dic.</th>
-                        <th style="width: 80px;">Total</th>
+                        <th>Enero</th>
+                        <th>Feb.</th>
+                        <th>Marzo</th>
+                        <th>Abril</th>
+                        <th>Mayo</th>
+                        <th>Junio</th>
+                        <th>Julio</th>
+                        <th>Agos.</th>
+                        <th>Sept.</th>
+                        <th>Oct.</th>
+                        <th>Nov.</th>
+                        <th>Dic.</th>
+                        <th>Total</th>
                         <th></th>
                         <th></th>
                     </thead>
