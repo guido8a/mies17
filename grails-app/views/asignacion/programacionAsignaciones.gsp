@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="layout" content="main"/>
+        <meta name="layout" content="main2"/>
         <title>Asignaciones de la unidad: ${unidad}</title>
 
         <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}"
@@ -20,7 +20,7 @@
 
         <style type="text/css">
         .valor {
-            width      : 50px;
+            width      : 60px;
             text-align : center;
             margin     : 0px;
             color      : #000000;
@@ -33,18 +33,20 @@
         <div style="margin-left: 10px;">
             <g:link class="btn_arbol" controller="asignacion" action="asignacionesCorrientesv2" id="${unidad.id}">Ver/Editar Asignaciones corrientes</g:link>
             <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades Ejecutoras</g:link>
-            <g:link class="btn" controller="reportes" action="poaCorrientesReporteWeb" id="${unidad.id}" params="${[anio: actual.id]}" target="_blank">Reporte</g:link>
-            &nbsp;&nbsp;&nbsp;<b>Año:</b><g:select from="${mies.Anio.list([sort: 'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
+            <g:link class="btn" controller="reportes" action="poaCorrientesReporteWeb" id="${unidad.id}" params="${[anio: actual.id]}"
+                    target="_blank">Reporte</g:link>
+            <span style="margin-left: 200px">Año:</span>
+            <g:select from="${mies.Anio.list([sort: 'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/>
         </div>
 
-        <div id="accordion" style="width:1030px;margin-top: 5px;font-size: 11px;">
+        <div id="accordion" style="width:1270px;margin-top: 5px;font-size: 11px;">
             <ul>
                 <li><a href="#tabs-1">Gasto corriente</a></li>
             </ul>
 
 
             <div id="tabs-1">
-                <table style="width: 80% !important;">
+                <table style="width: 100% !important;">
                     <thead>
                         <th>Enero</th>
                         <th>Feb.</th>
@@ -68,7 +70,7 @@
                         <g:set var="mar" value="${0}"/>
                         <g:set var="abr" value="${0}"/>
                         <g:set var="may" value="${0}"/>
-                        <g:set var="jun" value="${0}"/>                                                                                                /
+                        <g:set var="jun" value="${0}"/>
                         <g:set var="jul" value="${0}"/>
                         <g:set var="ago" value="${0}"/>
                         <g:set var="sep" value="${0}"/>
