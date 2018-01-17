@@ -989,16 +989,15 @@ class EntidadController extends mies.seguridad.Shield {
 
 //            println("valor actual inversion " + valorActualInversion)
 
-            if(unidad.padre){
-                padre = UnidadEjecutora.get(unidad.padre.id)
-                inversionPadre = PresupuestoUnidad.findByUnidadAndAnio(padre, anio).maxInversion
-                unidades = UnidadEjecutora.findAllByPadre(padre)
-                inversionesTodas = (PresupuestoUnidad.findAllByUnidadInListAndAnio(unidades, anio).maxInversion.sum() ?: 0)
-
-                corrientePadre = PresupuestoUnidad.findByUnidadAndAnio(padre, anio).maxCorrientes
-                corrientesTodas = (PresupuestoUnidad.findAllByUnidadInListAndAnio(unidades, anio).maxCorrientes.sum() ?: 0)
-
-            }
+//            if(unidad.padre){
+//                padre = UnidadEjecutora.get(unidad.padre.id)
+//                inversionPadre = PresupuestoUnidad.findByUnidadAndAnio(padre, anio).maxInversion
+//                unidades = UnidadEjecutora.findAllByPadre(padre)
+//                inversionesTodas = (PresupuestoUnidad.findAllByUnidadInListAndAnio(unidades, anio).maxInversion.sum() ?: 0)
+//
+//                corrientePadre = PresupuestoUnidad.findByUnidadAndAnio(padre, anio).maxCorrientes
+//                corrientesTodas = (PresupuestoUnidad.findAllByUnidadInListAndAnio(unidades, anio).maxCorrientes.sum() ?: 0)
+//            }
 
             def presupuestoUnidad = new PresupuestoUnidad()
 
@@ -1033,11 +1032,11 @@ class EntidadController extends mies.seguridad.Shield {
 
             orgInversion = orgInversion.replaceAll("\\.", "")
             orgInversion = orgInversion.replaceAll(",", "\\.")
-            presupuestoUnidad.originalInversion = orgInversion.toDouble()
+            presupuestoUnidad.originalInversion = (orgInversion ? orgInversion.toDouble() : 0)
 
             orgCorriente = orgCorriente.replaceAll("\\.", "")
             orgCorriente = orgCorriente.replaceAll(",", "\\.")
-            presupuestoUnidad.originalCorrientes = orgCorriente.toDouble()
+            presupuestoUnidad.originalCorrientes = (orgCorriente ? orgCorriente?.toDouble() : 0)
 
             presupuestoUnidad.objetivoGobiernoResultado = ObjetivoGobiernoResultado.get(params.objetivoGobiernoResultado.id)
             presupuestoUnidad.politica = Politica.get(params.politica.id)

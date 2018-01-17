@@ -61,7 +61,7 @@
                     </g:else>
                 </g:if>
                 <g:else>
-                    <g:textField name="maxCorrientes" class="ui-widget-content ui-corner-all" id="maxCorrientes"  value="${0.00}"/>
+                    <g:textField name="maxCorrientes" class="ui-widget-content ui-corner-all validacionNumeroSinPuntos" id="maxCorrientes"  value="${0.00}"/>
                     %{--<input type="number" name="maxCorrientes" class="ui-widget-content ui-corner-all" id="maxCorrientes"  value=""/>--}%
                 </g:else>
             </td> <!-- campo -->
