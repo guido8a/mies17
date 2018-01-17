@@ -38,7 +38,7 @@
             <td>
                 %{--<input type="number" name="maxInversion" class="ui-widget-content ui-corner-all" id="maxInversion"--}%
                        %{--value="${presupuesto ? g.formatNumber(number: presupuesto.maxInversion, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>--}%
-                <g:textField name="maxInversion" class="ui-widget-content ui-corner-all" id="maxInversion"
+                <g:textField name="maxInversion" class="ui-widget-content ui-corner-all validacionNumeroSinPuntos" id="maxInversion"
                              value="${presupuesto ? g.formatNumber(number: presupuesto.maxInversion, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
             </td> <!-- campo -->
 
@@ -53,7 +53,7 @@
                     <g:if test="${presupuesto.aprobadoCorrientes==0}">
                         %{--<input type="number" name="maxCorrientes" class="ui-widget-content ui-corner-all" id="maxCorrientes"--}%
                                %{--value="${presupuesto ? g.formatNumber(number: presupuesto.maxCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>--}%
-                        <g:textField name="maxCorrientes" class="ui-widget-content ui-corner-all" id="maxCorrientes"
+                        <g:textField name="maxCorrientes" class="ui-widget-content ui-corner-all validacionNumeroSinPuntos" id="maxCorrientes"
                                      value="${presupuesto ? g.formatNumber(number: presupuesto.maxCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
                     </g:if>
                     <g:else>
@@ -76,7 +76,7 @@
             <td>
                 %{--<input type="number" name="originalInversion" class="ui-widget-content ui-corner-all" id="orgInversion"--}%
                        %{--value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>--}%
-                <g:textField name="originalInversion" class="ui-widget-content ui-corner-all" id="orgInversion"
+                <g:textField name="originalInversion" class="ui-widget-content ui-corner-all validacionNumeroSinPuntos" id="orgInversion"
                              value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, format: '###,##0', maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
             </td> <!-- campo -->
 
@@ -89,7 +89,7 @@
             <td>
                 %{--<input type="number" name="originalCorrientes" class="ui-widget-content ui-corner-all" id="orgCorrientes"--}%
                        %{--value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>--}%
-                <g:textField name="originalCorrientes" class="ui-widget-content ui-corner-all" id="orgCorrientes"
+                <g:textField name="originalCorrientes" class="ui-widget-content ui-corner-all validacionNumeroSinPuntos" id="orgCorrientes"
                              value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, format: "###,##0", maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
             </td> <!-- campo -->
         </tr>
@@ -154,6 +154,34 @@
 
 
 <script type="text/javascript">
+
+
+
+
+    function validarNumSinPuntos(ev) {
+        /*
+         48-57      -> numeros
+         96-105     -> teclado numerico
+         188        -> , (coma)
+         190        -> . (punto) teclado
+         110        -> . (punto) teclado numerico
+         8          -> backspace
+         46         -> delete
+         9          -> tab
+         37         -> flecha izq
+         39         -> flecha der
+         */
+        return ((ev.keyCode >= 48 && ev.keyCode <= 57) ||
+        (ev.keyCode >= 96 && ev.keyCode <= 105) ||
+        ev.keyCode == 8 || ev.keyCode == 46 || ev.keyCode == 9 ||
+        ev.keyCode == 37 || ev.keyCode == 39 || ev.keyCode == 188);
+    }
+
+    $(".validacionNumeroSinPuntos").keydown(function (ev) {
+        return validarNumSinPuntos(ev);
+    }).keyup(function () {
+    });
+
 
     function reload() {
 

@@ -1049,7 +1049,7 @@ class EntidadController extends mies.seguridad.Shield {
             println "\n\n"
 
 
-            if(unidad.padre){
+         /*   if(unidad.padre){
                 def subtotalInv = inversionPadre - inversionesTodas
                 def inversionDisponible = Math.round(subtotalInv*100)/100
 
@@ -1071,16 +1071,7 @@ class EntidadController extends mies.seguridad.Shield {
                 if(valorActualInversion){
 
                     if(params.maxInversion.toDouble() <= valorActualInversion){
-//                        presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
-//                        if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
-//                            render("OK")
-//                        } else {
-//                            render("NO")
-//                        }
-
-
                         bandInv = 'OK'
-
                     }else{
 //                        def diferenciaInversion = params.maxInversion.toDouble() - valorActualInversion
 
@@ -1129,29 +1120,29 @@ class EntidadController extends mies.seguridad.Shield {
 
                 //validación corrientes
 
-                if(valorActualCorriente){
-
-                    if(params.maxCorrientes.toDouble() <= valorActualCorriente){
-                        bandCorr = 'OK'
-                    }else{
-                        def totalDisponibleCorriente = valorActualCorriente + corrienteDisponible
-                        if(params.maxCorrientes.toDouble() <= totalDisponibleCorriente){
-                            bandCorr = 'OK'
-                        }else{
-                            bandCorr = "NO_Ingrese un valor corriente menor o igual a ${Math.round(totalDisponibleCorriente*100)/100}"
-                        }
-                    }
-                }else{
-                    if(corrientePadre < params.maxCorrientes.toDouble()){
-                        bandCorr = "NO_Ingrese un valor corriente menor a ${Math.round(corrientePadre*100)/100}"
-                    }else{
-                        if(corrienteDisponible < params.maxCorrientes.toDouble()){
-                            bandCorr = "NO_Ingrese un valor corriente menor a ${Math.round(corrienteDisponible*100)/100}"
-                        }else{
-                            bandCorr = 'OK'
-                        }
-                    }
-                }
+//                if(valorActualCorriente){
+//
+//                    if(params.maxCorrientes.toDouble() <= valorActualCorriente){
+//                        bandCorr = 'OK'
+//                    }else{
+//                        def totalDisponibleCorriente = valorActualCorriente + corrienteDisponible
+//                        if(params.maxCorrientes.toDouble() <= totalDisponibleCorriente){
+//                            bandCorr = 'OK'
+//                        }else{
+//                            bandCorr = "NO_Ingrese un valor corriente menor o igual a ${Math.round(totalDisponibleCorriente*100)/100}"
+//                        }
+//                    }
+//                }else{
+//                    if(corrientePadre < params.maxCorrientes.toDouble()){
+//                        bandCorr = "NO_Ingrese un valor corriente menor a ${Math.round(corrientePadre*100)/100}"
+//                    }else{
+//                        if(corrienteDisponible < params.maxCorrientes.toDouble()){
+//                            bandCorr = "NO_Ingrese un valor corriente menor a ${Math.round(corrienteDisponible*100)/100}"
+//                        }else{
+//                            bandCorr = 'OK'
+//                        }
+//                    }
+//                }
 
             }else{
 //                presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
@@ -1162,10 +1153,10 @@ class EntidadController extends mies.seguridad.Shield {
 //                }
                 bandInv = 'OK'
                 bandCorr = 'OK'
-            }
+            }*/
 
 
-            def partesInv = bandInv.split("_")
+           /* def partesInv = bandInv.split("_")
             def partesCorr = bandCorr.split("_")
 
             println("inv " + partesInv + " " + "corr" + partesCorr)
@@ -1188,7 +1179,18 @@ class EntidadController extends mies.seguridad.Shield {
                         render "NO"
                     }
                 }
+            }*/
+
+
+            presupuestoUnidad = kerberosService.saveObject(presupuestoUnidad, PresupuestoUnidad, session.perfil, session.usuario, actionName, controllerName, session)
+            if ((presupuestoUnidad.errors.getErrorCount() == 0)) {
+                render("OK")
+            } else {
+                render("NO")
             }
+
+
+
 
         }
 
