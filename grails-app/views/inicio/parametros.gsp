@@ -133,6 +133,9 @@
                     <div class="item" texto="fnte">
                         <g:link  controller="componente" action="list">Componente</g:link> Componentes, usados en el registro de asignaciones corrientes.
                     </div><br>
+                    <div class="item" texto="act">
+                        <g:link  controller="actividadPresupuesto" action="list">Actividad Presupuestaria</g:link> Actividad Presupuestaria.
+                    </div><br>
                     <div class="item" texto="fnte">
                         <g:link  controller="fuente" action="list">Fuente de Financiamiento</g:link> Posibles fuentes de financiamiento que puede tener un proyecto
                     </div><br>
@@ -433,6 +436,10 @@
     <div id="plas" style="display:none">
         <h1>Políticas de la Agenda Social</h1><br>
         <p>Políticas de la agenda social que pueden aplicarse a un proyecto</p>
+    </div>
+    <div id="act" style="display:none">
+        <h1>Actividad Presupuestaria</h1><br>
+        <p>Actividad Presupuestaria</p>
     </div>
 
 </div>%{-- cierra el div de contenedor --}%

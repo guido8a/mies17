@@ -42,9 +42,9 @@
                     <li>Ejecución de Gastos -> Reportes -> Información Consolidada -> Ejecución del Presupuesto (Grupos dinámicos)</li>
                 </ul>
                 <li>Desde la pantalla que aprece, ingrese:</li>
-                <lu>
+                <ul>
                     <li> Ingrese el número de la Entidad Institucional y la Unidad Ejecutora</li>
-                </lu>
+                </ul>
             </ul>
             <img src="${resource(dir: 'esigef', file: 'cuadro1.jpeg')}" alt="Valores de Filtrado" border="1px;" style="margin-left: 40px;">
             <lu>
