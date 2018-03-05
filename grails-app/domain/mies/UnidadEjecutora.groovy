@@ -18,6 +18,8 @@ class UnidadEjecutora implements Serializable {
     String email
     String observaciones
 
+    String frontera
+
     int orden
 
     static auditable = [ignore: []]
@@ -46,6 +48,7 @@ class UnidadEjecutora implements Serializable {
             observaciones column: 'unejobsr'
             
             orden column: 'unejordn'
+            frontera column: 'unejfrnt'
         }
     }
     static constraints = {
@@ -64,6 +67,7 @@ class UnidadEjecutora implements Serializable {
         fax(size: 1..63, blank: true, nullable: true, attributes: [mensaje: 'Números de fax, se los separa con “;”'])
         email(size: 1..63, blank: true, nullable: true, attributes: [mensaje: 'Dirección de correo electrónico institucional'])
         observaciones(size: 1..127, blank: true, nullable: true, attributes: [mensaje: 'Observaciones'])
+        frontera(blank: true, nullable: true)
     }
 
     String toString() {

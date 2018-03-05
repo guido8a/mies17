@@ -226,6 +226,18 @@
                 </td> <!-- campo -->
             </tr>
 
+        <tr class="prop">
+            <td class="label">Frontera</td>
+
+            <td class="indicator">
+                &nbsp;
+            </td>
+
+            <td>
+                <g:textField name="unidad.frontera" value="${unidad?.frontera}" class="field ui-widget-content ui-corner-all" title="Frontera cerca a la que se encuentra la unidad"/>
+            </td> <!-- campo -->
+        </tr>
+
             <tr class="prop">
                 <td class="label">Observaciones</td>
 

@@ -17,6 +17,10 @@ class Asignacion implements Serializable {
     int meta
     String indicador
     String modalidad
+    String unidadAdministrativa
+
+    ActividadPresupuesto actividadPresupuesto
+
     static auditable=[ignore:[]]
     static mapping = {
         table 'asgn'
@@ -42,6 +46,8 @@ class Asignacion implements Serializable {
             meta column: 'asgnmeta'
             indicador column: 'asgnindi'
             modalidad column: 'asgnmdsr'
+            unidadAdministrativa column: 'asgnundd'
+            actividadPresupuesto column: 'acps__id'
         }
     }
     static constraints = {
@@ -60,6 +66,8 @@ class Asignacion implements Serializable {
 //        meta(nullable: true,blank: true,size: 1..255)
         indicador(nullable: true,blank: true,size: 1..255)
         modalidad(nullable: true, blank: true)
+        unidadAdministrativa(blank: true, nullable: true)
+        componente(blank: true, nullable: true)
     }
 
     String toString(){

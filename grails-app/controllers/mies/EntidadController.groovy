@@ -1196,6 +1196,9 @@ class EntidadController extends mies.seguridad.Shield {
 //        } //guardar presupuesto entidad
         else {
 
+            println("params " + params)
+
+
             def pUnidad = params.unidad
             def unidad
             if (pUnidad.id) {

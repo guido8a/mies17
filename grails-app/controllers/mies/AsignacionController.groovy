@@ -269,10 +269,12 @@ class AsignacionController extends mies.seguridad.Shield {
     }
 
     def cambiarPrograma = {
-        println params
+//        println params
         def asg = Asignacion.get(params.idAsg)
         def prog = ProgramaPresupuestario.get(params.progs)
+        def act = ActividadPresupuesto.get(params.act)
         asg.programa = prog
+        asg.actividadPresupuesto = act
         asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, actionName, controllerName, session)
         if (asg.errors.getErrorCount() == 0) {
             flash.message = "Asignación cambiada al programa <b>" + prog.codigo+": "+prog.descripcion + "</b>"
@@ -284,7 +286,7 @@ class AsignacionController extends mies.seguridad.Shield {
         redirect(action: 'asignacionesCorrientesv2', params: [id: params.id, anio: params.anio, programa: params.programa])
     }
     def cambiarProgramaEditar = {
-        println params
+//        println params
         def asg = Asignacion.get(params.idAsg)
         def prog = ProgramaPresupuestario.get(params.progs)
         asg.programa = prog
@@ -793,8 +795,15 @@ class AsignacionController extends mies.seguridad.Shield {
         params.planificado = params.planificado.replaceAll(",", "\\.")
         params.planificado = params.planificado.toDouble()
         def band = true
-        if (params?.componente?.id == "-1") {
-            params.remove("componente.id")
+//        if (params?.componente?.id == "-1") {
+//            params.remove("componente.id")
+//            band = false
+//        }
+
+        def actividadPresupuestaria
+        if(params.actividadPresupuestaria != null){
+            actividadPresupuestaria = ActividadPresupuesto.get(params.actividadPresupuestaria)
+        }else{
             band = false
         }
 
@@ -822,7 +831,9 @@ class AsignacionController extends mies.seguridad.Shield {
 
         }
 
+        params.componente = null
         asg.properties = params
+        asg.actividadPresupuesto = actividadPresupuestaria
 
         asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, "guardarAsignacion", "asignacion", session)
         if (asg.errors.getErrorCount() == 0) {
@@ -1513,6 +1524,25 @@ class AsignacionController extends mies.seguridad.Shield {
             return false
 
         return true
+    }
+
+    def actividad_ajax () {
+
+        def programa = ProgramaPresupuestario.get(params.programa)
+        def actividades = ActividadPresupuesto.findAllByProgramaPresupuestario(programa)
+        def actividad
+        if(params.actividad != 'null'){
+            actividad = Actividad.get(params.actividad)
+        }
+
+        return[actividades: actividades, actividad: actividad]
+    }
+
+    def cargarActividad_ajax () {
+        println("params " + params)
+        def programa = ProgramaPresupuestario.get(params.programa)
+        def actividades = ActividadPresupuesto.findAllByProgramaPresupuestario(programa)
+        return [actividades: actividades]
     }
 
 }

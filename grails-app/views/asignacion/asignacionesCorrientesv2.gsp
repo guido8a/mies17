@@ -41,8 +41,9 @@
         <table width="600">
             <tr>
                 <th>Año</th>
-                <th>Programa</th>
-                <th>Componente</th>
+                <th>Programa Presupuestario</th>
+                %{--<th>Componente</th>--}%
+                <th>Actividad Presupuestaria</th>
             </tr>
 
             <tr>
@@ -50,8 +51,8 @@
 
                 <td><g:select from="${programas}" id="programa" optionKey="id" name="programa" class="programa" value="${programa.id}"/></td>
 
-                %{--<td><g:select from="${componentes}" id="componente" optionKey="id" name="componente" class="componente" noSelection="['-1':'Seleccione...']"/></td>--}%
-                <td><g:select from="${componentes}" id="componente" optionKey="id" name="componente" class="componente"/></td>
+                %{--<td><g:select from="${componentes}" id="componente" optionKey="id" name="componente" class="componente"/></td>--}%
+                <td id="tdActividad"></td>
             </tr>
         </table>
 
@@ -166,11 +167,11 @@
         <thead>
 
         <th style="width: 220px">Programa</th>
-        <th style="width: 120px">Componente</th>
+        %{--<th style="width: 120px">Componente</th>--}%
+        <th style="width: 120px">Act. Presupuestaria</th>
         <th style="width: 240px">Actividad</th>
         <th style="width: 60px;">Partida</th>
         <th style="width: 200px">Desc. Presupuestaria</th>
-
         <th>Fuente</th>
         <th>Presupuesto</th>
         <th></th>
@@ -188,7 +189,8 @@
                 </td>
 
                 <td>
-                    ${asg.componente}
+                    %{--${asg.componente}--}%
+                    ${asg?.actividadPresupuesto?.descripcion}
                 </td>
 
                 <td class="actividad">
@@ -223,7 +225,7 @@
                 <td style="text-align: center">
                     <g:if test="${max?.aprobadoCorrientes==0}">
                         <a href="#" class="btn eliminar ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}"
-                           prog="${asg.programa.id}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}"
+                           prog="${asg.programa.id}" actpr="${asg.actividadPresupuesto.id}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}"
                            fuente="${asg.fuente.id}" valor="${(asg.redistribucion == 0) ? asg.planificado.toDouble().round(2) : asg.redistribucion.toDouble().round(2)}" actv="${asg.actividad}"
                            meta="${asg.meta}" indi="${asg.indicador}">Eliminar</a>
                     </g:if>
@@ -309,13 +311,60 @@
         <p id="pTexto">
             Seleccione el nuevo programa
         </p>
+
+        <div style="margin-top: 15px">Programa Presupuestario</div>
+
         <g:select from="${programas}" name="progs" optionKey="id" value="${programa.id}"/>
+
+        <div style="margin-top: 15px">Actividad Presupuestaria</div>
+
+        <div id="divActividad"></div>
+
     </form>
 </div>
 
 <script type="text/javascript">
 
+    $("#progs").change(function () {
+        var programa = $(this).val();
+        cargarActividadDialogo(programa);
+    });
 
+    cargarActividadDialogo($("#progs").val());
+
+    function cargarActividadDialogo(programa){
+        $.ajax({
+           type: 'POST',
+            url: '${createLink(controller: 'asignacion', action: 'cargarActividad_ajax')}',
+            data:{
+                programa: programa
+            },
+            success: function (msg) {
+                $("#divActividad").html(msg)
+            }
+        });
+    }
+
+    cargarActivdad($("#programa").val(), null)
+
+    $("#programa").change(function () {
+        var programa = $(this).val();
+        cargarActivdad(programa, null)
+    });
+
+    function cargarActivdad (programa, actividad ){
+        $.ajax({
+            type: 'POST',
+            url:'${createLink(controller: 'asignacion', action: 'actividad_ajax')}',
+            data:{
+                programa: programa,
+                actividad: actividad
+            },
+            success: function (msg) {
+                $("#tdActividad").html(msg)
+            }
+        });
+    }
 
     function validarNumSinPuntos(ev) {
         /*
@@ -341,11 +390,6 @@
     }).keyup(function () {
     });
 
-
-
-
-
-
     var valorEditar = 0;
 
     function validar(tipo) {
@@ -360,6 +404,9 @@
 
         var meta = $("#meta").val();
         var indi = $("#indi").val();
+        var acpr = $("#actividadPresupuestaria").val()
+
+
         valorTxt.removeClass("error");
         prspField.removeClass("error");
 
@@ -401,15 +448,14 @@
                     band = false;
                     error = actField;
                 }
-//                if (meta.length < 2) {
-//                    mensaje = "Error: Debe llenar el campo meta";
-//                    band = false;
-//                    error = $(".btn_editar");
-//                }
                 if (indi.length < 2) {
                     mensaje = "Error: Debe llenar el campo indicador";
                     band = false;
                     error = $(".btn_editar");
+                }
+                if(acpr == null){
+                    mensaje = "Error: Debe seleccionar una actividad presupuestaria";
+                    band = false;
                 }
             }
         }
@@ -439,9 +485,15 @@
             buttons:{
                 "Aceptar":function () {
                     var data = $("#frmCmbPrg").serialize();
-                    var url = "${createLink(action: 'cambiarPrograma')}?" + data + "&programa=${programa.id}&anio=${actual.id}&id=${unidad.id}";
-//                            console.log(url);
-                    location.href = url;
+                    var act = $("#actividadPre").val();
+
+                    if(act == null){
+                        alert("Error: Debe seleccionar una actividad presupuestaria");
+                        return
+                    }else{
+                        var url = "${createLink(action: 'cambiarPrograma')}?" + data + "&programa=${programa.id}&anio=${actual.id}&id=${unidad.id}" + "&act=" + act;
+                        location.href = url;
+                    }
                 },
                 "Cancelar":function () {
                     $(this).dialog("close");
@@ -459,6 +511,7 @@
             var act = $(this).parents("tr").find(".actividad").text().trim();
             $("#idAsg").val(parts[1]);
             $("#pTexto").html("Seleccione el nuevo programa para la asignación:<br/> <b>" + act + "</b>");
+            cargarActividadDialogo($("#progs").val());
             $("#dlgProg").dialog("open");
             return false;
         });
@@ -557,6 +610,10 @@
             $("#meta").val($(this).attr("meta"));
             $("#indi").val($(this).attr("indi"));
             $("#met").val($(this).attr("met"));
+
+            cargarActivdad($(this).attr("prog"), $(this).attr("actpr"))
+
+
         });
 
         $(".eliminar").button({
@@ -587,6 +644,7 @@
         });
 
         $("#anio_asg, #programa").change(function () {
+//        $("#anio_asg").change(function () {
             location.href = "${createLink(controller:'asignacion',action:'asignacionesCorrientesv2')}?id=${unidad.id}&anio=" + $("#anio_asg").val() + "&programa=" + $("#programa").val();
         });
 
@@ -597,12 +655,13 @@
             var valor = valorTxt.val();
             var actField = $("#actv");
             var actividad = actField.val();
-            var band = true;
-            var comp = $("#componente").val()
+            var actividadPresupuestaria = $("#actividadPresupuestaria").val()
+            var comp = $("#componente").val(null);
             var meta = $("#meta").val();
             var indi = $("#indi").val();
             var met = $("#met").val();
             var boton = $(this);
+            var band = true;
             if (validar(0)) {
                 var anio = boton.attr("anio")
                 var fuente = $("#fuente").val()
@@ -610,7 +669,8 @@
                 $.ajax({
                     type:"POST",
                     url:"${createLink(action:'guardarAsignacion',controller:'asignacion')}",
-                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&componente.id=" + comp + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
+                    %{--data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&componente.id=" + comp + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),--}%
+                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&actividadPresupuestaria=" + actividadPresupuestaria + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
                     success:function (msg) {
                         if (msg * 1 >= 0) {
                             location.reload(true);
