@@ -27,20 +27,17 @@
 <body>
 
 <div style="margin-left: 10px;">
-    %{--<g:if test="${max?.aprobadoCorrientes!=0}">--}%
-    %{--<g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad" params="${[unidad:unidad.id,anio:actual.id]}">Solicitar modificación</g:link>--}%
-    %{--</g:if>--}%
     <g:link class="btn" controller="asignacion" action="programacionAsignaciones" params="[id:unidad.id,anio:actual.id]">Programación</g:link>
     <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
     <a href="${createLink(controller: 'asignacion', action: 'asignacionesCorrientesv2')}?id=${unidad.id}&anio=${actual.id}&todo=1" class="btn">Ver todas</a>
 
     <a href="#" id="btnReporte">Reporte</a>
 
-    <div style="margin-top: 15px;">
-
+    <div style="margin-top: 50px;">
         <table width="600">
             <tr>
                 <th>Año</th>
+                <th>Unidad</th>
                 <th>Programa Presupuestario</th>
                 %{--<th>Componente</th>--}%
                 <th>Actividad Presupuestaria</th>
@@ -49,13 +46,15 @@
             <tr>
                 <td><g:select from="${mies.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/></td>
 
+                <td class="unidad">
+                    <textarea style="width: 230px;height: 40px;resize: none;" id="unidadA"></textarea>
+                </td>
                 <td><g:select from="${programas}" id="programa" optionKey="id" name="programa" class="programa" value="${programa.id}"/></td>
 
                 %{--<td><g:select from="${componentes}" id="componente" optionKey="id" name="componente" class="componente"/></td>--}%
                 <td id="tdActividad"></td>
             </tr>
         </table>
-
     </div>
 </div>
 
@@ -218,7 +217,7 @@
 
                 <td style="text-align: center">
                     <g:if test="${max?.aprobadoCorrientes==0}">
-                        <a href="#" class="btn editar ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.programa.id}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente.id}" valor="${(asg.redistribucion == 0) ? asg.planificado.toDouble().round(2) : asg.redistribucion.toDouble().round(2)}" actv="${asg.actividad}" meta="${asg.meta}" indi="${asg.indicador}" met="${asg?.modalidad}" comp="${asg?.componente?.id}">Editar</a>
+                        <a href="#" class="btn editar ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.programa.id}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente.id}" valor="${(asg.redistribucion == 0) ? asg.planificado.toDouble().round(2) : asg.redistribucion.toDouble().round(2)}" actv="${asg.actividad}" meta="${asg.meta}" indi="${asg.indicador}" met="${asg?.modalidad}" comp="${asg?.componente?.id}" un="${asg.unidadAdministrativa}">Editar</a>
                     </g:if>
                 </td>
 
@@ -404,7 +403,8 @@
 
         var meta = $("#meta").val();
         var indi = $("#indi").val();
-        var acpr = $("#actividadPresupuestaria").val()
+        var acpr = $("#actividadPresupuestaria").val();
+        var uni = $("#unidadA").val();
 
 
         valorTxt.removeClass("error");
@@ -455,6 +455,10 @@
                 }
                 if(acpr == null){
                     mensaje = "Error: Debe seleccionar una actividad presupuestaria";
+                    band = false;
+                }
+                if(uni == ''){
+                    mensaje = "Error: Debe ingresar una unidad";
                     band = false;
                 }
             }
@@ -610,10 +614,9 @@
             $("#meta").val($(this).attr("meta"));
             $("#indi").val($(this).attr("indi"));
             $("#met").val($(this).attr("met"));
+            $("#unidadA").val($(this).attr("un"));
 
             cargarActivdad($(this).attr("prog"), $(this).attr("actpr"))
-
-
         });
 
         $(".eliminar").button({
@@ -655,7 +658,8 @@
             var valor = valorTxt.val();
             var actField = $("#actv");
             var actividad = actField.val();
-            var actividadPresupuestaria = $("#actividadPresupuestaria").val()
+            var actividadPresupuestaria = $("#actividadPresupuestaria").val();
+            var unidadAdministrativa = $("#unidadA").val();
             var comp = $("#componente").val(null);
             var meta = $("#meta").val();
             var indi = $("#indi").val();
@@ -670,7 +674,7 @@
                     type:"POST",
                     url:"${createLink(action:'guardarAsignacion',controller:'asignacion')}",
                     %{--data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&componente.id=" + comp + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),--}%
-                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&actividadPresupuestaria=" + actividadPresupuestaria + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
+                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&actividadPresupuestaria=" + actividadPresupuestaria + "&unidadA=" + unidadAdministrativa + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
                     success:function (msg) {
                         if (msg * 1 >= 0) {
                             location.reload(true);

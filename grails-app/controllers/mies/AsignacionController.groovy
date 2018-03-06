@@ -834,6 +834,7 @@ class AsignacionController extends mies.seguridad.Shield {
         params.componente = null
         asg.properties = params
         asg.actividadPresupuesto = actividadPresupuestaria
+        asg.unidadAdministrativa = params.unidadA
 
         asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, "guardarAsignacion", "asignacion", session)
         if (asg.errors.getErrorCount() == 0) {
