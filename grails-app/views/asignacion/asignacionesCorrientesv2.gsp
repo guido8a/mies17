@@ -64,6 +64,27 @@
     </div>
 </g:if>
 
+
+<fieldset class="ui-corner-all" style="min-height: 110px;font-size: 11px;">
+    <legend>Objetivos</legend>
+    <table style="width: 100%">
+        <tr>
+            <th style="width: 25%">Plan de Desarrollo</th>
+            <th style="width: 25%">Objetivo Institucional</th>
+            <th style="width: 25%">Objetivo Específico</th>
+            <th style="width: 25%">Objetivo Operativo</th>
+        </tr>
+
+        <tr>
+            <td><g:select from="${mies.PlanDesarrollo.list().sort{it.descripcion}}" id="plan" name="plan_name" optionKey="id" optionValue="descripcion" value="${''}"/></td>
+            <td><g:select from="${mies.ObjetivoInstitucional.list().sort{it.descripcion}}" id="institucional" name="institucional_name" optionKey="id" optionValue="descripcion" value="${''}"/></td>
+            <td id="tdEspecifico"></td>
+            <td id="tdOperativo"></td>
+        </tr>
+    </table>
+</fieldset>
+
+
 <fieldset class="ui-corner-all" style="min-height: 110px;font-size: 11px;">
     <legend>
         Ingreso de datos
@@ -577,6 +598,12 @@
 
             }
         });
+
+
+
+//
+        $("#plan").selectmenu({width:250, height:60})
+        $("#institucional").selectmenu({width:250, height:60})
 
         $("#progs").selectmenu({width:380, height:50})
         $("[name=programa]").selectmenu({width:380, height:50})

@@ -21,6 +21,10 @@ class Asignacion implements Serializable {
 
     ActividadPresupuesto actividadPresupuesto
 
+    ObjetivoOperativo objetivoOperativo
+
+    PlanDesarrollo planDesarrollo
+
     static auditable=[ignore:[]]
     static mapping = {
         table 'asgn'
@@ -48,6 +52,8 @@ class Asignacion implements Serializable {
             modalidad column: 'asgnmdsr'
             unidadAdministrativa column: 'asgnundd'
             actividadPresupuesto column: 'acps__id'
+            objetivoOperativo column: 'obop__id'
+            planDesarrollo column: 'plnd__id'
         }
     }
     static constraints = {

@@ -2499,6 +2499,7 @@ response.outputStream << file.newInputStream()
     }
 
     def uploadFile() {
+
         def path = servletContext.getRealPath("/") + "xls/"   //web-app/archivos
         new File(path).mkdirs()
 
@@ -2541,7 +2542,21 @@ response.outputStream << file.newInputStream()
 
             workbook.getNumberOfSheets().times { sheet ->
                 println("hojas " + sheet)
+                Sheet s = workbook.getSheet(sheet)
+                if (!s.getSettings().isHidden()) {
+                    Cell[] row = null
+                    s.getRows().times {j->
+                        row = s.getRow(j)
+                        def canton = row[5].getContents()
+                        println("cantones " + j + " " + canton)
+
+                    }
+                }
             }
+
+
+
+
 
             file.delete();
 /*
