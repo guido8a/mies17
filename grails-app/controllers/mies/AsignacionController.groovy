@@ -801,8 +801,16 @@ class AsignacionController extends mies.seguridad.Shield {
 //        }
 
         def actividadPresupuestaria
+        def objOperativo
+
         if(params.actividadPresupuestaria != null){
             actividadPresupuestaria = ActividadPresupuesto.get(params.actividadPresupuestaria)
+        }else{
+            band = false
+        }
+
+        if(params.operativo != null){
+            objOperativo = ObjetivoOperativo.get(params.operativo)
         }else{
             band = false
         }
@@ -828,13 +836,14 @@ class AsignacionController extends mies.seguridad.Shield {
                 asg.meta = params.meta.toInteger()
             }
              asg.modalidad = params.met
-
         }
 
         params.componente = null
         asg.properties = params
         asg.actividadPresupuesto = actividadPresupuestaria
         asg.unidadAdministrativa = params.unidadA
+        asg.objetivoOperativo = objOperativo
+
 
         asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, "guardarAsignacion", "asignacion", session)
         if (asg.errors.getErrorCount() == 0) {
@@ -1540,10 +1549,30 @@ class AsignacionController extends mies.seguridad.Shield {
     }
 
     def cargarActividad_ajax () {
-        println("params " + params)
+//        println("params " + params)
         def programa = ProgramaPresupuestario.get(params.programa)
         def actividades = ActividadPresupuesto.findAllByProgramaPresupuestario(programa)
         return [actividades: actividades]
+    }
+
+    def especifico_ajax () {
+        def objetivoInstitucional = ObjetivoInstitucional.get(params.objetivo)
+        def objetivosEspecificos = ObjetivoEspecifico.findAllByObjetivoInstitucional(objetivoInstitucional)
+
+        return[objetivos: objetivosEspecificos]
+    }
+
+    def operativo_ajax () {
+        def objetivoEspecifico
+        def objetivosOperativos
+
+        if(params.especifico != 'null'){
+            objetivoEspecifico = ObjetivoEspecifico.get(params.especifico)
+            objetivosOperativos = ObjetivoOperativo.findAllByObjetivoEspecifico(objetivoEspecifico)
+        }else{
+            objetivosOperativos = null
+        }
+        return[objetivos: objetivosOperativos]
     }
 
 }

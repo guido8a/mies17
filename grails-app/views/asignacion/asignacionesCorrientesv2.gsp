@@ -65,7 +65,7 @@
 </g:if>
 
 
-<fieldset class="ui-corner-all" style="min-height: 110px;font-size: 11px;">
+<fieldset class="ui-corner-all" style="min-height: 100px;font-size: 11px;">
     <legend>Objetivos</legend>
     <table style="width: 100%">
         <tr>
@@ -345,6 +345,28 @@
 
 <script type="text/javascript">
 
+
+    cargarObjEspecifico($("#institucional").val());
+
+    function cargarObjEspecifico (objetivo) {
+        $.ajax({
+            type: 'POST',
+            url:'${createLink(controller: 'asignacion', action:'especifico_ajax')}',
+            data:{
+                objetivo: objetivo
+            },
+            success: function (msg) {
+                $("#tdEspecifico").html(msg)
+            }
+        });
+    }
+
+    $("#institucional").change(function () {
+        var objetivo = $(this).val()
+        cargarObjEspecifico(objetivo)
+    });
+
+
     $("#progs").change(function () {
         var programa = $(this).val();
         cargarActividadDialogo(programa);
@@ -426,6 +448,7 @@
         var indi = $("#indi").val();
         var acpr = $("#actividadPresupuestaria").val();
         var uni = $("#unidadA").val();
+        var opera = $("#objetivoOperativo").val();
 
 
         valorTxt.removeClass("error");
@@ -480,6 +503,10 @@
                 }
                 if(uni == ''){
                     mensaje = "Error: Debe ingresar una unidad";
+                    band = false;
+                }
+                if(opera == '' || opera == null){
+                    mensaje = "Error: Debe seleccionar un objetivo operativo";
                     band = false;
                 }
             }
@@ -601,9 +628,12 @@
 
 
 
-//
-        $("#plan").selectmenu({width:250, height:60})
-        $("#institucional").selectmenu({width:250, height:60})
+
+        $("#plan").selectmenu({width:250, height:50})
+        $("#institucional").selectmenu({width:250, height:50})
+        $("#plan-button").css("height", "35px")
+        $("#institucional-button").css("height", "35px")
+
 
         $("#progs").selectmenu({width:380, height:50})
         $("[name=programa]").selectmenu({width:380, height:50})
@@ -616,6 +646,7 @@
         $("#breadCrumb").jBreadCrumb({
             beginingElementsToLeaveOpen:10
         });
+
 
         $(".editar").button({
             icons:{
@@ -687,6 +718,7 @@
             var actividad = actField.val();
             var actividadPresupuestaria = $("#actividadPresupuestaria").val();
             var unidadAdministrativa = $("#unidadA").val();
+            var operativo = $("#objetivoOperativo").val();
             var comp = $("#componente").val(null);
             var meta = $("#meta").val();
             var indi = $("#indi").val();
@@ -694,14 +726,14 @@
             var boton = $(this);
             var band = true;
             if (validar(0)) {
-                var anio = boton.attr("anio")
-                var fuente = $("#fuente").val()
-                var programa = $("#programa").val()
+                var anio = boton.attr("anio");
+                var fuente = $("#fuente").val();
+                var programa = $("#programa").val();
                 $.ajax({
                     type:"POST",
                     url:"${createLink(action:'guardarAsignacion',controller:'asignacion')}",
                     %{--data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&componente.id=" + comp + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),--}%
-                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&actividadPresupuestaria=" + actividadPresupuestaria + "&unidadA=" + unidadAdministrativa + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
+                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&actividadPresupuestaria=" + actividadPresupuestaria + "&unidadA=" + unidadAdministrativa + "&operativo=" + operativo + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
                     success:function (msg) {
                         if (msg * 1 >= 0) {
                             location.reload(true);

@@ -1,9 +1,10 @@
 <%--
   Created by IntelliJ IDEA.
   User: gato
-  Date: 05/03/18
-  Time: 10:59
+  Date: 08/03/18
+  Time: 14:58
 --%>
+
 
 <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}" style="" type="text/css"/>
 <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}" type="text/css"/>
@@ -16,9 +17,37 @@
 
 <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/box/css', file: 'jquery.luz.box.css')}"/>
 
-<g:select from="${actividades}" id="actividadPresupuestaria" optionKey="id" optionValue="descripcion" name="actividad_name" value="${actividad?.id}"/>
+<g:select from="${objetivos}" id="objetivoEspecifico" optionKey="id" optionValue="descripcion" name="objetivoEsp_name" value="${''}"/>
 
 <script type="text/javascript">
-    $("#actividadPresupuestaria").selectmenu({width:340, height:50})
-    $("#actividadPresupuestaria-button").css("height", "40px")
+    $("#objetivoEspecifico").selectmenu({width:250, height:50});
+    $("#objetivoEspecifico-button").css("height", "35px");
+
+
+    cargarObjOperativo($("#objetivoEspecifico").val());
+
+    $("#objetivoEspecifico").change(function () {
+       var especifico = $(this).val();
+        cargarObjOperativo(especifico);
+    });
+
+    function cargarObjOperativo (especifico) {
+        $.ajax({
+            type: 'POST',
+            url:'${createLink(controller: 'asignacion', action: 'operativo_ajax')}',
+            async: false,
+            data:{
+                especifico: especifico
+            },
+            success: function (msg) {
+                $("#tdOperativo").html(msg)
+            }
+        });
+    }
+
+
+
+
+
+
 </script>

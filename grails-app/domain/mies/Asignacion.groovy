@@ -63,7 +63,6 @@ class Asignacion implements Serializable {
         actividad( blank:true, nullable:true,size: 1..1024,attributes:[mensaje:'Actividad de gasto corriente'])
         presupuesto( blank:true, nullable:true ,attributes:[mensaje:'Partida presupuestaria'])
         tipoGasto( blank:true, nullable:true ,attributes:[mensaje:'Tipo de gasto o grupo de gasto'])
-        componente(nullable: true,blank:true)
         planificado( blank:true, nullable:true ,attributes:[mensaje:'Planificado'])
         redistribucion( blank:true, nullable:true ,attributes:[mensaje:'redistribuido (en + o en – según aumente o disminuya la asignación), lo asignado_real = valor_asignado + redistribuido.'])
         unidad(blank: true,nullable: true)
@@ -74,6 +73,7 @@ class Asignacion implements Serializable {
         modalidad(nullable: true, blank: true)
         unidadAdministrativa(blank: true, nullable: true)
         componente(blank: true, nullable: true)
+        objetivoOperativo(blank: true, nullable: true)
     }
 
     String toString(){

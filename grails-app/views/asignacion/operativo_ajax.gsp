@@ -1,11 +1,10 @@
 <%--
   Created by IntelliJ IDEA.
   User: gato
-  Date: 05/03/18
-  Time: 10:59
+  Date: 08/03/18
+  Time: 15:09
 --%>
 
-<link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'Base.css')}" style="" type="text/css"/>
 <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jBreadCrumb/Styles', file: 'BreadCrumb.css')}" type="text/css"/>
 
 <script src="${resource(dir: 'js/jquery/plugins/', file: 'jquery.easing.1.3.js')}" type="text/javascript" charset="" language="JavaScript"></script>
@@ -16,9 +15,9 @@
 
 <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/box/css', file: 'jquery.luz.box.css')}"/>
 
-<g:select from="${actividades}" id="actividadPresupuestaria" optionKey="id" optionValue="descripcion" name="actividad_name" value="${actividad?.id}"/>
+<g:select from="${objetivos}" id="objetivoOperativo" optionKey="id" optionValue="descripcion" name="objetivoOpe_name" value="${''}"/>
 
 <script type="text/javascript">
-    $("#actividadPresupuestaria").selectmenu({width:340, height:50})
-    $("#actividadPresupuestaria-button").css("height", "40px")
+    $("#objetivoOperativo").selectmenu({width:250, height:50});
+    $("#objetivoOperativo-button").css("height", "35px");
 </script>
