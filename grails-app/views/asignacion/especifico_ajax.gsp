@@ -17,27 +17,28 @@
 
 <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/box/css', file: 'jquery.luz.box.css')}"/>
 
-<g:select from="${objetivos}" id="objetivoEspecifico" optionKey="id" optionValue="descripcion" name="objetivoEsp_name" value="${''}"/>
+<g:select from="${objetivos}" id="objetivoEspecifico" optionKey="id" optionValue="descripcion" name="objetivoEsp_name" value="${especifico?.id}"/>
 
 <script type="text/javascript">
     $("#objetivoEspecifico").selectmenu({width:250, height:50});
     $("#objetivoEspecifico-button").css("height", "35px");
 
 
-    cargarObjOperativo($("#objetivoEspecifico").val());
+    cargarObjOperativo($("#objetivoEspecifico").val(),null);
 
     $("#objetivoEspecifico").change(function () {
        var especifico = $(this).val();
-        cargarObjOperativo(especifico);
+        cargarObjOperativo(especifico, null);
     });
 
-    function cargarObjOperativo (especifico) {
+    function cargarObjOperativo (especifico, operativo) {
         $.ajax({
             type: 'POST',
             url:'${createLink(controller: 'asignacion', action: 'operativo_ajax')}',
             async: false,
             data:{
-                especifico: especifico
+                especifico: especifico,
+                operativo: operativo
             },
             success: function (msg) {
                 $("#tdOperativo").html(msg)

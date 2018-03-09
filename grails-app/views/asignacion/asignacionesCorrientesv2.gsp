@@ -76,8 +76,12 @@
         </tr>
 
         <tr>
-            <td><g:select from="${mies.PlanDesarrollo.list().sort{it.descripcion}}" id="plan" name="plan_name" optionKey="id" optionValue="descripcion" value="${''}"/></td>
-            <td><g:select from="${mies.ObjetivoInstitucional.list().sort{it.descripcion}}" id="institucional" name="institucional_name" optionKey="id" optionValue="descripcion" value="${''}"/></td>
+            <td id="tdPlan">
+                %{--<g:select from="${mies.PlanDesarrollo.list().sort{it.descripcion}}" id="plan" name="plan_name" optionKey="id" optionValue="descripcion" />--}%
+            </td>
+            <td id="tdInstitucional">
+                %{--<g:select from="${mies.ObjetivoInstitucional.list().sort{it.descripcion}}" id="institucional" name="institucional_name" optionKey="id" optionValue="descripcion" value="${''}"/>--}%
+            </td>
             <td id="tdEspecifico"></td>
             <td id="tdOperativo"></td>
         </tr>
@@ -150,7 +154,7 @@
                 <b>Modalidad de Servicios (255 caracteres):</b><br>
 
                 %{--<textArea name="desc" rows="5" cols="40" id="dlg_desc" ${(max?.aprobadoCorrientes!= 0) ? "disabled" : ""}--}%
-                          %{--style="color: black; resize: none"></textArea>--}%
+                %{--style="color: black; resize: none"></textArea>--}%
 
                 <textArea name="met" rows="5" cols="40" id="dlg_met" ${(max?.aprobadoCorrientes!= 0) ? "disabled" : ""}
                           style="color: black; resize: none"></textArea>
@@ -238,7 +242,7 @@
 
                 <td style="text-align: center">
                     <g:if test="${max?.aprobadoCorrientes==0}">
-                        <a href="#" class="btn editar ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.programa.id}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente.id}" valor="${(asg.redistribucion == 0) ? asg.planificado.toDouble().round(2) : asg.redistribucion.toDouble().round(2)}" actv="${asg.actividad}" meta="${asg.meta}" indi="${asg.indicador}" met="${asg?.modalidad}" comp="${asg?.componente?.id}" un="${asg.unidadAdministrativa}">Editar</a>
+                        <a href="#" class="btn editar ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.programa.id}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente.id}" valor="${(asg.redistribucion == 0) ? asg.planificado.toDouble().round(2) : asg.redistribucion.toDouble().round(2)}" actv="${asg.actividad}" meta="${asg.meta}" indi="${asg.indicador}" met="${asg?.modalidad}" comp="${asg?.componente?.id}" un="${asg?.unidadAdministrativa}" plan="${asg?.planDesarrollo?.id}" ope="${asg?.objetivoOperativo?.id}">Editar</a>
                     </g:if>
                 </td>
 
@@ -345,15 +349,63 @@
 
 <script type="text/javascript">
 
+    cargarObInstitucional(null);
 
-    cargarObjEspecifico($("#institucional").val());
+    function cargarObInstitucional(institucional) {
+        $.ajax({
+           type: 'POST',
+            url:'${createLink(controller: 'asignacion', action: 'institucional_ajax')}',
+            data:{
+                institucional: institucional
+            },
+            success: function (msg){
+                $("#tdInstitucional").html(msg)
+            }
+        });
+    }
 
-    function cargarObjEspecifico (objetivo) {
+    cargarPlanDesarrollo(null);
+
+    function cargarPlanDesarrollo (plan) {
+        $.ajax({
+           type: 'POST',
+            url:'${createLink(controller: 'asignacion', action: 'plan_ajax')}',
+            data:{
+            plan: plan
+            },
+            success: function (msg){
+                $("#tdPlan").html(msg)
+            }
+        });
+    }
+
+    function cargarCombos(oo) {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'asignacion', action: 'revisarCombos_ajax')}',
+            data:{
+                operativo: oo
+            },
+            success: function (msg){
+                var parts = msg.split("_");
+                cargarObjEspecifico(parts[1],parts[0], oo);
+                cargarObjOperativo (parts[1], oo);
+                cargarObInstitucional(parts[0]);
+            }
+        })
+    }
+
+    cargarObjEspecifico($("#institucional").val(),null, null);
+
+    function cargarObjEspecifico (objetivo, especifico, operativo) {
         $.ajax({
             type: 'POST',
             url:'${createLink(controller: 'asignacion', action:'especifico_ajax')}',
             data:{
-                objetivo: objetivo
+                objetivo: objetivo,
+                especifico: especifico,
+                operativo: operativo
+
             },
             success: function (msg) {
                 $("#tdEspecifico").html(msg)
@@ -361,10 +413,10 @@
         });
     }
 
-    $("#institucional").change(function () {
-        var objetivo = $(this).val()
-        cargarObjEspecifico(objetivo)
-    });
+//    $("#institucional").change(function () {
+//        var objetivo = $(this).val();
+//        cargarObjEspecifico(objetivo, null, null)
+//    });
 
 
     $("#progs").change(function () {
@@ -376,7 +428,7 @@
 
     function cargarActividadDialogo(programa){
         $.ajax({
-           type: 'POST',
+            type: 'POST',
             url: '${createLink(controller: 'asignacion', action: 'cargarActividad_ajax')}',
             data:{
                 programa: programa
@@ -449,7 +501,7 @@
         var acpr = $("#actividadPresupuestaria").val();
         var uni = $("#unidadA").val();
         var opera = $("#objetivoOperativo").val();
-
+        var pln = $("#plan").val();
 
         valorTxt.removeClass("error");
         prspField.removeClass("error");
@@ -507,6 +559,10 @@
                 }
                 if(opera == '' || opera == null){
                     mensaje = "Error: Debe seleccionar un objetivo operativo";
+                    band = false;
+                }
+                if(pln == '' || pln == null){
+                    mensaje = "Error: Debe seleccionar un plan de desarrollo";
                     band = false;
                 }
             }
@@ -629,10 +685,10 @@
 
 
 
-        $("#plan").selectmenu({width:250, height:50})
-        $("#institucional").selectmenu({width:250, height:50})
-        $("#plan-button").css("height", "35px")
-        $("#institucional-button").css("height", "35px")
+//        $("#plan").selectmenu({width:250, height:50})
+//        $("#institucional").selectmenu({width:250, height:50})
+//        $("#plan-button").css("height", "35px")
+//        $("#institucional-button").css("height", "35px")
 
 
         $("#progs").selectmenu({width:380, height:50})
@@ -674,7 +730,10 @@
             $("#met").val($(this).attr("met"));
             $("#unidadA").val($(this).attr("un"));
 
-            cargarActivdad($(this).attr("prog"), $(this).attr("actpr"))
+            cargarActivdad($(this).attr("prog"), $(this).attr("actpr"));
+            cargarCombos($(this).attr("ope"));
+            cargarPlanDesarrollo($(this).attr('plan'));
+
         });
 
         $(".eliminar").button({
@@ -719,6 +778,7 @@
             var actividadPresupuestaria = $("#actividadPresupuestaria").val();
             var unidadAdministrativa = $("#unidadA").val();
             var operativo = $("#objetivoOperativo").val();
+            var plan = $("#plan").val();
             var comp = $("#componente").val(null);
             var meta = $("#meta").val();
             var indi = $("#indi").val();
@@ -733,7 +793,7 @@
                     type:"POST",
                     url:"${createLink(action:'guardarAsignacion',controller:'asignacion')}",
                     %{--data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&componente.id=" + comp + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),--}%
-                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&actividadPresupuestaria=" + actividadPresupuestaria + "&unidadA=" + unidadAdministrativa + "&operativo=" + operativo + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
+                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&actividadPresupuestaria=" + actividadPresupuestaria + "&unidadA=" + unidadAdministrativa + "&operativo=" + operativo + "&plan=" + plan + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
                     success:function (msg) {
                         if (msg * 1 >= 0) {
                             location.reload(true);

@@ -801,7 +801,8 @@ class AsignacionController extends mies.seguridad.Shield {
 //        }
 
         def actividadPresupuestaria
-        def objOperativo
+        def objOperativo = null
+        def planDesarrollo = null
 
         if(params.actividadPresupuestaria != null){
             actividadPresupuestaria = ActividadPresupuesto.get(params.actividadPresupuestaria)
@@ -813,6 +814,12 @@ class AsignacionController extends mies.seguridad.Shield {
             objOperativo = ObjetivoOperativo.get(params.operativo)
         }else{
             band = false
+        }
+
+        if(params.plan != null){
+            planDesarrollo = PlanDesarrollo.get(params.plan)
+        }else{
+            band=false
         }
 
         def asg
@@ -843,6 +850,8 @@ class AsignacionController extends mies.seguridad.Shield {
         asg.actividadPresupuesto = actividadPresupuestaria
         asg.unidadAdministrativa = params.unidadA
         asg.objetivoOperativo = objOperativo
+        asg.planDesarrollo = planDesarrollo
+
 
 
         asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, "guardarAsignacion", "asignacion", session)
@@ -1556,15 +1565,22 @@ class AsignacionController extends mies.seguridad.Shield {
     }
 
     def especifico_ajax () {
+
         def objetivoInstitucional = ObjetivoInstitucional.get(params.objetivo)
         def objetivosEspecificos = ObjetivoEspecifico.findAllByObjetivoInstitucional(objetivoInstitucional)
+        def especifico
 
-        return[objetivos: objetivosEspecificos]
+        if(params.especifco != null){
+            especifico = ObjetivoEspecifico.get(params.especifico)
+        }
+
+        return[objetivos: objetivosEspecificos, especifico: especifico, operativo: params.operativo]
     }
 
     def operativo_ajax () {
         def objetivoEspecifico
         def objetivosOperativos
+        def operativo
 
         if(params.especifico != 'null'){
             objetivoEspecifico = ObjetivoEspecifico.get(params.especifico)
@@ -1572,7 +1588,40 @@ class AsignacionController extends mies.seguridad.Shield {
         }else{
             objetivosOperativos = null
         }
-        return[objetivos: objetivosOperativos]
+
+        if(params.operativo != 'null'){
+           operativo = ObjetivoOperativo.get(params.operativo)
+        }
+
+        return[objetivos: objetivosOperativos,operativo: operativo]
+    }
+
+    def revisarCombos_ajax () {
+
+        def operativo = ObjetivoOperativo.get(params.operativo)
+        def especifico = operativo.objetivoEspecifico
+        def institucional = especifico.objetivoInstitucional
+
+        render especifico.id + "_" + institucional.id
+//        render "ok"
+    }
+
+
+    def plan_ajax () {
+        def plan
+        if(params.plan != 'null'){
+            plan = PlanDesarrollo.get(params.plan)
+        }
+        return[plan:plan]
+    }
+
+    def institucional_ajax () {
+        def institucional
+        if(params.institucional != 'null'){
+            institucional = ObjetivoInstitucional.get(params.institucional)
+        }
+
+        return[institucional: institucional]
     }
 
 }
