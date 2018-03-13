@@ -26,37 +26,6 @@
 
 <body>
 
-<div style="margin-left: 10px;">
-    <g:link class="btn" controller="asignacion" action="programacionAsignaciones" params="[id:unidad.id,anio:actual.id]">Programación</g:link>
-    <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
-    <a href="${createLink(controller: 'asignacion', action: 'asignacionesCorrientesv2')}?id=${unidad.id}&anio=${actual.id}&todo=1" class="btn">Ver todas</a>
-
-    <a href="#" id="btnReporte">Reporte</a>
-
-    <div style="margin-top: 50px;">
-        <table width="600">
-            <tr>
-                <th>Año</th>
-                <th>Unidad</th>
-                <th>Programa Presupuestario</th>
-                %{--<th>Componente</th>--}%
-                <th>Actividad Presupuestaria</th>
-            </tr>
-
-            <tr>
-                <td><g:select from="${mies.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/></td>
-
-                <td class="unidad">
-                    <textarea style="width: 230px;height: 40px;resize: none;" id="unidadA"></textarea>
-                </td>
-                <td><g:select from="${programas}" id="programa" optionKey="id" name="programa" class="programa" value="${programa.id}"/></td>
-
-                %{--<td><g:select from="${componentes}" id="componente" optionKey="id" name="componente" class="componente"/></td>--}%
-                <td id="tdActividad"></td>
-            </tr>
-        </table>
-    </div>
-</div>
 
 <g:if test="${flash.message}">
     <div class="${flash.clase}">
@@ -64,6 +33,55 @@
     </div>
 </g:if>
 
+
+<div style="margin-left: 10px;">
+    <g:link class="btn" controller="asignacion" action="programacionAsignaciones" params="[id:unidad.id,anio:actual.id]">Programación</g:link>
+    <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
+    <a href="${createLink(controller: 'asignacion', action: 'asignacionesCorrientesv2')}?id=${unidad.id}&anio=${actual.id}&todo=1" class="btn">Ver todas</a>
+
+    <a href="#" id="btnReporte">Reporte</a>
+
+    <div style="margin-top: 20px; width: 550px">
+        %{--<table width="200">--}%
+            %{--<tr>--}%
+                %{--<th>Año</th>--}%
+                %{--<th>Unidad</th>--}%
+            %{--</tr>--}%
+            %{--<tr>--}%
+                %{--<td><g:select from="${mies.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/></td>--}%
+                %{--<td class="unidad">--}%
+                    %{--<textarea style="width: 230px;height: 40px;resize: none;" id="unidadA"></textarea>--}%
+                %{--</td>--}%
+            %{--</tr>--}%
+        %{--</table>--}%
+
+
+        <b>Año</b> <g:select from="${mies.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}" style="margin-right: 30px"/>
+
+        <b>Unidad</b>  <g:textField name="unidadA_name" id="unidadA" style="width: 350px"/>
+
+    </div>
+</div>
+
+
+<div style="margin-top: 10px;">
+    <table width="600">
+        <tr>
+            %{--<th>Año</th>--}%
+
+            <th>Programa Presupuestario</th>
+            <th>Actividad Presupuestaria</th>
+            <th>Política de Igualdad</th>
+        </tr>
+
+        <tr>
+            <td><g:select from="${programas}" id="programa" optionKey="id" name="programa" class="programa" value="${programa.id}"/></td>
+            <td id="tdActividad"></td>
+            %{--<td><g:select from="${mies.PoliticasIgualdad.list().sort{it.descripcion}}" id="politica" name="politica_name" optionKey="id" optionValue="descripcion" value="${''}"/></td>--}%
+            <td id="tdPoliticas"></td>
+        </tr>
+    </table>
+</div>
 
 <fieldset class="ui-corner-all" style="min-height: 100px;font-size: 11px;">
     <legend>Objetivos</legend>
@@ -76,12 +94,8 @@
         </tr>
 
         <tr>
-            <td id="tdPlan">
-                %{--<g:select from="${mies.PlanDesarrollo.list().sort{it.descripcion}}" id="plan" name="plan_name" optionKey="id" optionValue="descripcion" />--}%
-            </td>
-            <td id="tdInstitucional">
-                %{--<g:select from="${mies.ObjetivoInstitucional.list().sort{it.descripcion}}" id="institucional" name="institucional_name" optionKey="id" optionValue="descripcion" value="${''}"/>--}%
-            </td>
+            <td id="tdPlan"></td>
+            <td id="tdInstitucional"></td>
             <td id="tdEspecifico"></td>
             <td id="tdOperativo"></td>
         </tr>
@@ -242,7 +256,7 @@
 
                 <td style="text-align: center">
                     <g:if test="${max?.aprobadoCorrientes==0}">
-                        <a href="#" class="btn editar ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.programa.id}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente.id}" valor="${(asg.redistribucion == 0) ? asg.planificado.toDouble().round(2) : asg.redistribucion.toDouble().round(2)}" actv="${asg.actividad}" meta="${asg.meta}" indi="${asg.indicador}" met="${asg?.modalidad}" comp="${asg?.componente?.id}" un="${asg?.unidadAdministrativa}" plan="${asg?.planDesarrollo?.id}" ope="${asg?.objetivoOperativo?.id}">Editar</a>
+                        <a href="#" class="btn editar ajax" iden="${asg.id}" icono="ico_001" clase="act_" band="0" tr="#det_${i}" prog="${asg.programa.id}" prsp_id="${asg.presupuesto.id}" prsp_num="${asg.presupuesto.numero}" desc="${asg.presupuesto.descripcion}" fuente="${asg.fuente.id}" valor="${(asg.redistribucion == 0) ? asg.planificado.toDouble().round(2) : asg.redistribucion.toDouble().round(2)}" actv="${asg.actividad}" meta="${asg.meta}" indi="${asg.indicador}" met="${asg?.modalidad}" comp="${asg?.componente?.id}" un="${asg?.unidadAdministrativa}" plan="${asg?.planDesarrollo?.id}" ope="${asg?.objetivoOperativo?.id}" pol="${asg?.politicasIgualdad?.id}">Editar</a>
                     </g:if>
                 </td>
 
@@ -348,6 +362,21 @@
 </div>
 
 <script type="text/javascript">
+
+    cargarPolitica(null);
+
+    function cargarPolitica (politica) {
+        $.ajax({
+           type: 'POST',
+            url: '${createLink(controller: 'asignacion', action: 'politica_ajax')}',
+            data:{
+                politica: politica
+            },
+            success: function (msg){
+               $("#tdPoliticas").html(msg)
+            }
+        });
+    }
 
     cargarObInstitucional(null);
 
@@ -682,15 +711,6 @@
             }
         });
 
-
-
-
-//        $("#plan").selectmenu({width:250, height:50})
-//        $("#institucional").selectmenu({width:250, height:50})
-//        $("#plan-button").css("height", "35px")
-//        $("#institucional-button").css("height", "35px")
-
-
         $("#progs").selectmenu({width:380, height:50})
         $("[name=programa]").selectmenu({width:380, height:50})
         $("#componente").selectmenu({width:340, height:50})
@@ -733,6 +753,7 @@
             cargarActivdad($(this).attr("prog"), $(this).attr("actpr"));
             cargarCombos($(this).attr("ope"));
             cargarPlanDesarrollo($(this).attr('plan'));
+            cargarPolitica($(this).attr('pol'));
 
         });
 
@@ -784,6 +805,7 @@
             var indi = $("#indi").val();
             var met = $("#met").val();
             var boton = $(this);
+            var poli = $("#politica").val();
             var band = true;
             if (validar(0)) {
                 var anio = boton.attr("anio");
@@ -793,7 +815,7 @@
                     type:"POST",
                     url:"${createLink(action:'guardarAsignacion',controller:'asignacion')}",
                     %{--data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&componente.id=" + comp + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),--}%
-                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&actividadPresupuestaria=" + actividadPresupuestaria + "&unidadA=" + unidadAdministrativa + "&operativo=" + operativo + "&plan=" + plan + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
+                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&met=" + met + "&actividadPresupuestaria=" + actividadPresupuestaria + "&unidadA=" + unidadAdministrativa + "&operativo=" + operativo + "&plan=" + plan + "&politica=" + poli + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
                     success:function (msg) {
                         if (msg * 1 >= 0) {
                             location.reload(true);

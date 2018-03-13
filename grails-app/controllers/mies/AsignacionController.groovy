@@ -803,6 +803,7 @@ class AsignacionController extends mies.seguridad.Shield {
         def actividadPresupuestaria
         def objOperativo = null
         def planDesarrollo = null
+        def politica = null
 
         if(params.actividadPresupuestaria != null){
             actividadPresupuestaria = ActividadPresupuesto.get(params.actividadPresupuestaria)
@@ -821,6 +822,14 @@ class AsignacionController extends mies.seguridad.Shield {
         }else{
             band=false
         }
+
+
+        if(params.politica != null){
+            politica = PoliticasIgualdad.get(params.politica)
+        }else{
+            band = false
+        }
+
 
         def asg
         if (params.id) {
@@ -851,6 +860,7 @@ class AsignacionController extends mies.seguridad.Shield {
         asg.unidadAdministrativa = params.unidadA
         asg.objetivoOperativo = objOperativo
         asg.planDesarrollo = planDesarrollo
+        asg.politicasIgualdad = politica
 
 
 
@@ -1622,6 +1632,15 @@ class AsignacionController extends mies.seguridad.Shield {
         }
 
         return[institucional: institucional]
+    }
+
+    def politica_ajax () {
+        def politica
+        if(params.politica != 'null'){
+            politica = PoliticasIgualdad.get(params.politica)
+        }
+
+        return[politica: politica]
     }
 
 }

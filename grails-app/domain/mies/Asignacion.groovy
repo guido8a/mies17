@@ -20,10 +20,9 @@ class Asignacion implements Serializable {
     String unidadAdministrativa
 
     ActividadPresupuesto actividadPresupuesto
-
     ObjetivoOperativo objetivoOperativo
-
     PlanDesarrollo planDesarrollo
+    PoliticasIgualdad politicasIgualdad
 
     static auditable=[ignore:[]]
     static mapping = {
@@ -54,6 +53,7 @@ class Asignacion implements Serializable {
             actividadPresupuesto column: 'acps__id'
             objetivoOperativo column: 'obop__id'
             planDesarrollo column: 'plnd__id'
+            politicasIgualdad column: 'plig__id'
         }
     }
     static constraints = {
@@ -75,6 +75,7 @@ class Asignacion implements Serializable {
         componente(blank: true, nullable: true)
         objetivoOperativo(blank: true, nullable: true)
         planDesarrollo(blank:true, nullable: true)
+        politicasIgualdad(blank:true, nullable: true)
     }
 
     String toString(){
