@@ -354,6 +354,7 @@ class InicioController extends mies.seguridad.Shield{
                         }
                     }
 
+
                 }
 
                 println "procesados $cnta registros, con $cntaEr errores"
