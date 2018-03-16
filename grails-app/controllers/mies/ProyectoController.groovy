@@ -3,6 +3,7 @@ package mies
 import jxl.Cell
 import jxl.Sheet
 import jxl.Workbook
+import jxl.WorkbookSettings
 import mies.seguridad.Usro
 
 import java.text.SimpleDateFormat
@@ -157,12 +158,10 @@ class ProyectoController extends mies.seguridad.Shield {
                 if (!proyectoInstance.hasErrors() && proyectoInstance.save(flush: true)) {
                     flash.message = "${message(code: 'default.updated.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), proyectoInstance.id])}"
                     redirect(action: "show", id: proyectoInstance.id)
-                }
-                else {
+                } else {
                     render(view: "form", model: [proyectoInstance: proyectoInstance, title: title, source: "edit"])
                 }
-            }
-            else {
+            } else {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), params.id])}"
                 redirect(action: "list")
             }
@@ -172,8 +171,7 @@ class ProyectoController extends mies.seguridad.Shield {
             if (proyectoInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.created.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), proyectoInstance.id])}"
                 redirect(action: "show", id: proyectoInstance.id)
-            }
-            else {
+            } else {
                 render(view: "form", model: [proyectoInstance: proyectoInstance, title: title, source: "create"])
             }
         }
@@ -195,12 +193,10 @@ class ProyectoController extends mies.seguridad.Shield {
             if (!proyectoInstance.hasErrors() && proyectoInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), proyectoInstance.id])}"
                 redirect(action: "show", id: proyectoInstance.id)
-            }
-            else {
+            } else {
                 render(view: "edit", model: [proyectoInstance: proyectoInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), params.id])}"
             redirect(action: "list")
         }
@@ -309,7 +305,7 @@ class ProyectoController extends mies.seguridad.Shield {
                 tabla += tablasEsp[i]
                 tabla += "</td>"
 
-                def domain = grailsApplication.domainClasses.find {it.name == tbl}
+                def domain = grailsApplication.domainClasses.find { it.name == tbl }
                 def clazz = domain.clazz
                 def loader = clazz.getClassLoader()
                 def nomb = clazz.getName()
@@ -492,8 +488,7 @@ class ProyectoController extends mies.seguridad.Shield {
         if (!proyectoInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             def title = g.message(code: "default.show.label", args: ["Proyecto"], default: "Show Proyecto")
 
             def metasProyecto = MetaBuenVivirProyecto.findAllByProyecto(proyectoInstance)
@@ -527,15 +522,14 @@ class ProyectoController extends mies.seguridad.Shield {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'proyecto.label', default: 'Proyecto'), params.id])}"
             redirect(action: "list")
         }
     }
 
     def loadCombo = {
-        println "aaa "+params
+        println "aaa " + params
         def str = ""
         switch (params.tipo) {
             case "politica":
@@ -596,7 +590,7 @@ class ProyectoController extends mies.seguridad.Shield {
         [proyecto: proyecto]
     }
 
-    def validarProyecto()  {
+    def validarProyecto() {
         println "params validarProyecto: $params"
         def proyecto = Proyecto.get(params.id)
 
@@ -613,22 +607,22 @@ class ProyectoController extends mies.seguridad.Shield {
 
         def tx_fcha
         def fcha
-        if(params.fechaInicioPlanificada.size() > 20){
+        if (params.fechaInicioPlanificada.size() > 20) {
             tx_fcha = "${params.fechaInicioPlanificada_day}-${params.fechaInicioPlanificada_month}-${params.fechaInicioPlanificada_year}"
             fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
             proyecto.fechaInicioPlanificada = fcha
         }
-        if(params.fechaFinPlanificada.size() > 20){
+        if (params.fechaFinPlanificada.size() > 20) {
             tx_fcha = "${params.fechaFinPlanificada_day}-${params.fechaFinPlanificada_month}-${params.fechaFinPlanificada_year}"
             fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
             proyecto.fechaFinPlanificada = fcha
         }
-        if(params.fechaInicio.size() > 20){
+        if (params.fechaInicio.size() > 20) {
             tx_fcha = "${params.fechaInicio_day}-${params.fechaInicio_month}-${params.fechaInicio_year}"
             fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
             proyecto.fechaInicio = fcha
         }
-        if(params.fechaFin.size() > 20){
+        if (params.fechaFin.size() > 20) {
             tx_fcha = "${params.fechaFin_day}-${params.fechaFin_month}-${params.fechaFin_year}"
             fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
             proyecto.fechaFin = fcha
@@ -643,8 +637,7 @@ class ProyectoController extends mies.seguridad.Shield {
         if (!proyecto.hasErrors() && proyecto.save(flush: true)) {
             flash.message = "Proyecto actualizado correctamente"
             redirect(action: "formProyecto", id: proyecto.id)
-        }
-        else {
+        } else {
             render(proyecto.errors)
         }
     }
@@ -731,7 +724,7 @@ class ProyectoController extends mies.seguridad.Shield {
             }.to("validarProyecto")
 //            on("lista").to("lista")
             on("salir").to("salir")
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //proyecto
 
         validarProyecto {
@@ -815,7 +808,7 @@ class ProyectoController extends mies.seguridad.Shield {
             }.to("redirect")//.to("politicasAgenda")
             on("salir").to("salir")
 //            on("datos").to("proyecto")
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         }//buen vivir
 
         politicasAgenda {
@@ -862,7 +855,7 @@ class ProyectoController extends mies.seguridad.Shield {
             }.to("checkpoint0")
 //            on("buenVivir").to("buenVivir")
             on("salir").to("salir")
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         }
 
         checkpoint0 {
@@ -939,7 +932,7 @@ class ProyectoController extends mies.seguridad.Shield {
 //            on("lista").to("lista")
             on("salir").to("salir")
             on("plas").to("politicasAgenda")
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //politicas proyecto
 
         checkpoint1 {
@@ -1014,8 +1007,7 @@ class ProyectoController extends mies.seguridad.Shield {
         if (!documentoInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'documento.label', default: 'Documento'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
 
             def title = g.message(code: "documento.show", default: "Show Documento")
 
@@ -1119,7 +1111,7 @@ class ProyectoController extends mies.seguridad.Shield {
                     "N": "[Ñ]",
                     "C": "[Ç]",
 
-                    "": "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
+                    "" : "[\\!@#\\\$%\\^&*()-='\"\\/<>:;\\.,\\?]",
 
                     "_": "[\\s]"
             ]
@@ -1341,7 +1333,7 @@ response.outputStream << file.newInputStream()
         if (params.ingreso) {
             def proyecto = Proyecto.get(params.ingreso.proyecto.id)
 
-            if(params.ingreso.desde && params.ingreso.hasta){
+            if (params.ingreso.desde && params.ingreso.hasta) {
                 def desde = params.ingreso.desde
                 def hasta = params.ingreso.hasta
                 def d = new Date().parse("dd-MM-yyyy", desde)
@@ -1351,7 +1343,7 @@ response.outputStream << file.newInputStream()
                 if (params.ingreso.id) {
                     responsable = ResponsableProyecto.get(params.ingreso.id)
 //                    responsable.hasta = Date.parse("dd-MM-yyyy", desde)
-                }else{
+                } else {
                     responsable = new ResponsableProyecto()
 //                    responsable.hasta  = h
                 }
@@ -1364,14 +1356,14 @@ response.outputStream << file.newInputStream()
                 responsable.proyecto = proyecto
                 responsable.responsable = usuario
                 responsable.tipo = tipo
-                responsable.desde  = d
-                responsable.hasta  = h
+                responsable.desde = d
+                responsable.hasta = h
                 responsable.observaciones = params.ingreso.observaciones
 
-                try{
+                try {
                     responsable.save(flush: true)
                     render "OK"
-                }catch (e){
+                } catch (e) {
                     println("error al guardar el responsable ingreso" + e)
                     render "NO"
                 }
@@ -1382,17 +1374,17 @@ response.outputStream << file.newInputStream()
         if (params.ejecucion) {
             def proyecto = Proyecto.get(params.ejecucion.proyecto.id)
 
-            if(params.ejecucion.desde && params.ejecucion.hasta){
+            if (params.ejecucion.desde && params.ejecucion.hasta) {
                 def desde = params.ejecucion.desde
                 def hasta = params.ejecucion.hasta
                 def d = new Date().parse("dd-MM-yyyy", desde)
                 def h = new Date().parse("dd-MM-yyyy", hasta)
                 def responsable
 
-                if(params.ejecucion.id){
+                if (params.ejecucion.id) {
                     responsable = ResponsableProyecto.get(params.ejecucion.id)
 //                    responsable.hasta = Date.parse("dd-MM-yyyy", desde)
-                }else{
+                } else {
                     responsable = new ResponsableProyecto()
 //                    responsable.hasta  = h
                 }
@@ -1405,14 +1397,14 @@ response.outputStream << file.newInputStream()
                 responsable.proyecto = proyecto
                 responsable.responsable = usuario
                 responsable.tipo = tipo
-                responsable.desde  = d
-                responsable.hasta  = h
+                responsable.desde = d
+                responsable.hasta = h
                 responsable.observaciones = params.ejecucion.observaciones
 
-                try{
+                try {
                     responsable.save(flush: true)
                     render "OK"
-                }catch (e){
+                } catch (e) {
                     println("error al guardar el responsable ejecucion" + e)
                     render "NO"
                 }
@@ -1423,7 +1415,7 @@ response.outputStream << file.newInputStream()
         if (params.seguimiento) {
             def proyecto = Proyecto.get(params.seguimiento.proyecto.id)
 
-            if(params.seguimiento.desde && params.seguimiento.hasta){
+            if (params.seguimiento.desde && params.seguimiento.hasta) {
                 def desde = params.seguimiento.desde
                 def hasta = params.seguimiento.hasta
                 def d = new Date().parse("dd-MM-yyyy", desde)
@@ -1433,7 +1425,7 @@ response.outputStream << file.newInputStream()
                 if (params.seguimiento.id) {
                     responsable = ResponsableProyecto.get(params.seguimiento.id)
 //                    responsable.hasta = Date.parse("dd-MM-yyyy", desde)
-                }else{
+                } else {
                     responsable = new ResponsableProyecto()
 
                 }
@@ -1445,14 +1437,14 @@ response.outputStream << file.newInputStream()
                 responsable.proyecto = proyecto
                 responsable.responsable = usuario
                 responsable.tipo = tipo
-                responsable.desde  = d
-                responsable.hasta  = h
+                responsable.desde = d
+                responsable.hasta = h
                 responsable.observaciones = params.seguimiento.observaciones
 
-                try{
+                try {
                     responsable.save(flush: true)
                     render "OK"
-                }catch (e){
+                } catch (e) {
                     println("error al guardar el responsable seguimiento" + e)
                     render "NO"
                 }
@@ -1774,10 +1766,10 @@ response.outputStream << file.newInputStream()
         indicador.metodologia = params.met
         indicador.impactos = params.imp
 
-        try{
+        try {
             indicador.save(flush: true)
             redirect(action: "verIndicadoresSenplades", id: params.id)
-        }catch (e){
+        } catch (e) {
             println("error al guardar los indicadores senplades " + e)
             redirect(action: "editarIndicadoresSenplades", id: params.id)
         }
@@ -2017,7 +2009,7 @@ response.outputStream << file.newInputStream()
         error {} //error
 
         indice {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //indice
 
         redirect {
@@ -2030,7 +2022,7 @@ response.outputStream << file.newInputStream()
         }
 
         indicadoresSemplades {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
             on("guardarIndicadores").to("guardarIndicadores")
         } //indicadores semplades
         guardarIndicadores {
@@ -2059,7 +2051,7 @@ response.outputStream << file.newInputStream()
         }
 
         beneficiosSemplades {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
             on("guardarBeneficios") { println "???? " + params }.to "guardarBeneficios"
         } //beneficios semplades
         guardarBeneficios {
@@ -2089,28 +2081,28 @@ response.outputStream << file.newInputStream()
         }
 
         estudiosTecnicos {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //estudios tecnicos
 
         objetivosEstrategicos {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //objetivos estrategicos
 
         gruposDeAtencion {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //grupos de atencion
 
         entidadesProyecto {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //entidades proyecto
 
         intervenciones {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
 
         } //intervenciones
 
         adquisiciones {
-            on("click") {flow.evento = params.evento}.to "redirect"
+            on("click") { flow.evento = params.evento }.to "redirect"
         } //adquisiciones
 
         salir {
@@ -2121,7 +2113,7 @@ response.outputStream << file.newInputStream()
     def formBuenVivir = {
         def proyecto = Proyecto.get(params.id)
         def metasProyecto = MetaBuenVivirProyecto.findAllByProyecto(proyecto)
-        return[metasProyecto:metasProyecto,proyecto: proyecto]
+        return [metasProyecto: metasProyecto, proyecto: proyecto]
     }
 
     def saveBuenVivir = {
@@ -2132,44 +2124,44 @@ response.outputStream << file.newInputStream()
         def metaProyecto
         def errores = ''
 
-        if(params.deleted){
+        if (params.deleted) {
             def c = params.deleted.split(",")
-            c.each{
+            c.each {
                 def borrar = MetaBuenVivirProyecto.get(it.toString())
                 try {
                     borrar.delete(flush: true)
-                }catch (e){
+                } catch (e) {
                     println("error al borrar la meta buen vivir del proyecto " + e)
                     errores += e
                 }
             }
         }
 
-        if(params.meta){
-            if(params.meta.class == java.lang.String ){
+        if (params.meta) {
+            if (params.meta.class == java.lang.String) {
                 meta = MetaBuenVivir.get(params.meta)
                 metaProyecto = new MetaBuenVivirProyecto()
                 metaProyecto.metaBuenVivir = meta
                 metaProyecto.proyecto = proyecto
 
-                try{
+                try {
                     metaProyecto.save(flush: true)
-                }catch (e){
+                } catch (e) {
                     println("error al agregar meta buen vivir " + e)
                     errores += e
                 }
 
-            }else{
-                params.meta.each{
+            } else {
+                params.meta.each {
                     meta = MetaBuenVivir.get(it)
                     metaProyecto = new MetaBuenVivirProyecto()
                     metaProyecto.metaBuenVivir = meta
                     metaProyecto.proyecto = proyecto
 
-                    try{
+                    try {
                         metaProyecto.save(flush: true)
 
-                    }catch (e){
+                    } catch (e) {
                         println("error al agregar meta buen vivir " + e)
                         errores += e
                     }
@@ -2178,17 +2170,17 @@ response.outputStream << file.newInputStream()
         }
 
 
-        if(errores == ''){
-            redirect(controller: 'proyecto', action: 'formBuenVivir',id: proyecto.id)
-        }else{
+        if (errores == '') {
+            redirect(controller: 'proyecto', action: 'formBuenVivir', id: proyecto.id)
+        } else {
             flash.message = "Error al guardar las metas"
         }
     }
 
-    def formPoliticas () {
+    def formPoliticas() {
         def proyecto = Proyecto.get(params.id)
         def politicasAgenda = PoliticasAgendaProyecto.findAllByProyecto(proyecto).politicaAgendaSocial.id
-        return[proyecto: proyecto, politicasAgenda: politicasAgenda]
+        return [proyecto: proyecto, politicasAgenda: politicasAgenda]
     }
 
     def savePoliticas = {
@@ -2200,56 +2192,56 @@ response.outputStream << file.newInputStream()
 
         def politicasAgenda = PoliticasAgendaProyecto.findAllByProyecto(proyecto)
 
-        if(params.politica){
+        if (params.politica) {
 
-            politicasAgenda.politicaAgendaSocial.id.each { p->
-                if(params.politica.contains(p.toString())){
+            politicasAgenda.politicaAgendaSocial.id.each { p ->
+                if (params.politica.contains(p.toString())) {
                     params.politica = params.politica - p.toString()
-                }else{
+                } else {
                     politica = PoliticaAgendaSocial.get(p)
-                    politicaProyecto = PoliticasAgendaProyecto.findByPoliticaAgendaSocialAndProyecto(politica,proyecto)
-                    try{
+                    politicaProyecto = PoliticasAgendaProyecto.findByPoliticaAgendaSocialAndProyecto(politica, proyecto)
+                    try {
                         politicaProyecto.delete(flush: true)
-                    }catch (e){
+                    } catch (e) {
                         println("error al borrar una politica especifica " + e)
                         errores += e
                     }
                 }
             }
 
-            if(params.politica.class == java.lang.String ){
+            if (params.politica.class == java.lang.String) {
                 politica = PoliticaAgendaSocial.get(params.politica)
                 politicaProyecto = new PoliticasAgendaProyecto()
                 politicaProyecto.proyecto = proyecto
                 politicaProyecto.politicaAgendaSocial = politica
 
-                try{
+                try {
                     politicaProyecto.save(flush: true)
-                }catch (e){
+                } catch (e) {
                     println("error al guardar la politica " + e)
                     errores += e
                 }
-            }else{
-                params.politica.each{
+            } else {
+                params.politica.each {
                     politica = PoliticaAgendaSocial.get(it)
                     politicaProyecto = new PoliticasAgendaProyecto()
                     politicaProyecto.proyecto = proyecto
                     politicaProyecto.politicaAgendaSocial = politica
 
-                    try{
+                    try {
                         politicaProyecto.save(flush: true)
-                    }catch (e){
+                    } catch (e) {
                         println("error al guardar la politica " + e)
                         errores += e
                     }
                 }
             }
-        }else{
-            politicasAgenda.each{b->
+        } else {
+            politicasAgenda.each { b ->
 
-                try{
+                try {
                     b.delete(flush: true)
-                }catch (e){
+                } catch (e) {
                     println("error al borrar todas las politicas")
                     errores += e
                 }
@@ -2257,17 +2249,17 @@ response.outputStream << file.newInputStream()
             }
         }
 
-        if(errores == ''){
-            redirect(controller: 'proyecto', action: 'formPoliticas',id: proyecto.id)
-        }else{
+        if (errores == '') {
+            redirect(controller: 'proyecto', action: 'formPoliticas', id: proyecto.id)
+        } else {
             flash.message = "Error al guardar las politicas"
         }
     }
 
-    def formPoliticasMies () {
+    def formPoliticasMies() {
         def proyecto = Proyecto.get(params.id)
         def politicasProyecto = PoliticasProyecto.findAllByProyecto(proyecto).politica.id
-        return[proyecto: proyecto, politicasProyecto: politicasProyecto]
+        return [proyecto: proyecto, politicasProyecto: politicasProyecto]
     }
 
     def savePoliticasMies = {
@@ -2279,56 +2271,56 @@ response.outputStream << file.newInputStream()
 
         def politicasMies = PoliticasProyecto.findAllByProyecto(proyecto)
 
-        if(params.politica){
+        if (params.politica) {
 
-            politicasMies.politica.id.each { p->
-                if(params.politica.contains(p.toString())){
+            politicasMies.politica.id.each { p ->
+                if (params.politica.contains(p.toString())) {
                     params.politica = params.politica - p.toString()
-                }else{
+                } else {
                     politica = Politica.get(p)
-                    politicaProyecto = PoliticasProyecto.findByPoliticaAndProyecto(politica,proyecto)
-                    try{
+                    politicaProyecto = PoliticasProyecto.findByPoliticaAndProyecto(politica, proyecto)
+                    try {
                         politicaProyecto.delete(flush: true)
-                    }catch (e){
+                    } catch (e) {
                         println("error al borrar una politica especifica " + e)
                         errores += e
                     }
                 }
             }
 
-            if(params.politica.class == java.lang.String ){
+            if (params.politica.class == java.lang.String) {
                 politica = Politica.get(params.politica)
                 politicaProyecto = new PoliticasProyecto()
                 politicaProyecto.proyecto = proyecto
                 politicaProyecto.politica = politica
 
-                try{
+                try {
                     politicaProyecto.save(flush: true)
-                }catch (e){
+                } catch (e) {
                     println("error al guardar la politica " + e)
                     errores += e
                 }
-            }else{
-                params.politica.each{
+            } else {
+                params.politica.each {
                     politica = Politica.get(it)
                     politicaProyecto = new PoliticasProyecto()
                     politicaProyecto.proyecto = proyecto
                     politicaProyecto.politica = politica
 
-                    try{
+                    try {
                         politicaProyecto.save(flush: true)
-                    }catch (e){
+                    } catch (e) {
                         println("error al guardar la politica MIES " + e)
                         errores += e
                     }
                 }
             }
-        }else{
-            politicasMies.each{b->
+        } else {
+            politicasMies.each { b ->
 
-                try{
+                try {
                     b.delete(flush: true)
-                }catch (e){
+                } catch (e) {
                     println("error al borrar todas las politicas MIES")
                     errores += e
                 }
@@ -2336,21 +2328,21 @@ response.outputStream << file.newInputStream()
             }
         }
 
-        if(errores == ''){
-            redirect(controller: 'proyecto', action: 'formPoliticasMies',id: proyecto.id)
-        }else{
+        if (errores == '') {
+            redirect(controller: 'proyecto', action: 'formPoliticasMies', id: proyecto.id)
+        } else {
             flash.message = "Error al guardar las politicas MIES"
         }
     }
 
-    def formPresupuesto () {
+    def formPresupuesto() {
         def proyecto = Proyecto.get(params.id)
         def financiamientos = Financiamiento.findAllByProyecto(proyecto)
         def band = false
-        if(params.band == '1'){
+        if (params.band == '1') {
             band = true
         }
-        return[proyecto: proyecto, financiamientos: financiamientos, band: band]
+        return [proyecto: proyecto, financiamientos: financiamientos, band: band]
     }
 
     def savePresupuesto = {
@@ -2362,14 +2354,14 @@ response.outputStream << file.newInputStream()
         def errores = ''
         def borrar
 
-        if(params.deleted){
+        if (params.deleted) {
             borrar = params.deleted.split(",")
-            borrar.each{f->
+            borrar.each { f ->
                 financiamiento = Financiamiento.get(f.toString())
 
-                try{
+                try {
                     financiamiento.delete(flush: true)
-                }catch (e){
+                } catch (e) {
                     println("error al borrar el financiamiento " + e)
                     errores += e
                 }
@@ -2388,9 +2380,9 @@ response.outputStream << file.newInputStream()
                 financiamiento.anio = anio
                 financiamiento.monto = monto.toDouble()
 
-                try{
+                try {
                     financiamiento.save(flush: true)
-                }catch (e){
+                } catch (e) {
                     println("error al guardar el financiamiento " + e)
                     errores += e
                 }
@@ -2399,27 +2391,27 @@ response.outputStream << file.newInputStream()
         }
 
         def band = 0
-        if(params.band == 'true'){
+        if (params.band == 'true') {
             band = 1
         }
 
 
-        if(errores == ''){
-            redirect(controller: 'proyecto', action: 'formPresupuesto',id: proyecto.id, params: [band: band])
-        }else{
+        if (errores == '') {
+            redirect(controller: 'proyecto', action: 'formPresupuesto', id: proyecto.id, params: [band: band])
+        } else {
             flash.message = "Error al guardar el finaciamiento"
         }
     }
 
-    def formEntidades () {
+    def formEntidades() {
         println("params " + params)
         def proyecto = Proyecto.get(params.id)
         def entidadesProyecto = EntidadesProyecto.findAllByProyecto(proyecto)
         def band = false
-        if(params.band == '1'){
+        if (params.band == '1') {
             band = true
         }
-        return[proyecto: proyecto, entidadesProyecto: entidadesProyecto, band: band]
+        return [proyecto: proyecto, entidadesProyecto: entidadesProyecto, band: band]
 
     }
 
@@ -2430,9 +2422,9 @@ response.outputStream << file.newInputStream()
         def tipo
         def entidad
 
-        if(params.unidad == null || params.tipoParticipacion == null || !params.monto){
+        if (params.unidad == null || params.tipoParticipacion == null || !params.monto) {
             render "no2"
-        }else{
+        } else {
 
             unidad = UnidadEjecutora.get(params.unidad)
             tipo = TipoParticipacion.get(params.tipoParticipacion)
@@ -2444,15 +2436,14 @@ response.outputStream << file.newInputStream()
             entidad.rol = params.rol
             entidad.tipoPartisipacion = tipo
 
-            try{
+            try {
                 entidad.save(flush: true)
                 render "OK"
-            }catch (e){
+            } catch (e) {
                 println("error al guardar la entidad proyecto " + e)
                 render "no1"
             }
         }
-
 
 
     }
@@ -2462,24 +2453,24 @@ response.outputStream << file.newInputStream()
         def entidad
         def errores = ''
 
-        if(params.id.class == java.lang.String){
+        if (params.id.class == java.lang.String) {
             entidad = EntidadesProyecto.get(params.id)
 
-            try{
+            try {
                 entidad.delete(flush: true)
 
-            }catch (e){
+            } catch (e) {
                 println("error al borrar la entidad del proyecto " + e)
                 errores += e
             }
-        }else{
+        } else {
 
-            params.id.each{ d->
+            params.id.each { d ->
                 entidad = EntidadesProyecto.get(d)
 
-                try{
+                try {
                     entidad.delete(flush: true)
-                }catch (e){
+                } catch (e) {
                     println("error al borrar la entidad del proyecto " + e)
                     errores += e
                 }
@@ -2487,185 +2478,12 @@ response.outputStream << file.newInputStream()
         }
 
 
-        if(errores == ''){
+        if (errores == '') {
             render "OK"
-        }else{
+        } else {
             render "NO"
         }
     }
 
-    def cargarExcel () {
-
-    }
-
-    def uploadFile() {
-
-        def path = servletContext.getRealPath("/") + "xls/"   //web-app/archivos
-        new File(path).mkdirs()
-
-        def f = request.getFile('file')  //archivo = name del input type file
-        if (f && !f.empty) {
-            def fileName = f.getOriginalFilename() //nombre original del archivo
-            def ext
-
-            def parts = fileName.split("\\.")
-            fileName = ""
-            parts.eachWithIndex { obj, i ->
-                if (i < parts.size() - 1) {
-                    fileName += obj
-                } else {
-                    ext = obj
-                }
-            }
-
-//            if (ext == "xls") {
-
-                fileName = "xlsAsg_" + new Date().format("yyyyMMdd_HHmmss")
-
-                def fn = fileName
-                fileName = fileName + "." + ext
-
-                def pathFile = path + fileName
-                def src = new File(pathFile)
-
-                def i = 1
-                while (src.exists()) {
-                    pathFile = path + fn + "_" + i + "." + ext
-                    src = new File(pathFile)
-                    i++
-                }
-
-                f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
-
-            def file = new File(pathFile)
-            Workbook workbook = Workbook.getWorkbook(file)
-
-            workbook.getNumberOfSheets().times { sheet ->
-                println("hojas " + sheet)
-                Sheet s = workbook.getSheet(sheet)
-                if (!s.getSettings().isHidden()) {
-                    Cell[] row = null
-                    s.getRows().times {j->
-                        row = s.getRow(j)
-                        def canton = row[5].getContents()
-                        println("cantones " + j + " " + canton)
-
-                    }
-                }
-            }
-
-
-
-
-
-            file.delete();
-/*
-                //procesar excel
-                def htmlInfo = "", errores = "", doneHtml = "", done = 0
-                def file = new File(pathFile)
-                Workbook workbook = Workbook.getWorkbook(file)
-
-                workbook.getNumberOfSheets().times { sheet ->
-                    if (sheet == 0) {
-                        Sheet s = workbook.getSheet(sheet)
-                        if (!s.getSettings().isHidden()) {
-//                            println s.getName() + "  " + sheet
-                            htmlInfo += "<h2>Hoja " + (sheet + 1) + ": " + s.getName() + "</h2>"
-                            Cell[] row = null
-                            s.getRows().times { j ->
-                                def ok = true
-//                                if (j > 19) {
-//                                println ">>>>>>>>>>>>>>>" + (j + 1)
-                                row = s.getRow(j)
-//                                println row*.getContents()
-//                                println row.length
-                                if (row.length >= 5) {
-                                    def cod = row[0].getContents()
-                                    def nombre = row[1].getContents()
-                                    def cant = row[3].getContents()
-                                    def nuevaCant = row[4].getContents()
-
-//                                    println "\t\tcod:" + cod + "\tnombre:" + nombre + "\tcant:" + cant + "\tnCant:" + nuevaCant
-
-                                    if (cod != "CODIGO") {
-//                                        println "\t\t**"
-                                        def item = Item.findAllByCodigo(cod)
-//                                        println "\t\t???" + item
-                                        if (item.size() == 1) {
-                                            //ok
-                                            item = item[0]
-                                        } else if (item.size() == 0) {
-                                            errores += "<li>No se encontró item con código ${cod} (l. ${j + 1})</li>"
-                                            println "No se encontró item con código ${cod}"
-                                            ok = false
-                                        } else {
-                                            println "Se encontraron ${item.size()} items con código ${cod}!! ${item.id}"
-                                            errores += "<li>Se encontraron ${item.size()} items con código ${cod}!! (l. ${j + 1})</li>"
-                                            ok = false
-                                        }
-                                        if (ok) {
-                                            def comp = Composicion.withCriteria {
-                                                eq("item", item)
-                                                eq("obra", obra)
-                                            }
-                                            if (comp.size() == 1) {
-                                                comp = comp[0]
-                                                comp.cantidad = nuevaCant.toDouble()
-
-                                                if (comp.save(flush: true)) {
-                                                    done++
-//                                                    println "Modificado comp: ${comp.id}"
-                                                    doneHtml += "<li>Se ha modificado la cantidad para el item ${nombre}</li>"
-                                                } else {
-                                                    println "No se pudo guardar comp ${comp.id}: " + comp.errors
-                                                    errores += "<li>Ha ocurrido un error al guardar la cantidad para el item ${nombre} (l. ${j + 1})</li>"
-                                                }
-//                                            println comp
-
-//                                            row.length.times { k ->
-//                                                if (!row[k].isHidden()) {
-//                                                    println "k:" + k + "      " + row[k].getContents()
-//                                                }// row ! hidden
-//                                            } //row.legth.each
-                                            } else if (comp.size() == 0) {
-                                                println "No se encontró composición para el item ${nombre}"
-                                                errores += "<li>No se encontró composición para el item ${nombre} (l. ${j + 1})</li>"
-                                            } else {
-                                                println "Se encontraron ${comp.size()} composiciones para el item ${nombre}: ${comp.id}"
-                                                errores += "<li>Se encontraron ${comp.size()} composiciones para el item ${nombre} (l. ${j + 1})</li>"
-                                            }
-                                        }
-                                    }
-                                } //row ! empty
-//                                }//row > 7 (fila 9 + )
-                            } //rows.each
-                        } //sheet ! hidden
-                    }//solo sheet 0
-                } //sheets.each
-                if (done > 0) {
-                    doneHtml = "<div class='alert alert-success'>Se han ingresado correctamente " + done + " registros</div>"
-                }
-
-                def str = doneHtml
-                str += htmlInfo
-                if (errores != "") {
-                    str += "<ol>" + errores + "</ol>"
-                }
-                str += doneHtml
-
-                flash.message = str
-
-                println "DONE!!"
-                redirect(action: "mensajeUpload", id: params.id)
-            } else {
-                flash.message = "Seleccione un archivo Excel xls para procesar (archivos xlsx deben ser convertidos a xls primero)"
-                redirect(action: 'formArchivo')
-            }*/
-        } else {
-            flash.message = "Seleccione un archivo para procesar"
-            redirect(action: 'formArchivo')
-//            println "NO FILE"
-        }
-    }
 
 }
