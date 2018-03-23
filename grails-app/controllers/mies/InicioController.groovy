@@ -7,6 +7,7 @@ import jxl.WorkbookSettings
 
 class InicioController extends mies.seguridad.Shield{
 
+    def dbConnectionService
 
     def getValorReal(aa){
         if(aa.reubicada=="S"){
@@ -253,7 +254,7 @@ class InicioController extends mies.seguridad.Shield{
                 def txto = ""
                 def nmbr
                 def bsca
-                def meses = []
+                def valor = 0
 
                 def error = ""
                 def eranUnej = ""
@@ -271,7 +272,7 @@ class InicioController extends mies.seguridad.Shield{
                             row = s.getRow(j)
                             fila++
 //                        println row*.getContents()
-
+                            println "->${fila}"
                             if (row[4].getContents().trim() != 'PROVINCIA' && row[3].getContents().trim().size() > 10) {
                                 zona = row[0].getContents().split('_').toList()[0]
                                 coor = row[2].getContents().split('_').toList()
@@ -324,7 +325,7 @@ class InicioController extends mies.seguridad.Shield{
                                 }
 
                                 txto = row[33].getContents()
-                                def acps = ActividadPresupuesto.findByCodigo(txto)
+                                def acps = ActividadPresupuesto.findByProgramaPresupuestarioAndCodigo(pgps, txto)
                                 if(!pgps) {
                                     error = "PGPS"
                                     println "en $fila no halla PGPS: '${txto}'"
@@ -350,6 +351,40 @@ class InicioController extends mies.seguridad.Shield{
                                     cntaEr++
                                 }
 
+                                def asgn = new Asignacion()
+                                asgn.anio = Anio.get(13)
+//                                println "--- fuente: ${row[30].getContents()}"
+                                asgn.fuente = Fuente.findByCodigo(row[30].getContents())
+                                asgn.unidad = unej
+                                asgn.unidadAdministrativa = row[3].getContents().replaceAll('_', ' ')
+                                asgn.actividad = row[14].getContents()
+                                asgn.indicador = row[16].getContents()
+                                asgn.planDesarrollo = plnd
+                                asgn.objetivoOperativo = obop
+                                asgn.programa = pgps
+                                asgn.actividadPresupuesto = acps
+                                asgn.politicasIgualdad = plig
+                                asgn.presupuesto = prsp
+                                asgn.planificado = row[40].getContents().replaceAll(',', '.').toDouble()
+                                asgn.meta = row[15].getContents().replaceAll(',', '.').toDouble()*100
+
+                                if(!asgn.save(flush: true)) {
+                                    println asgn.errors
+                                } else {
+                                    creaPras(1, asgn, poneValor(row[41].getContents()))
+                                    creaPras(2, asgn, poneValor(row[42].getContents()))
+                                    creaPras(3, asgn, poneValor(row[43].getContents()))
+                                    creaPras(4, asgn, poneValor(row[44].getContents()))
+                                    creaPras(5, asgn, poneValor(row[45].getContents()))
+                                    creaPras(6, asgn, poneValor(row[46].getContents()))
+                                    creaPras(7, asgn, poneValor(row[47].getContents()))
+                                    creaPras(8, asgn, poneValor(row[48].getContents()))
+                                    creaPras(9, asgn, poneValor(row[49].getContents()))
+                                    creaPras(10, asgn, poneValor(row[50].getContents()))
+                                    creaPras(11, asgn, poneValor(row[51].getContents()))
+//                                    creaPras(12, asgn, poneValor(row[52].getContents()))
+                                    creaPras(12, asgn, saldoValor(asgn))
+                                }
                             }
                         }
                     }
@@ -560,7 +595,7 @@ class InicioController extends mies.seguridad.Shield{
 //                println("hojas " + sheet)
                     Sheet s = workbook.getSheet(sheet)
 
-                    if (!s.getSettings().isHidden()) {   hallaUnej(zona, coor, nmbr, busca)
+                    if (!s.getSettings().isHidden()) {
                         Cell[] row = null
                         s.getRows().times { j ->
                             row = s.getRow(j)
@@ -1037,6 +1072,110 @@ class InicioController extends mies.seguridad.Shield{
 
     }
 
+    def subeFnte() {
+        def path = servletContext.getRealPath("/") + "xls/"   //web-app/archivos
+        new File(path).mkdirs()
+        def f = request.getFile('file')  //archivo = name del input type file
+
+        if (f && !f.empty) {
+            def fileName = f.getOriginalFilename() //nombre original del archivo
+            def ext
+            def parts = fileName.split("\\.")
+            fileName = ""
+            parts.eachWithIndex { obj, i ->
+                if (i < parts.size() - 1) {
+                    fileName += obj
+                } else {
+                    ext = obj
+                }
+            }
+
+            if (ext == "xls") {
+                fileName = "fnte_" + new Date().format("yyyyMMdd_HHmmss")
+                def fn = fileName
+                fileName = fileName + "." + ext
+
+                def pathFile = path + fileName
+                def src = new File(pathFile)
+
+                def i = 1
+                while (src.exists()) {
+                    pathFile = path + fn + "_" + i + "." + ext
+                    src = new File(pathFile)
+                    i++
+                }
+
+                f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+                println "carga el archivo en $pathFile"
+
+                def file = new File(pathFile)
+                WorkbookSettings ws = new WorkbookSettings();
+                ws.setEncoding("Cp1252");
+                Workbook workbook = Workbook.getWorkbook(file, ws)
+                println "inicia proceso de datos obop"
+                def cnta = 1
+                def html = ""
+                def error = ""
+                def ok = false
+                def actual = 0
+                def nmro = ""
+                def dscr = ""
+
+                workbook.getNumberOfSheets().times { sheet ->
+//                println("hojas " + sheet)
+                    Sheet s = workbook.getSheet(sheet)
+
+                    if (!s.getSettings().isHidden()) {
+                        Cell[] row = null
+                        s.getRows().times { j ->
+                            row = s.getRow(j)
+//                        println row*.getContents()
+//                        println row[4].getContents()
+
+                            if (row[0].getContents().trim() != 'NO.' && row[0].getContents().trim()) {
+
+//                                println "--- ${row[0].getContents()} ----- ${row[1].getContents()}"
+
+                                nmro = row[0].getContents().trim()
+                                dscr = row[1].getContents().trim()
+
+                                def fnte
+                                fnte = Fuente.findByCodigo(nmro)
+                                if(!fnte) {
+                                    fnte = new Fuente()
+                                    fnte.codigo = nmro
+                                    fnte.descripcion = dscr
+                                    if (fnte.save(flush: true)) {
+                                        cnta++
+                                    }
+                                }
+                           }
+                        }
+                    }
+
+                }
+
+                def str = "<h3>Se han ingresado correctamente ${cnta - 1} registros</h3>"
+                if (error != "") {
+                    str += "<ol>" + error + "</ol>"
+                }
+                flash.message = str
+                println "Rerealizado...."
+
+                redirect(action: "mensajeUpload")
+
+            } else {
+                flash.message = "Seleccione un archivo Excel xls para procesar (archivos xlsx deben ser convertidos a xls primero)"
+                redirect(action: 'cargarExcel')
+            }
+
+        } else {
+            flash.message = "Seleccione un archivo para procesar"
+            redirect(action: 'cargarExcel')
+        }
+
+    }
+
 
     def mensajeUpload = {
 
@@ -1059,6 +1198,39 @@ class InicioController extends mies.seguridad.Shield{
         } else {
             return null
         }
+    }
+
+    def creaPras(mes, asgn, vlor) {
+//        println "---> $mes, ${asgn.id}, $vlor"
+        def pras = new ProgramacionAsignacion()
+        pras.asignacion = asgn
+        pras.mes = Mes.get(mes)
+        pras.valor = vlor
+        pras.save(flush: true)
+    }
+
+    def poneValor(valor) {
+        def nmro = 0.0
+        if (valor) {
+            try {
+                nmro = valor.replaceAll(',', '.').toDouble()
+                nmro = Math.round(nmro * 100)/100
+            } catch (e) {
+
+            }
+        }
+        return nmro
+    }
+
+    def saldoValor(asgn) {
+        def nmro = 0.0
+        def cn = dbConnectionService.getConnection()
+        def sql = "select asgnplan - coalesce(sum(messvlor),0) suma from pras, asgn " +
+                "where asgn.asgn__id = ${asgn.id} and mess__id < 12 and pras.asgn__id = asgn.asgn__id group by asgnplan"
+        nmro = cn.rows(sql.toString())[0].suma
+//        nmro = Math.round(nmro * 100)/100
+//        if(nmro < 0.0) println "-----error--- asgn: ${asgn.id}"
+        return nmro
     }
 
 }

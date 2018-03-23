@@ -117,6 +117,21 @@
     </g:uploadForm>
 </div>
 
+<div style="width: 1020px; margin-bottom:5px; margin-top:10px; padding: 4px;" class="ui-corner-all ui-widget-content">
+    <g:uploadForm action="subeFnte" method="post" name="frmFnte" id="${''}">
+        <div class="row-fluid span6" role="main" style="margin: 10px 0 0 0; display: inline">
+        <div class="span6" role="main" style="margin: 10px 0 0 0;">
+
+           <b> Fuentes de financiamiento (FNTE):</b>
+            <input type="file" class="ui-corner-all" name="file" id="file07" size="70" width="600px"/>
+
+                <a href="#" class="btn button btn-success pull-right"
+                   id="btnSubirFnte">Subir Archivo</a>
+            </div>
+        </div>
+    </g:uploadForm>
+</div>
+
 <script type="text/javascript">
 
     $(".button").button();
@@ -154,6 +169,11 @@
     $("#btnSubirPrsp").click(function () {
 //            $(this).replaceWith(spinner);
             $("#frmPrsp").submit();
+    });
+
+    $("#btnSubirFnte").click(function () {
+//            $(this).replaceWith(spinner);
+            $("#frmFnte").submit();
     });
 
 </script>
