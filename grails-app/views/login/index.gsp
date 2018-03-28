@@ -67,6 +67,9 @@
             </g:form>
         </div>
     </div>
+    <p class="text-info pull-right" style="font-size: 10px; margin-top: 20px">
+        Versión ${message(code: 'version', default: '1.1.0x')}
+    </p>
 </div>
 <script>
     $(document).ready(function () {

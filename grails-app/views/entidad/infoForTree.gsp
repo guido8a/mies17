@@ -19,7 +19,6 @@
     <tbody>
         <tr class="prop">
             <td class="label">Orden</td>
-
             <td class="campo">${unidad?.orden}</td> <!-- campo -->
         </tr>
 
@@ -113,7 +112,13 @@
             </td> <!-- campo -->
         </tr>
 
-        <tr class="prop" style="max-height: 200px;">
+    <tr class="prop">
+        <td class="label">Id</td>
+        <td class="campo">${unidad?.id} - padre:${unidad?.padre.id}</td> <!-- campo -->
+    </tr>
+
+
+    <tr class="prop" style="max-height: 200px;">
             <td class="label">Presupuesto</td>
 
             <td class="campo" style="">
