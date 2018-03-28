@@ -145,6 +145,12 @@
                     <div class="item" texto="pgps">
                         <g:link  controller="programaPresupuestario" action="list">Programa Presupuestario</g:link> o dependencia a la cual se carga el POA o PAPP
                     </div><br>
+                    <div class="item" texto="plds">
+                        <g:link  controller="planDesarrollo" action="list">Plan de Desarrollo</g:link>
+                    </div><br>
+                    <div class="item" texto="obop">
+                        <g:link  controller="objetivoOperativo" action="list">Objetivo Operativo</g:link>
+                    </div><br>
                     <div class="item" texto="tpcp">
                         <g:link  controller="tipoCompra" action="list">Tipo de Compra o adquisici&oacute;n</g:link> seg&uacute;n el INCOP
                     </div><br>
@@ -440,6 +446,14 @@
     <div id="act" style="display:none">
         <h1>Actividad Presupuestaria</h1><br>
         <p>Actividad Presupuestaria</p>
+    </div>
+    <div id="plds" style="display:none">
+        <h1>Plan de Desarrollo</h1><br>
+        <p>Plan de Desarrollo</p>
+    </div>
+    <div id="obop" style="display:none">
+        <h1>Objetivo Operativo</h1><br>
+        <p>Objetivo Operativo</p>
     </div>
 
 </div>%{-- cierra el div de contenedor --}%
