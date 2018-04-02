@@ -11,7 +11,7 @@ class ObjetivoOperativoController extends mies.seguridad.Shield {
     }
 
     def list = {
-        def title = g.message(code: "objetivoOperativo.list", default: "Planes de Desarrollo")
+        def title = g.message(code: "objetivoOperativo.list", default: "Objetivo Operativo")
 
         params.max = Math.min(params.max ? params.int('max') : 20, 100)
 
@@ -25,7 +25,7 @@ class ObjetivoOperativoController extends mies.seguridad.Shield {
         if (params.source == "create") {
             objetivoOperativoInstance = new ObjetivoOperativo()
             objetivoOperativoInstance.properties = params
-            title = g.message(code: "objetivoOperativo.create", default: "Nuevo Plan de Desarrollo")
+            title = g.message(code: "objetivoOperativo.create", default: "Nuevo Objetivo Operativo")
         } else if (params.source == "edit") {
             objetivoOperativoInstance = ObjetivoOperativo.get(params.id)
             if (!objetivoOperativoInstance) {
