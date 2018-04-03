@@ -8,8 +8,13 @@ class Shield{
      */
     def auth() {
         println "an "+actionName+" cn "+ controllerName+"  "
+        if((actionName != 'pdfLink') || (actionName != 'certificacion')) {
+            return true
+        }
+
         if(!session.usuario || !session.perfil){
 
+            println "no hay sesion..."
             if(controllerName != "inicio" && actionName != "index") {
                 flash.message = "Usted ha superado el tiempo de inactividad máximo de la sesión"
             }
@@ -37,9 +42,10 @@ class Shield{
 
         } else {
 
+            println "procesa..."
             //verificacion de permisos
             if(!session.unidad){
-                if(controllerName=="proyecto"){
+                if(controllerName=="proyecto" || actionName == 'pdfLink' || actionName == 'certificacion'){
                     if(this.isAllowed() )
                         return true
 
@@ -74,6 +80,7 @@ class Shield{
 
     boolean isAllowed(){
 
+/*
         try{
             if(session.permisos[actionName]==controllerName)
                 return true
@@ -81,6 +88,7 @@ class Shield{
             println "execption e"+e
             return true
         }
+*/
         return true
     }
 }

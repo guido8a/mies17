@@ -170,7 +170,7 @@ class PrflController extends mies.seguridad.Shield{
     * **/
 
     def grabar = {
-      //println "parametros grabar: ${params}"
+      println "parametros grabar: ${params}"
       def ids = params.ids
       def modulo = params.menu
       def prfl = params.prfl
