@@ -117,7 +117,7 @@
                             <input type="hidden" name="anio" value="${actual.id}">
                         </td>
                         <td class="prsp">
-                            <input type="hidden" class="prsp" value="${mies.Presupuesto.findByNumero(act.codigo).id}">
+                            <input type="hidden" class="prsp" value="${mies.Presupuesto.findByNumero(act.codigo)?.id}">
                             <input type="text" id="prsp_c${i}" style="width: 80px;color:black"
                                 ${(actual.estado==0)?'class="buscar"':'disabled'} value="${act.codigo}">
                         </td>
@@ -236,7 +236,7 @@
                             <input type="hidden" name="anio" value="${actual.id}">
                         </td>
                         <td class="prsp">
-                            <input type="hidden" class="prsp" value="${mies.Presupuesto.findByNumero(act.codigo).id}">
+                            <input type="hidden" class="prsp" value="${mies.Presupuesto.findByNumero(act.codigo)?.id}">
                             <input type="text" id="prsp_o${i}" style="width: 80px;color:black" ${(actual.estado==0)?'class="buscar"':'disabled'} value="${act.codigo}">
                         </td>
                         <td class="tipo">
@@ -351,7 +351,7 @@
                             <input type="hidden" name="anio" value="${actual.id}">
                         </td>
                         <td class="prsp">
-                            <input type="hidden" class="prsp" value="${mies.Presupuesto.findByNumero(act.codigo).id}">
+                            <input type="hidden" class="prsp" value="${mies.Presupuesto.findByNumero(act.codigo)?.id}">
                             <input type="text" id="prsp_n${i}" style="width: 80px;color:black" ${(actual.estado==0)?'class="buscar"':'disabled'} value="${act.codigo}">
                         </td>
                         <td class="tipo">

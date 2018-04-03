@@ -1,16 +1,10 @@
 <%--
   Created by IntelliJ IDEA.
   User: gato
-  Date: 28/03/18
-  Time: 14:29
+  Date: 02/04/18
+  Time: 14:47
 --%>
 
-<%--
-  Created by IntelliJ IDEA.
-  User: gato
-  Date: 28/03/18
-  Time: 10:58
---%>
 
 <%@ page import="mies.ObjetivoOperativo" %>
 <html>
@@ -46,7 +40,7 @@
 
         <div id="" class="toolbar ui-widget-header ui-corner-all">
             <g:link class="button list" action="list">
-                <g:message code="objetivoOperativo.list" default="Lista de Objetivos Operativos" />
+                <g:message code="objetivoEspecifico.list" default="Lista de Objetivos Operativos" />
             </g:link>
         </div> <!-- toolbar -->
 
@@ -55,58 +49,58 @@
                 <g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMessage}"/>
             </div>
         </g:if>
-        <g:hasErrors bean="${objetivoOperativoInstance}">
+        <g:hasErrors bean="${objetivoEspecificoInstance}">
             <div class="errors ui-state-error ui-corner-all">
-                <g:renderErrors bean="${objetivoOperativoInstance}" as="list"/>
+                <g:renderErrors bean="${objetivoEspecificoInstance}" as="list"/>
             </div>
         </g:hasErrors>
-        <g:form action="save" class="frmObjetivoOperativo" method="post">
-            <g:hiddenField name="id" value="${objetivoOperativoInstance?.id}"/>
-            <g:hiddenField name="version" value="${objetivoOperativoInstance?.version}"/>
+        <g:form action="save" class="frmObjetivoEspecifico" method="post">
+            <g:hiddenField name="id" value="${objetivoEspecificoInstance?.id}"/>
+            <g:hiddenField name="version" value="${objetivoEspecificoInstance?.version}"/>
             <div style="width: 800px">
                 <fieldset class="ui-corner-all">
                     <legend class="ui-widget ui-widget-header ui-corner-all">
                         <g:if test="${source == 'edit'}">
-                            <g:message code="objetivoOperativo.edit.legend"
-                                       default="Editar Objetivo Operativo"/>
+                            <g:message code="objetivoEspecifico.edit.legend"
+                                       default="Editar Objetivo Específico"/>
                         </g:if>
                         <g:else>
-                            <g:message code="objetivoOperativo.create.legend"
-                                       default="Ingresar Objetivo Operativo"/>
+                            <g:message code="objetivoEspecifico.create.legend"
+                                       default="Ingresar Objetivo Específico"/>
                         </g:else>
                     </legend>
 
 
-                    <div class="fieldcontain ${hasErrors(bean: objetivoOperativoInstance, field: 'objetivoEspecifico', 'error')}">
+                    <div class="fieldcontain ${hasErrors(bean: objetivoEspecificoInstance, field: 'objetivoEspecifico', 'error')}">
                         <label for="objetivoEspecifico">
-                            <g:message code="objetivoOperativo.objetivoEspecifico.label" default="Objetivo Especifico" />
+                            <g:message code="objetivoEspecifico.objetivoInstitucional.label" default="Objetivo Especifico" />
                         </label>
-                        <g:select id="objetivoEspecifico" name="objetivoEspecifico.id" from="${mies.ObjetivoEspecifico.list()}" optionKey="id" optionValue="descripcion" required="" value="${objetivoOperativoInstance?.objetivoEspecifico?.id}" class="many-to-one"/>
+                        <g:select id="objetivoInstitucional" name="objetivoInstitucional.id" from="${mies.ObjetivoInstitucional.list()}" optionKey="id" optionValue="descripcion" required="" value="${objetivoOperativoInstance?.objetivoEspecifico?.id}" class="many-to-one"/>
 
                     </div>
 
-                    <div class="prop ${hasErrors(bean: objetivoOperativoInstance, field: 'codigo', 'error')}">
+                    <div class="prop ${hasErrors(bean: objetivoEspecificoInstance, field: 'codigo', 'error')}">
                         <label for="codigo">
-                            <g:message code="objetivoOperativo.codigo.label" default="Código"/>
+                            <g:message code="objetivoEspecifico.codigo.label" default="Código"/>
                         </label>
 
                         <div class="campo">
-                            <g:textField name="codigo" id="codigo" title="Código objetivo Operativo"
-                                         class="field ui-widget-content ui-corner-all" value="${objetivoOperativoInstance?.codigo}" maxlength="2" minlength="1"/>
+                            <g:textField name="codigo" id="codigo" title="Código del objetivo Específico"
+                                         class="field ui-widget-content ui-corner-all" value="${objetivoEspecificoInstance?.codigo}" maxlength="2" minlength="1"/>
                         </div>
                     </div>
 
-                    <div class="prop ${hasErrors(bean: objetivoOperativoInstance, field: 'descripcion', 'error')}">
+                    <div class="prop ${hasErrors(bean: objetivoEspecificoInstance, field: 'descripcion', 'error')}">
                         <label for="descripcion">
-                            <g:message code="objetivoOperativo.descripcion.label" default="Descripción"/>
+                            <g:message code="objetivoEspecifico.descripcion.label" default="Descripción"/>
 
                         </label>
 
                         <div class="campo">
                             <g:textArea name="descripcion" id="descripcion"
-                                         title="Descripción corta del objetivo operativo"
-                                         class="field ui-widget-content ui-corner-all" minlenght="1"
-                                         value="${objetivoOperativoInstance?.descripcion}" style="width: 650px; resize: none"/>
+                                        title="Descripción corta del objetivo Específico"
+                                        class="field ui-widget-content ui-corner-all" minlenght="1"
+                                        value="${objetivoEspecificoInstance?.descripcion}" style="width: 650px; resize: none"/>
 
 
                         </div>
@@ -121,7 +115,7 @@
                             <a href="#" class="button delete" id="btnBorrar">
                                 <g:message code="default.button.delete.label" default="Delete"/>
                             </a>
-                            <g:link class="button show" action="show" id="${objetivoOperativoInstance?.id}">
+                            <g:link class="button show" action="show" id="${objetivoEspecificoInstance?.id}">
                                 <g:message code="default.button.show.label" default="Show"/>
                             </g:link>
                         </g:if>
@@ -140,7 +134,7 @@
 
 <script type="text/javascript">
     $(function() {
-        var myForm = $(".frmObjetivoOperativo");
+        var myForm = $(".frmObjetivoEspecifico");
 
         // Tooltip de informacion para cada field (utiliza el atributo title del textfield)
         var elems = $('.field')
@@ -242,15 +236,15 @@
             if (confirm("${message(code: 'default.button.delete.confirm.message', default: 'está seguro?')}")) {
                 $.ajax({
                     type: 'POST',
-                    url: '${createLink(controller: 'objetivoOperativo', action: 'delete')}',
+                    url: '${createLink(controller: 'objetivoEspecifico', action: 'delete')}',
                     data:{
-                        id: '${objetivoOperativoInstance?.id}'
+                        id: '${objetivoEspecificoInstance?.id}'
                     },
                     success: function (msg){
                         if(msg == 'ok'){
-                            location.href="${createLink(controller: 'objetivoOperativo', action: 'list')}"
+                            location.href="${createLink(controller: 'objetivoEspecifico', action: 'list')}"
                         }else{
-                            location.href="${createLink(controller: 'objetivoOperativo', action: 'list')}"
+                            location.href="${createLink(controller: 'objetivoEspecifico', action: 'list')}"
                         }
                     }
                 });
@@ -258,7 +252,7 @@
         });
 
 
-        $("#objetivoEspecifico").selectmenu({width:650, height:40})
+        $("#objetivoInstitucional").selectmenu({width:650, height:40})
 
     });
 </script>

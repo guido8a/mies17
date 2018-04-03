@@ -29,9 +29,6 @@
                     <div class="item" texto="obes">
                         <g:link  controller="objetivoEstrategicoProyecto" action="list">Objetivos Estratégicos</g:link> con los cuales se alinean los proyectos
                     </div><br>
-                    %{--<div class="item" texto="obes">--}%
-                    %{--<g:link  controller="objetivoEstrategicoProyecto" action="list">Objetivos Estratégicos</g:link> con los cuales se alinean los proyectos--}%
-                    %{--</div><br>--}%
                     <div class="item" texto="obgr">
                         <g:link  controller="objetivoGobiernoResultado" action="list">Objetivos del Gobierno por Resultados</g:link> de acuerdo al sistema de Gobierno por Resultados
                     </div><br>
@@ -44,17 +41,6 @@
                     <div class="item" texto="plas">
                         <g:link  controller="politicaAgendaSocial" action="list">Políticas de la Agenda Social</g:link> que pueden aplicarse a un proyecto
                     </div><br>
-                    %{--
-                                    <div class="item" texto="tpel">
-                                        <g:link  controller="tipoElemento" action="list">Tipo de Elemento del Marco Lógico</g:link> para identificar los diferentes componentes del Marco L&oacute;gico
-                                    </div><br>
-                                    <div class="item" texto="tpif">
-                                        <g:link  controller="tipoInforme" action="list">Tipo de Informe</g:link> que puede presentar el responsable o gerente del proyecto
-                                    </div><br>
-                                    <div class="item" texto="tpmd">
-                                        <g:link  controller="tipoModificacion" action="list">Tipo de Modificaci&oacute;n</g:link> que puede realizarse en el proyecto
-                                    </div><br>
-                    --}%
                     <div class="item" texto="tpmt">
                         <g:link  controller="tipoMeta" action="list">Tipo de Meta</g:link> para la desagregaci&oacute;n de las metas a modo de unidad de medida del efecto social.
                     </div><br>
@@ -70,11 +56,6 @@
                 </div>
 
                 <div id="snpl" class="ui-widget-content" style="height: 440px">
-                    %{--
-                                    <div class="item" texto="calf">
-                                        <g:link  controller="calificacion" action="list">Calificaci&oacute;n</g:link> Criterio de calificaci&oacute;n del proyecto.
-                                    </div><br>
-                    --}%
                     <div class="item" texto="cbrt">
                         <g:link  controller="cobertura" action="list">Cobertura del Proyecto</g:link> Cobertura geográfica del proyecto: nacional, provincial, etc.
                     </div><br>
@@ -90,34 +71,11 @@
                     <div class="item" texto="lnea">
                         <g:link  controller="linea" action="list">Lineamiento de inversi&oacute;n</g:link> Línea de inversión del proyecto, valores determinados por la Senplades
                     </div><br>
-                    %{--
-                                    <div class="item" texto="sctr">
-                                        <g:link  controller="sector" action="list">Sector Econ&oacute;mico</g:link> que apoya o en el que se interviene con el proyecto
-                                    </div><br>
-                                    <div class="item" texto="sbst">
-                                        <g:link  controller="subSector" action="list">Subsector Econ&oacute;mico</g:link> que apoya o en el que se interviene con el proyecto
-                                    </div><br>
-                                    <div class="item" texto="tpaq">
-                                        <g:link  controller="tipoAdquisicion" action="list">Tipo de Adquisici&oacute;n</g:link> de bienes o servicios que se realiza en el proyecto
-                                    </div><br>
-                                    <div class="item" texto="tpgr">
-                                        <g:link  controller="tipoGrupo" action="list">Tipo de Grupo de Atenci&oacute;n</g:link> prioritario para el proyecto
-                                    </div><br>
-                                    <div class="item" texto="tpiv">
-                                        <g:link  controller="tipoInversion" action="list">Tipo de Inversi&oacute;n</g:link> social que se puede hacer en el proyecto,
-                                    </div><br>
-                                    <div class="item" texto="tppc">
-                                        <g:link  controller="tipoProcedencia" action="list">Tipo de Procedencia</g:link> de los bienes o servicios a adquirirse en el proyecto
-                                    </div><br>
-                                    <div class="item" texto="tppd">
-                                        <g:link  controller="tipoProducto" action="list">Tipo de Producto</g:link> que se espera de resultado de la ejecuci&oacute;n del proyecto
-                                    </div><br>
-                    --}%
+
                     <div class="item" texto="tppt">
                         <g:link  controller="tipoParticipacion" action="list">Tipo de Participaci&oacute;n</g:link> de la Entidad en el proyecto
                     </div>
                 </div>
-
                 <div id="papp" class="ui-widget-content" style="height: 440px">
                     <div class="item" texto="actv">
                         <g:link  controller="actividad" action="list">Actividades de Gasto Corriente</g:link> que figuran en el PAPP
@@ -125,11 +83,6 @@
                     <div class="item" texto="anio">
                         <g:link  controller="anio" action="list">A&ntilde;o Fiscal</g:link> Año al cual corresponde el PAPP. Es similar al período contable o año fiscal.
                     </div><br>
-                    %{--
-                                    <div class="item" texto="ctrm">
-                                        <g:link  controller="cuatrimestre" action="list">Cuatrimestre</g:link> para la programación de la ejecución presupuestaria y del PAC
-                                    </div><br>
-                    --}%
                     <div class="item" texto="fnte">
                         <g:link  controller="componente" action="list">Componente</g:link> Componentes, usados en el registro de asignaciones corrientes.
                     </div><br>
@@ -147,6 +100,12 @@
                     </div><br>
                     <div class="item" texto="plds">
                         <g:link  controller="planDesarrollo" action="list">Plan de Desarrollo</g:link>
+                    </div><br>
+                    <div class="item" texto="obin">
+                        <g:link  controller="objetivoInstitucional" action="list">Objetivo Institucional</g:link>
+                    </div><br>
+                    <div class="item" texto="obep">
+                        <g:link  controller="objetivoEspecifico" action="list">Objetivo Específico</g:link>
                     </div><br>
                     <div class="item" texto="obop">
                         <g:link  controller="objetivoOperativo" action="list">Objetivo Operativo</g:link>
@@ -450,6 +409,14 @@
     <div id="plds" style="display:none">
         <h1>Plan de Desarrollo</h1><br>
         <p>Plan de Desarrollo</p>
+    </div>
+    <div id="obin" style="display:none">
+        <h1>Objetivo Institucional</h1><br>
+        <p>Objetivo Institucional</p>
+    </div>
+    <div id="obep" style="display:none">
+        <h1>Objetivo Específico</h1><br>
+        <p>Objetivo Específico</p>
     </div>
     <div id="obop" style="display:none">
         <h1>Objetivo Operativo</h1><br>
