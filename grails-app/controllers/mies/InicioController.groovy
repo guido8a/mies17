@@ -293,6 +293,7 @@ class InicioController extends mies.seguridad.Shield{
 //                                    }
                                 } else {
                                     error = "UNEJ"
+                                    println "no halla UNEJ: $zona, $coor, $nmbr, $bsca"
                                     contunej[nmbr] = contunej.get(nmbr,0) + 1
                                     if(eranUnej != nmbr) {
                                         eranUnej = nmbr
