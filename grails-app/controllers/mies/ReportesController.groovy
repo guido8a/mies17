@@ -3859,7 +3859,7 @@ class ReportesController extends mies.seguridad.Shield{
                 sheet.addCell(label);
                 label = new Label(10, columna, asignacion.actividad);
                 sheet.addCell(label);
-                label = new Label(11, columna, asignacion.meta);
+                label = new Label(11, columna, asignacion.meta.toString());
                 sheet.addCell(label);
                 label = new Label(12, columna, asignacion.indicador);
                 sheet.addCell(label);
