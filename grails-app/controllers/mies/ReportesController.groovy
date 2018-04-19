@@ -3601,11 +3601,17 @@ class ReportesController extends mies.seguridad.Shield{
         /*header*/
         WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, true);
         WritableCellFormat times16format = new WritableCellFormat(times16font);
-        Label label = new Label(0, 1, "ID", times16format);
+//        Label label = new Label(0, 1, "ID", times16format);
+//        sheet.addCell(label);
+//        label = new Label(1, 1, "Entidad", times16format);
+//        sheet.addCell(label);
+//        label = new Label(2, 1, "Unidad Ejecutora", times16format);
+//        sheet.addCell(label);
+        Label label = new Label(0, 1, "Nivel 0", times16format);
         sheet.addCell(label);
-        label = new Label(1, 1, "Entidad", times16format);
+        label = new Label(1, 1, "Nivel 1", times16format);
         sheet.addCell(label);
-        label = new Label(2, 1, "Unidad Ejecutora", times16format);
+        label = new Label(2, 1, "Nivel 2", times16format);
         sheet.addCell(label);
         label = new Label(3, 1, "Objetivo estratégico", times16format);
         sheet.addCell(label);
@@ -3837,9 +3843,13 @@ class ReportesController extends mies.seguridad.Shield{
                 } //if programaMap.proyectos.size >0
             } //unidad.programas.each -> programaMap
             it.corrientes.each { asignacion ->
-                label = new Label(0, columna,asignacion.id.toString());
+//                label = new Label(0, columna,asignacion.id.toString());
+//                sheet.addCell(label);
+//                label = new Label(1, columna, "MIES");
+//                sheet.addCell(label);
+                label = new Label(0, columna,UnidadEjecutora.get(it.unidad.id)?.padre?.padre?.nombre ?: '');
                 sheet.addCell(label);
-                label = new Label(1, columna, "MIES");
+                label = new Label(1, columna, UnidadEjecutora.get(it.unidad.id)?.padre?.nombre ?: '');
                 sheet.addCell(label);
                 label = new Label(2, columna, it.unidad.nombre);
                 sheet.addCell(label);
