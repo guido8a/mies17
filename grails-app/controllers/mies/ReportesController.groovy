@@ -5,6 +5,8 @@ import jxl.WorkbookSettings
 import jxl.write.*
 import mies.seguridad.Usro
 
+import java.awt.Color
+
 class ReportesController extends mies.seguridad.Shield{
 
     def dbConnectionService
@@ -3341,7 +3343,7 @@ class ReportesController extends mies.seguridad.Shield{
                                         }
                                     }
 
-                                  //  println "inv proy "+asignacion.id+" plan  "+asignacion.planificado+" suma "+total
+                                    //  println "inv proy "+asignacion.id+" plan  "+asignacion.planificado+" suma "+total
                                     if (total.toFloat().round(2) != asignacion.planificado.toFloat().round(2)) {
                                         label = new Label(0, columna, "MIES");
                                         sheet.addCell(label);
@@ -3427,58 +3429,58 @@ class ReportesController extends mies.seguridad.Shield{
                     }
                 }
 
-               // println "inv corr "+asignacion.id+" plan  "+asignacion.planificado+" suma "+tot
+                // println "inv corr "+asignacion.id+" plan  "+asignacion.planificado+" suma "+tot
 
-               if (tot.toFloat().round(2)!=asignacion.planificado.toFloat().round(2)){
-                   label = new Label(0, columna, "MIES");
-                   sheet.addCell(label);
-                   label = new Label(1, columna, it.unidad.nombre);
-                   sheet.addCell(label);
-                   label = new Label(2, columna, pu?.objetivoEstrategico?.descripcion);
-                   sheet.addCell(label);
-                   label = new Label(3, columna, pu?.ejeProgramatico?.descripcion);
-                   sheet.addCell(label);
-                   label = new Label(4, columna, pu?.politica?.descripcion);
-                   sheet.addCell(label);
-                   label = new Label(5, columna, "N/A");
-                   sheet.addCell(label);
-                   label = new Label(6, columna, asignacion.programa.descripcion);
-                   sheet.addCell(label);
-                   label = new Label(7, columna, "");
-                   sheet.addCell(label);
-                   label = new Label(8, columna, "");
-                   sheet.addCell(label);
-                   label = new Label(9, columna, asignacion.actividad);
-                   sheet.addCell(label);
-                   label = new Label(10, columna, asignacion.id.toString());
-                   sheet.addCell(label);
-                   label = new Label(11, columna, asignacion.indicador);
-                   sheet.addCell(label);
-                   label = new Label(12, columna, "Corriente");
-                   sheet.addCell(label);
-                   label = new Label(13, columna, asignacion.fuente.descripcion);
-                   sheet.addCell(label);
-                   label = new Label(14, columna, asignacion.presupuesto?.presupuesto?.descripcion);
-                   sheet.addCell(label);
-                   label = new Label(15, columna, asignacion.presupuesto?.numero);
-                   sheet.addCell(label);
-                   number = new Number(16, columna, asignacion.planificado);
-                   sheet.addCell(number);
+                if (tot.toFloat().round(2)!=asignacion.planificado.toFloat().round(2)){
+                    label = new Label(0, columna, "MIES");
+                    sheet.addCell(label);
+                    label = new Label(1, columna, it.unidad.nombre);
+                    sheet.addCell(label);
+                    label = new Label(2, columna, pu?.objetivoEstrategico?.descripcion);
+                    sheet.addCell(label);
+                    label = new Label(3, columna, pu?.ejeProgramatico?.descripcion);
+                    sheet.addCell(label);
+                    label = new Label(4, columna, pu?.politica?.descripcion);
+                    sheet.addCell(label);
+                    label = new Label(5, columna, "N/A");
+                    sheet.addCell(label);
+                    label = new Label(6, columna, asignacion.programa.descripcion);
+                    sheet.addCell(label);
+                    label = new Label(7, columna, "");
+                    sheet.addCell(label);
+                    label = new Label(8, columna, "");
+                    sheet.addCell(label);
+                    label = new Label(9, columna, asignacion.actividad);
+                    sheet.addCell(label);
+                    label = new Label(10, columna, asignacion.id.toString());
+                    sheet.addCell(label);
+                    label = new Label(11, columna, asignacion.indicador);
+                    sheet.addCell(label);
+                    label = new Label(12, columna, "Corriente");
+                    sheet.addCell(label);
+                    label = new Label(13, columna, asignacion.fuente.descripcion);
+                    sheet.addCell(label);
+                    label = new Label(14, columna, asignacion.presupuesto?.presupuesto?.descripcion);
+                    sheet.addCell(label);
+                    label = new Label(15, columna, asignacion.presupuesto?.numero);
+                    sheet.addCell(label);
+                    number = new Number(16, columna, asignacion.planificado);
+                    sheet.addCell(number);
 
-                   totalAsignado += asignacion.planificado
-                   agr.each {celda->
-                       sheet.addCell(celda);
-                   }
+                    totalAsignado += asignacion.planificado
+                    agr.each {celda->
+                        sheet.addCell(celda);
+                    }
 
 
-                   if (params.mes == "true")
-                       number = new Number(29, columna, tot);
-                   else
-                       number = new Number(17, columna, tot);
-                   sheet.addCell(number);
-                   totalTotal += tot
-                   columna++
-               }
+                    if (params.mes == "true")
+                        number = new Number(29, columna, tot);
+                    else
+                        number = new Number(17, columna, tot);
+                    sheet.addCell(number);
+                    totalTotal += tot
+                    columna++
+                }
 
 
             }
@@ -3601,6 +3603,13 @@ class ReportesController extends mies.seguridad.Shield{
         /*header*/
         WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, true);
         WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16format2 = new WritableCellFormat(times16font);
+//        times16format2.setBackground(jxl.format.Colour.PALE_BLUE)
+        sheet.setRowView(1,600)
+        sheet.setColumnView(7,40)
+        sheet.setColumnView(8,40)
+        sheet.setColumnView(9,40)
+        sheet.setColumnView(10,40)
 //        Label label = new Label(0, 1, "ID", times16format);
 //        sheet.addCell(label);
 //        label = new Label(1, 1, "Entidad", times16format);
@@ -3621,36 +3630,46 @@ class ReportesController extends mies.seguridad.Shield{
         sheet.addCell(label);
         label = new Label(6, 1, "CUP", times16format);
         sheet.addCell(label);
-        label = new Label(7, 1, "Programa", times16format);
+        label = new Label(7, 1, "Plan de desarrollo", times16format2);
         sheet.addCell(label);
-        label = new Label(8, 1, "Proyecto", times16format);
+        label = new Label(8, 1, "Objetivo Institucional", times16format2);
         sheet.addCell(label);
-        label = new Label(9, 1, "Componente", times16format);
+        label = new Label(9, 1, "Objetivo Específico", times16format2);
         sheet.addCell(label);
-        label = new Label(10, 1, "Actividad", times16format);
+        label = new Label(10, 1, "Objetivo Operativo", times16format2);
         sheet.addCell(label);
-        label = new Label(11, 1, "Meta", times16format);
+        label = new Label(11, 1, "Programa", times16format);
         sheet.addCell(label);
-        label = new Label(12, 1, "Indicador", times16format);
+        label = new Label(12, 1, "Proyecto", times16format);
         sheet.addCell(label);
-        label = new Label(13, 1, "Tipo gasto", times16format);
+        label = new Label(13, 1, "Componente", times16format);
         sheet.addCell(label);
-        label = new Label(14, 1, "Fuente financiamiento", times16format);
+        label = new Label(14, 1, "Actividad", times16format);
         sheet.addCell(label);
-        label = new Label(15, 1, "Grupo gasto", times16format);
+        label = new Label(15, 1, "Meta", times16format);
         sheet.addCell(label);
-        label = new Label(16, 1, "Partida presupuestaria", times16format);
+        label = new Label(16, 1, "Indicador", times16format);
         sheet.addCell(label);
-        label = new Label(17, 1, "Asignado", times16format);
+        label = new Label(17, 1, "Tipo gasto", times16format);
+        sheet.addCell(label);
+        label = new Label(18, 1, "Fuente financiamiento", times16format);
+        sheet.addCell(label);
+        label = new Label(19, 1, "Grupo gasto", times16format);
+        sheet.addCell(label);
+        label = new Label(20, 1, "Partida presupuestaria", times16format);
+        sheet.addCell(label);
+        label = new Label(21, 1, "Asignado", times16format);
         sheet.addCell(label);
         /*fin header*/
         def columna = 2
 
-        def max = 18
+//        def max = 18
+        def max = 22
         if (params.mes == "true") {
             Mes.list([sort: 'numero']).each { mes ->
                 headInversion += mes.descripcion + sep
-                label = new Label(17 + mes.numero, 1, mes.descripcion, times16format);
+//                label = new Label(17 + mes.numero, 1, mes.descripcion, times16format);
+                label = new Label(21 + mes.numero, 1, mes.descripcion, times16format);
                 sheet.addCell(label);
                 max++
             }
@@ -3672,84 +3691,99 @@ class ReportesController extends mies.seguridad.Shield{
 
             it.inversionDividido.each {inv ->
 
-                    label = new Label(0, columna, inv.id.toString());
-                    sheet.addCell(label);
-                    label = new Label(1, columna, "MIES");
-                    sheet.addCell(label);
-                    label = new Label(2, columna, it.unidad.nombre);
-                    sheet.addCell(label);
+//                label = new Label(0, columna, inv.id.toString());
+//                sheet.addCell(label);
+//                label = new Label(1, columna, "MIES");
+//                sheet.addCell(label);
+                label = new Label(0, columna,UnidadEjecutora.get(it.unidad.id)?.padre?.padre?.nombre ?: '');
+                sheet.addCell(label);
+                label = new Label(1, columna, UnidadEjecutora.get(it.unidad.id)?.padre?.nombre ?: '');
+                sheet.addCell(label);
+                label = new Label(2, columna, it.unidad.nombre);
+                sheet.addCell(label);
+                label = new Label(3, columna, inv.marcoLogico.proyecto.objetivoEstrategico.descripcion);
+                sheet.addCell(label);
+                label = new Label(4, columna, inv.marcoLogico.proyecto.ejeProgramatico.descripcion);
+                sheet.addCell(label);
+                def politicas = PoliticasProyecto.findByProyecto(inv.marcoLogico.proyecto)
+                label = new Label(5, columna, politicas.politica.descripcion);
+                sheet.addCell(label);
+                label = new Label(6, columna, inv.marcoLogico.proyecto.codigoProyecto);
+                sheet.addCell(label);
+                label = new Label(7, columna, asignacion?.planDesarrollo?.descripcion ?: '');
+                sheet.addCell(label);
+                label = new Label(8, columna, asignacion?.objetivoOperativo?.objetivoEspecifico?.objetivoInstitucional?.descripcion ?: '');
+                sheet.addCell(label);
+                label = new Label(9, columna,  asignacion?.objetivoOperativo?.objetivoEspecifico?.descripcion ?: '');
+                sheet.addCell(label);
+                label = new Label(10, columna, asignacion?.objetivoOperativo?.descripcion ?: '');
+                sheet.addCell(label);
+                label = new Label(11, columna, inv.marcoLogico.proyecto.programa.descripcion);
+                sheet.addCell(label);
+                label = new Label(12, columna, inv.marcoLogico.proyecto.nombre);
+                sheet.addCell(label);
+                label = new Label(13, columna, inv.marcoLogico.marcoLogico.objeto);
+                sheet.addCell(label);
+                label = new Label(14, columna, inv.marcoLogico.objeto);
+                sheet.addCell(label);
+                label = new Label(15, columna, inv.meta);
+                sheet.addCell(label);
+                label = new Label(16, columna, inv.indicador);
+                sheet.addCell(label);
+                label = new Label(17, columna, "Inversión");
+                sheet.addCell(label);
+                label = new Label(18, columna, inv.fuente.descripcion);
+                sheet.addCell(label);
+                label = new Label(19, columna, inv.presupuesto?.presupuesto?.descripcion);
+                sheet.addCell(label);
+                label = new Label(20, columna, inv.presupuesto?.numero);
+                sheet.addCell(label);
+                Number number = new Number(21, columna, inv.planificado);
+                sheet.addCell(number);
 
-                    label = new Label(3, columna, inv.marcoLogico.proyecto.objetivoEstrategico.descripcion);
-                    sheet.addCell(label);
-                    label = new Label(4, columna, inv.marcoLogico.proyecto.ejeProgramatico.descripcion);
-                    sheet.addCell(label);
-                    def politicas = PoliticasProyecto.findByProyecto(inv.marcoLogico.proyecto)
-                    label = new Label(5, columna, politicas.politica.descripcion);
-                    sheet.addCell(label);
-                    label = new Label(6, columna, inv.marcoLogico.proyecto.codigoProyecto);
-                    sheet.addCell(label);
-                    label = new Label(7, columna, inv.marcoLogico.proyecto.programa.descripcion);
-                    sheet.addCell(label);
-                    label = new Label(8, columna, inv.marcoLogico.proyecto.nombre);
-                    sheet.addCell(label);
-                    label = new Label(9, columna, inv.marcoLogico.marcoLogico.objeto);
-                    sheet.addCell(label);
-                    label = new Label(10, columna, inv.marcoLogico.objeto);
-                    sheet.addCell(label);
-                    label = new Label(11, columna, inv.meta);
-                    sheet.addCell(label);
-                    label = new Label(12, columna, inv.indicador);
-                    sheet.addCell(label);
-                    label = new Label(13, columna, "Inversión");
-                    sheet.addCell(label);
-                    label = new Label(14, columna, inv.fuente.descripcion);
-                    sheet.addCell(label);
-                    label = new Label(15, columna, inv.presupuesto?.presupuesto?.descripcion);
-                    sheet.addCell(label);
-                    label = new Label(16, columna, inv.presupuesto?.numero);
-                    sheet.addCell(label);
-                    Number number = new Number(17, columna, inv.planificado);
-                    sheet.addCell(number);
+                totalAsignado += inv.planificado
 
-                    totalAsignado += inv.planificado
+                def total = 0
 
-                    def total = 0
-
-                    12.times { mes ->
-                        def mm = mes + 1
-                        def pr = ProgramacionAsignacion.findAll("from ProgramacionAsignacion where asignacion = ${inv.id} and mes = ${mm}")
-                        if (pr.size() == 1) {
-                            pr = pr[0]
-                            def desde = ModificacionAsignacion.findAllByDesde(pr.asignacion)
-                            def hasta = ModificacionAsignacion.findAllByRecibe(pr.asignacion)
-                            if (params.mes == "true") {
-                                inversion += format(pr.valor, "number") + sep
-                                number = new Number(18 + mes, columna, pr.valor);
-                                sheet.addCell(number);
-                            }
-                            total += pr.valor
-                            totalMeses[mes] += pr.valor
-                        } else if (pr.size() > 1) {
-                            if (params.mes == "true") {
-                                inversion += "?" + sep
-                            }
-                        } else {
-                            if (params.mes == "true") {
-                                inversion += "0" + sep
-                                number = new Number(18 + mes, columna, 0);
-                                sheet.addCell(number);
-                            }
+                12.times { mes ->
+                    def mm = mes + 1
+                    def pr = ProgramacionAsignacion.findAll("from ProgramacionAsignacion where asignacion = ${inv.id} and mes = ${mm}")
+                    if (pr.size() == 1) {
+                        pr = pr[0]
+                        def desde = ModificacionAsignacion.findAllByDesde(pr.asignacion)
+                        def hasta = ModificacionAsignacion.findAllByRecibe(pr.asignacion)
+                        if (params.mes == "true") {
+                            inversion += format(pr.valor, "number") + sep
+//                            number = new Number(18 + mes, columna, pr.valor);
+                            number = new Number(22 + mes, columna, pr.valor);
+                            sheet.addCell(number);
+                        }
+                        total += pr.valor
+                        totalMeses[mes] += pr.valor
+                    } else if (pr.size() > 1) {
+                        if (params.mes == "true") {
+                            inversion += "?" + sep
+                        }
+                    } else {
+                        if (params.mes == "true") {
+                            inversion += "0" + sep
+//                            number = new Number(18 + mes, columna, 0);
+                            number = new Number(22 + mes, columna, 0);
+                            sheet.addCell(number);
                         }
                     }
-                    inversion += format(total, "number") + sep
-                    if (params.mes == "true")
-                        number = new Number(30, columna, total);
-                    else
-                        number = new Number(18, columna, total);
-                    sheet.addCell(number);
-                    totalTotal += total
-                    inversion += "\n"
-                    columna++
+                }
+                inversion += format(total, "number") + sep
+                if (params.mes == "true")
+//                    number = new Number(30, columna, total);
+                    number = new Number(34, columna, total);
+                else
+//                    number = new Number(18, columna, total);
+                    number = new Number(22, columna, total);
+                sheet.addCell(number);
+                totalTotal += total
+                inversion += "\n"
+                columna++
 
             }
 
@@ -3759,83 +3793,99 @@ class ReportesController extends mies.seguridad.Shield{
                         proyectoMap.actividades.each { actividadMap ->
                             actividadMap.asignaciones.each { asignacion ->
 //                                if (asignacion.reubicada != 'S') {
-                                    label = new Label(0, columna, asignacion.id.toString());
-                                    sheet.addCell(label);
-                                    label = new Label(1, columna, "MIES");
-                                    sheet.addCell(label);
-                                    label = new Label(2, columna, it.unidad.nombre);
-                                    sheet.addCell(label);
-                                    label = new Label(3, columna, proyectoMap.proyecto?.objetivoEstrategico?.descripcion);
-                                    sheet.addCell(label);
-                                    label = new Label(4, columna, proyectoMap.proyecto?.ejeProgramatico?.descripcion);
-                                    sheet.addCell(label);
-                                    def politicas = PoliticasProyecto.findByProyecto(proyectoMap.proyecto)
-                                    label = new Label(5, columna, politicas.politica.descripcion);
-                                    sheet.addCell(label);
-                                    label = new Label(6, columna, proyectoMap.proyecto.codigoProyecto);
-                                    sheet.addCell(label);
-                                    label = new Label(7, columna, programaMap.programa?.descripcion);
-                                    sheet.addCell(label);
-                                    label = new Label(8, columna, proyectoMap.proyecto.nombre);
-                                    sheet.addCell(label);
-                                    label = new Label(9, columna, actividadMap.actividad.marcoLogico.objeto);
-                                    sheet.addCell(label);
-                                    label = new Label(10, columna, actividadMap.actividad.objeto);
-                                    sheet.addCell(label);
-                                    label = new Label(11, columna, asignacion.meta);
-                                    sheet.addCell(label);
-                                    label = new Label(12, columna, asignacion.indicador);
-                                    sheet.addCell(label);
-                                    label = new Label(13, columna, "Inversión");
-                                    sheet.addCell(label);
-                                    label = new Label(14, columna, asignacion.fuente.descripcion);
-                                    sheet.addCell(label);
-                                    label = new Label(15, columna, asignacion.presupuesto?.presupuesto?.descripcion);
-                                    sheet.addCell(label);
-                                    label = new Label(16, columna, asignacion.presupuesto?.numero);
-                                    sheet.addCell(label);
-                                    Number number = new Number(17, columna, asignacion.getValorReal());
-                                    sheet.addCell(number);
+//                                    label = new Label(0, columna, asignacion.id.toString());
+//                                    sheet.addCell(label);
+//                                    label = new Label(1, columna, "MIES");
+//                                    sheet.addCell(label);
+                                label = new Label(0, columna,UnidadEjecutora.get(it.unidad.id)?.padre?.padre?.nombre ?: '');
+                                sheet.addCell(label);
+                                label = new Label(1, columna, UnidadEjecutora.get(it.unidad.id)?.padre?.nombre ?: '');
+                                sheet.addCell(label);
+                                label = new Label(2, columna, it.unidad.nombre);
+                                sheet.addCell(label);
+                                label = new Label(3, columna, proyectoMap.proyecto?.objetivoEstrategico?.descripcion);
+                                sheet.addCell(label);
+                                label = new Label(4, columna, proyectoMap.proyecto?.ejeProgramatico?.descripcion);
+                                sheet.addCell(label);
+                                def politicas = PoliticasProyecto.findByProyecto(proyectoMap.proyecto)
+                                label = new Label(5, columna, politicas.politica.descripcion);
+                                sheet.addCell(label);
+                                label = new Label(6, columna, proyectoMap.proyecto.codigoProyecto);
+                                sheet.addCell(label);
+                                label = new Label(7, columna, asignacion?.planDesarrollo?.descripcion ?: '');
+                                sheet.addCell(label);
+                                label = new Label(8, columna, asignacion?.objetivoOperativo?.objetivoEspecifico?.objetivoInstitucional?.descripcion ?: '');
+                                sheet.addCell(label);
+                                label = new Label(9, columna,  asignacion?.objetivoOperativo?.objetivoEspecifico?.descripcion ?: '');
+                                sheet.addCell(label);
+                                label = new Label(10, columna, asignacion?.objetivoOperativo?.descripcion ?: '');
+                                sheet.addCell(label);
+                                label = new Label(11, columna, programaMap.programa?.descripcion);
+                                sheet.addCell(label);
+                                label = new Label(12, columna, proyectoMap.proyecto.nombre);
+                                sheet.addCell(label);
+                                label = new Label(13, columna, actividadMap.actividad.marcoLogico.objeto);
+                                sheet.addCell(label);
+                                label = new Label(14, columna, actividadMap.actividad.objeto);
+                                sheet.addCell(label);
+                                label = new Label(15, columna, asignacion.meta);
+                                sheet.addCell(label);
+                                label = new Label(16, columna, asignacion.indicador);
+                                sheet.addCell(label);
+                                label = new Label(17, columna, "Inversión");
+                                sheet.addCell(label);
+                                label = new Label(18, columna, asignacion.fuente.descripcion);
+                                sheet.addCell(label);
+                                label = new Label(19, columna, asignacion.presupuesto?.presupuesto?.descripcion);
+                                sheet.addCell(label);
+                                label = new Label(20, columna, asignacion.presupuesto?.numero);
+                                sheet.addCell(label);
+                                Number number = new Number(21, columna, asignacion.getValorReal());
+                                sheet.addCell(number);
 
-                                    totalAsignado += asignacion.getValorReal()
+                                totalAsignado += asignacion.getValorReal()
 
-                                    def total = 0
+                                def total = 0
 
-                                    12.times { mes ->
-                                        def mm = mes + 1
-                                        def pr = ProgramacionAsignacion.findAll("from ProgramacionAsignacion where asignacion = ${asignacion.id} and mes = ${mm}")
-                                        if (pr.size() == 1) {
-                                            pr = pr[0]
-                                            def desde = ModificacionAsignacion.findAllByDesde(pr.asignacion)
-                                            def hasta = ModificacionAsignacion.findAllByRecibe(pr.asignacion)
-                                            if (params.mes == "true") {
-                                                inversion += format(pr.valor, "number") + sep
-                                                number = new Number(18 + mes, columna, pr.valor);
-                                                sheet.addCell(number);
-                                            }
-                                            total += pr.valor
-                                            totalMeses[mes] += pr.valor
-                                        } else if (pr.size() > 1) {
-                                            if (params.mes == "true") {
-                                                inversion += "?" + sep
-                                            }
-                                        } else {
-                                            if (params.mes == "true") {
-                                                inversion += "0" + sep
-                                                number = new Number(18 + mes, columna, 0);
-                                                sheet.addCell(number);
-                                            }
+                                12.times { mes ->
+                                    def mm = mes + 1
+                                    def pr = ProgramacionAsignacion.findAll("from ProgramacionAsignacion where asignacion = ${asignacion.id} and mes = ${mm}")
+                                    if (pr.size() == 1) {
+                                        pr = pr[0]
+                                        def desde = ModificacionAsignacion.findAllByDesde(pr.asignacion)
+                                        def hasta = ModificacionAsignacion.findAllByRecibe(pr.asignacion)
+                                        if (params.mes == "true") {
+                                            inversion += format(pr.valor, "number") + sep
+//                                            number = new Number(18 + mes, columna, pr.valor);
+                                            number = new Number(22 + mes, columna, pr.valor);
+                                            sheet.addCell(number);
+                                        }
+                                        total += pr.valor
+                                        totalMeses[mes] += pr.valor
+                                    } else if (pr.size() > 1) {
+                                        if (params.mes == "true") {
+                                            inversion += "?" + sep
+                                        }
+                                    } else {
+                                        if (params.mes == "true") {
+                                            inversion += "0" + sep
+//                                            number = new Number(18 + mes, columna, 0);
+                                            number = new Number(22 + mes, columna, 0);
+                                            sheet.addCell(number);
                                         }
                                     }
-                                    inversion += format(total, "number") + sep
-                                    if (params.mes == "true")
-                                        number = new Number(30, columna, total);
-                                    else
-                                        number = new Number(18, columna, total);
-                                    sheet.addCell(number);
-                                    totalTotal += total
-                                    inversion += "\n"
-                                    columna++
+                                }
+                                inversion += format(total, "number") + sep
+                                if (params.mes == "true")
+//                                    number = new Number(30, columna, total);
+                                    number = new Number(34, columna, total);
+                                else
+//                                    number = new Number(18, columna, total);
+                                    number = new Number(22, columna, total);
+                                sheet.addCell(number);
+                                totalTotal += total
+                                inversion += "\n"
+                                columna++
 //                            }
                             } //actividadMap.asignaciones.each -> asignacion
                         } //proyectoMap.actividades.each -> actividadMap
@@ -3861,27 +3911,35 @@ class ReportesController extends mies.seguridad.Shield{
                 sheet.addCell(label);
                 label = new Label(6, columna, "N/A");
                 sheet.addCell(label);
-                label = new Label(7, columna, asignacion.programa.descripcion);
+                label = new Label(7, columna, asignacion?.planDesarrollo?.descripcion ?: '');
                 sheet.addCell(label);
-                label = new Label(8, columna, "");
+                label = new Label(8, columna, asignacion?.objetivoOperativo?.objetivoEspecifico?.objetivoInstitucional?.descripcion ?: '');
                 sheet.addCell(label);
-                label = new Label(9, columna, "");
+                label = new Label(9, columna,  asignacion?.objetivoOperativo?.objetivoEspecifico?.descripcion ?: '');
                 sheet.addCell(label);
-                label = new Label(10, columna, asignacion.actividad);
+                label = new Label(10, columna, asignacion?.objetivoOperativo?.descripcion ?: '');
                 sheet.addCell(label);
-                label = new Label(11, columna, asignacion.meta.toString());
+                label = new Label(11, columna, asignacion.programa.descripcion);
                 sheet.addCell(label);
-                label = new Label(12, columna, asignacion.indicador);
+                label = new Label(12, columna, "");
                 sheet.addCell(label);
-                label = new Label(13, columna, "Corriente");
+                label = new Label(13, columna, "");
                 sheet.addCell(label);
-                label = new Label(14, columna, asignacion.fuente.descripcion);
+                label = new Label(14, columna, asignacion.actividad);
                 sheet.addCell(label);
-                label = new Label(15, columna, asignacion.presupuesto?.presupuesto?.descripcion);
+                label = new Label(15, columna, asignacion.meta.toString());
                 sheet.addCell(label);
-                label = new Label(16, columna, asignacion.presupuesto?.numero);
+                label = new Label(16, columna, asignacion.indicador);
                 sheet.addCell(label);
-                def number = new Number(17, columna, asignacion.planificado);
+                label = new Label(17, columna, "Corriente");
+                sheet.addCell(label);
+                label = new Label(18, columna, asignacion.fuente.descripcion);
+                sheet.addCell(label);
+                label = new Label(19, columna, asignacion.presupuesto?.presupuesto?.descripcion);
+                sheet.addCell(label);
+                label = new Label(20, columna, asignacion.presupuesto?.numero);
+                sheet.addCell(label);
+                def number = new Number(21, columna, asignacion.planificado);
                 sheet.addCell(number);
 
                 totalAsignado += asignacion.planificado
@@ -3894,7 +3952,8 @@ class ReportesController extends mies.seguridad.Shield{
                         pr = pr[0]
                         if (params.mes == "true") {
                             corriente += format(pr.valor, "number") + sep
-                            number = new Number(18 + mes, columna, pr.valor);
+//                            number = new Number(18 + mes, columna, pr.valor);
+                            number = new Number(22 + mes, columna, pr.valor);
                             sheet.addCell(number);
                         }
                         totalMeses[mes] += pr.valor
@@ -3906,16 +3965,19 @@ class ReportesController extends mies.seguridad.Shield{
                     } else {
                         if (params.mes == "true") {
                             corriente += "0" + sep
-                            number = new Number(18 + mes, columna, 0);
+//                            number = new Number(18 + mes, columna, 0);
+                            number = new Number(22 + mes, columna, 0);
                             sheet.addCell(number);
                         }
                     }
                 }
                 corriente += format(tot, "number") + sep
                 if (params.mes == "true")
-                    number = new Number(30, columna, tot);
+//                    number = new Number(30, columna, tot);
+                    number = new Number(34, columna, tot);
                 else
-                    number = new Number(18, columna, tot);
+//                    number = new Number(18, columna, tot);
+                    number = new Number(22, columna, tot);
                 sheet.addCell(number);
                 totalTotal += tot
                 corriente += "\n"
@@ -3939,37 +4001,48 @@ class ReportesController extends mies.seguridad.Shield{
                 sheet.addCell(label);
                 label = new Label(8, columna, "");
                 sheet.addCell(label);
-                label = new Label(9, columna, "Máximo inversión");
+                label = new Label(9, columna, "");
                 sheet.addCell(label);
-                number = new Number(10, columna, (pu?.maxInversion) ? pu.maxInversion : 0);
-                sheet.addCell(number);
+                label = new Label(10, columna, "");
+                sheet.addCell(label);
                 label = new Label(11, columna, "");
                 sheet.addCell(label);
                 label = new Label(12, columna, "");
                 sheet.addCell(label);
-                label = new Label(13, columna, "");
+                label = new Label(13, columna, "Máximo inversión");
                 sheet.addCell(label);
-                label = new Label(14, columna, "");
-                sheet.addCell(label);
+                number = new Number(14, columna, (pu?.maxInversion) ? pu.maxInversion : 0);
+                sheet.addCell(number);
                 label = new Label(15, columna, "");
                 sheet.addCell(label);
                 label = new Label(16, columna, "");
                 sheet.addCell(label);
-                number = new Number(17, columna, totalAsignado);
+                label = new Label(17, columna, "");
+                sheet.addCell(label);
+                label = new Label(18, columna, "");
+                sheet.addCell(label);
+                label = new Label(19, columna, "");
+                sheet.addCell(label);
+                label = new Label(20, columna, "");
+                sheet.addCell(label);
+                number = new Number(21, columna, totalAsignado);
                 sheet.addCell(number);
 
                 if (params.mes == "true") {
                     12.times() { mes ->
                         corriente += format(totalMeses[mes], "number") + sep
-                        number = new Number(18 + mes, columna, totalMeses[mes]);
+//                        number = new Number(18 + mes, columna, totalMeses[mes]);
+                        number = new Number(22 + mes, columna, totalMeses[mes]);
                         sheet.addCell(number);
                     }
                 }
                 corriente += format(totalTotal, "number") + sep
                 if (params.mes == "true")
-                    number = new Number(30, columna, totalTotal);
+//                    number = new Number(30, columna, totalTotal);
+                    number = new Number(34, columna, totalTotal);
                 else
-                    number = new Number(18, columna, totalTotal);
+//                    number = new Number(18, columna, totalTotal);
+                    number = new Number(22, columna, totalTotal);
                 sheet.addCell(number);
                 granTotal += totalTotal
                 corriente += "\n\n"
