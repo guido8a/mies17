@@ -429,18 +429,67 @@ class ModificacionController extends mies.seguridad.Shield {
         def asg
         if (params.id) {
             asg = Asignacion.get(params.id)
-            asg.properties = params
+
+            asg.indicador = params.indicador
+            asg.modalidad = params.met
+            if(params.meta){
+                asg.meta = params.meta.toInteger()
+            }
+
             if (!band) {
                 asg.componente = null
             }
         } else {
-            asg = new Asignacion(params)
+            asg = new Asignacion()
 
+            params.indicador = params.indicador
+            if(params.meta){
+                asg.meta = params.meta.toInteger()
+            }
+            asg.modalidad = params.met
         }
-//        def asignaciones = Asignacion.findAllByMarcoLogicoAndAnio(asg.marcoLogico,asg.anio)
-        //        println "asignaciones "+asignaciones
+
+
+        def actividadPresupuestaria
+        def objOperativo = null
+        def planDesarrollo = null
+        def politica = null
+
+        if(params.actividadPresupuestaria != null){
+            actividadPresupuestaria = ActividadPresupuesto.get(params.actividadPresupuestaria)
+        }else{
+            band = false
+        }
+
+        if(params.operativo != null){
+            objOperativo = ObjetivoOperativo.get(params.operativo)
+        }else{
+            band = false
+        }
+
+        if(params.plan != null){
+            planDesarrollo = PlanDesarrollo.get(params.plan)
+        }else{
+            band=false
+        }
+
+
+        if(params.politica != null){
+            politica = PoliticasIgualdad.get(params.politica)
+        }else{
+            band = false
+        }
+
+        params.componente = null
+        asg.properties = params
+        asg.actividadPresupuesto = actividadPresupuestaria
+        asg.unidadAdministrativa = params.unidadA
+        asg.objetivoOperativo = objOperativo
+        asg.planDesarrollo = planDesarrollo
+        asg.politicasIgualdad = politica
 
         asg = kerberosService.saveObject(asg, Asignacion, session.perfil, session.usuario, "guardarAsignacionMod", "modificacion", session)
+
         if (asg.errors.getErrorCount() == 0) {
             def mod = new ModificacionAsignacion()
             mod.desde = asg
@@ -448,6 +497,7 @@ class ModificacionController extends mies.seguridad.Shield {
             mod.recibe = null
             mod.valor = asg.planificado
             mod.fecha = new Date()
+
             mod = kerberosService.saveObject(mod, ModificacionAsignacion, session.perfil, session.usuario, "guardarAsignacionMod", "modificacion", session)
             render guardarPras(asg)
         } else {

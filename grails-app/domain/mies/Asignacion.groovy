@@ -76,6 +76,7 @@ class Asignacion implements Serializable {
         objetivoOperativo(blank: true, nullable: true)
         planDesarrollo(blank:true, nullable: true)
         politicasIgualdad(blank:true, nullable: true)
+        actividadPresupuesto(blank: true, nullable: true)
     }
 
     String toString(){

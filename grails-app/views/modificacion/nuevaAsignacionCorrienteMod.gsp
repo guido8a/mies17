@@ -27,9 +27,6 @@
 <body>
 
 <div style="margin-left: 10px;">
-    %{--<g:if test="${max?.aprobadoCorrientes!=0}">--}%
-    %{--<g:link class="btn" controller="modificacionProyecto" action="solicitarModificacionUnidad" params="${[unidad:unidad.id,anio:actual.id]}">Solicitar modificación</g:link>--}%
-    %{--</g:if>--}%
     <g:link class="btn" controller="modificacion" action="poaCorrientesMod" params="[id:unidad.id,anio:actual.id]">Volver a modificaciones Poa</g:link>
     <g:link class="btn" controller="modificacion" action="programacionAsignacionesMod" params="[id:unidad.id,anio:actual.id]">Programación</g:link>
     <g:link class="btn_arbol" controller="entidad" action="arbol_asg">Unidades ejecutoras</g:link>
@@ -37,22 +34,28 @@
 
 
     <div style="margin-top: 15px;">
+        %{--<table width="600">--}%
+            %{--<tr>--}%
+                %{--<th>Año</th>--}%
+                %{--<th>Programa</th>--}%
+                %{--<th>Componente</th>--}%
+            %{--</tr>--}%
 
-        <table width="600">
-            <tr>
-                <th>Año</th>
-                <th>Programa</th>
-                <th>Componente</th>
-            </tr>
+            %{--<tr>--}%
+                %{--<td><g:select from="${mies.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/></td>--}%
 
-            <tr>
-                <td><g:select from="${mies.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}"/></td>
+                %{--<td><g:select from="${programas}" id="programa" optionKey="id" name="programa" class="programa" value="${programa.id}"/></td>--}%
 
-                <td><g:select from="${programas}" id="programa" optionKey="id" name="programa" class="programa" value="${programa.id}"/></td>
+                %{--<td><g:select from="${componentes}" id="componente" optionKey="id" name="componente" class="componente" noSelection="['-1':'Seleccione...']"/></td>--}%
+            %{--</tr>--}%
+        %{--</table>--}%
 
-                <td><g:select from="${componentes}" id="componente" optionKey="id" name="componente" class="componente" noSelection="['-1':'Seleccione...']"/></td>
-            </tr>
-        </table>
+
+
+        <b>Año</b> <g:select from="${mies.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}" style="margin-right: 30px"/>
+
+        <b>Unidad</b>  <g:textField name="unidadA_name" id="unidadA" style="width: 350px"/>
+
 
     </div>
 </div>
@@ -62,6 +65,44 @@
         ${flash.message}
     </div>
 </g:if>
+
+
+<div style="margin-top: 10px;">
+    <table width="600">
+        <tr>
+            <th>Programa Presupuestario</th>
+            <th>Actividad Presupuestaria</th>
+            <th>Política de Igualdad</th>
+        </tr>
+
+        <tr>
+            <td><g:select from="${programas}" id="programa" optionKey="id" name="programa" class="programa" value="${programa.id}"/></td>
+            <td id="tdActividad"></td>
+            <td id="tdPoliticas"></td>
+        </tr>
+    </table>
+</div>
+
+
+
+<fieldset class="ui-corner-all" style="min-height: 100px;font-size: 11px;">
+    <legend>Objetivos</legend>
+    <table style="width: 100%">
+        <tr>
+            <th style="width: 25%">Plan de Desarrollo</th>
+            <th style="width: 25%">Objetivo Institucional</th>
+            <th style="width: 25%">Objetivo Específico</th>
+            <th style="width: 25%">Objetivo Operativo</th>
+        </tr>
+
+        <tr>
+            <td id="tdPlan"></td>
+            <td id="tdInstitucional"></td>
+            <td id="tdEspecifico"></td>
+            <td id="tdOperativo"></td>
+        </tr>
+    </table>
+</fieldset>
 
 <fieldset class="ui-corner-all" style="min-height: 110px;font-size: 11px;">
     <legend>
@@ -121,11 +162,23 @@
 
             <div id="dlg_desc_obs">
                 <input type="hidden" id="hid_desc">
-
                 <input type="hidden" id="hid_obs">
-                <b>Meta (255 caracteres):</b><br>
+                <input type="hidden" id="hid_met">
 
-                <textArea name="desc" rows="6" cols="40" id="dlg_desc" style="color: black"></textArea>
+                %{--<b>Meta (255 caracteres):</b><br>--}%
+
+                %{--<textArea name="desc" rows="6" cols="40" id="dlg_desc" style="color: black"></textArea>--}%
+
+
+                <b>Modalidad de Servicios (255 caracteres):</b><br>
+
+                <textArea name="met" rows="5" cols="40" id="dlg_met" style="color: black; resize: none"></textArea>
+
+                <b>Meta (numérico):</b>
+
+                <input type="text" id="dlg_desc" name="desc" class="validacionNumeroSinPuntos" style="width: 70px;color:black"> <br>
+
+
                 <b>Indicador (255 caracteres):</b><br>
 
                 <textArea name="desc" rows="6" cols="40" id="dlg_obs"  style="color: black"></textArea> <br>
@@ -286,6 +339,111 @@
 
 <script type="text/javascript">
 
+    cargarPolitica(null);
+
+    function cargarPolitica (politica) {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'asignacion', action: 'politica_ajax')}',
+            data:{
+                politica: politica
+            },
+            success: function (msg){
+                $("#tdPoliticas").html(msg)
+            }
+        });
+    }
+
+    cargarActivdad($("#programa").val(), null)
+
+    $("#programa").change(function () {
+        var programa = $(this).val();
+        cargarActivdad(programa, null)
+    });
+
+    function cargarActivdad (programa, actividad ){
+        $.ajax({
+            type: 'POST',
+            url:'${createLink(controller: 'asignacion', action: 'actividad_ajax')}',
+            data:{
+                programa: programa,
+                actividad: actividad
+            },
+            success: function (msg) {
+                $("#tdActividad").html(msg)
+            }
+        });
+    }
+
+
+    /**objetivos**/
+
+    cargarPlanDesarrollo(null);
+
+    function cargarPlanDesarrollo (plan) {
+        $.ajax({
+            type: 'POST',
+            url:'${createLink(controller: 'asignacion', action: 'plan_ajax')}',
+            data:{
+                plan: plan
+            },
+            success: function (msg){
+                $("#tdPlan").html(msg)
+            }
+        });
+    }
+
+    cargarObInstitucional(null);
+
+    function cargarObInstitucional(institucional) {
+        $.ajax({
+            type: 'POST',
+            url:'${createLink(controller: 'asignacion', action: 'institucional_ajax')}',
+            data:{
+                institucional: institucional
+            },
+            success: function (msg){
+                $("#tdInstitucional").html(msg)
+            }
+        });
+    }
+
+    function cargarCombos(oo) {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'asignacion', action: 'revisarCombos_ajax')}',
+            data:{
+                operativo: oo
+            },
+            success: function (msg){
+                var parts = msg.split("_");
+                cargarObjEspecifico(parts[1],parts[0], oo);
+                cargarObjOperativo (parts[1], oo);
+                cargarObInstitucional(parts[0]);
+            }
+        })
+    }
+
+    cargarObjEspecifico($("#institucional").val(),null, null);
+
+    function cargarObjEspecifico (objetivo, especifico, operativo) {
+        $.ajax({
+            type: 'POST',
+            url:'${createLink(controller: 'asignacion', action:'especifico_ajax')}',
+            data:{
+                objetivo: objetivo,
+                especifico: especifico,
+                operativo: operativo
+
+            },
+            success: function (msg) {
+                $("#tdEspecifico").html(msg)
+            }
+        });
+    }
+
+    /*******/
+
     var valorEditar = 0;
 
     function validar(tipo) {
@@ -300,6 +458,12 @@
 
         var meta = $("#meta").val();
         var indi = $("#indi").val();
+
+        var acpr = $("#actividadPresupuestaria").val();
+        var uni = $("#unidadA").val();
+        var opera = $("#objetivoOperativo").val();
+        var pln = $("#plan").val();
+
         valorTxt.removeClass("error");
         prspField.removeClass("error");
 
@@ -323,11 +487,11 @@
                 error = valorTxt;
             }
             if (tipo == 0) {
-                if (valor < 0) {
-                    mensaje = "Error: El valor de la asignación debe ser un número mayor a cero";
-                    band = false;
-                    error = valorTxt;
-                }
+//                if (valor < 0) {
+//                    mensaje = "Error: El valor de la asignación debe ser un número mayor a cero";
+//                    band = false;
+//                    error = valorTxt;
+//                }
                 if (isNaN(prsp)) {
                     prsp = 0
                 }
@@ -351,6 +515,24 @@
                     band = false;
                     error = $(".btn_editar");
                 }
+
+                if(acpr == null){
+                    mensaje = "Error: Debe seleccionar una actividad presupuestaria";
+                    band = false;
+                }
+                if(uni == ''){
+                    mensaje = "Error: Debe ingresar una unidad";
+                    band = false;
+                }
+                if(opera == '' || opera == null){
+                    mensaje = "Error: Debe seleccionar un objetivo operativo";
+                    band = false;
+                }
+                if(pln == '' || pln == null){
+                    mensaje = "Error: Debe seleccionar un plan de desarrollo";
+                    band = false;
+                }
+
             }
         }
 
@@ -394,14 +576,14 @@
             },
             text:false
         }).click(function () {
-                    var id = $(this).attr("id");
-                    var parts = id.split("_");
-                    var act = $(this).parents("tr").find(".actividad").text().trim();
-                    $("#idAsg").val(parts[1]);
-                    $("#pTexto").html("Seleccione el nuevo programa para la asignación:<br/> <b>" + act + "</b>");
-                    $("#dlgProg").dialog("open");
-                    return false;
-                });
+            var id = $(this).attr("id");
+            var parts = id.split("_");
+            var act = $(this).parents("tr").find(".actividad").text().trim();
+            $("#idAsg").val(parts[1]);
+            $("#pTexto").html("Seleccione el nuevo programa para la asignación:<br/> <b>" + act + "</b>");
+            $("#dlgProg").dialog("open");
+            return false;
+        });
 
         $(".btn_editar").button({
             icons:{
@@ -409,22 +591,24 @@
             },
             text:false
         }).click(function () {
-                    $("#hid_desc").val($(this).attr("desc"))
-                    $("#hid_obs").val($(this).attr("obs"))
-                    $("#dlg_desc").val($("#" + $(this).attr("desc")).val())
-                    $("#dlg_obs").val($("#" + $(this).attr("obs")).val())
-                    $("#dlg_error").hide().html("")
-                    $("#dlg_desc_obs").dialog("open")
-                });
+            $("#hid_desc").val($(this).attr("desc"));
+            $("#hid_obs").val($(this).attr("obs"));
+            $("#hid_met").val($(this).attr("met"));
+            $("#dlg_desc").val($("#" + $(this).attr("desc")).val());
+            $("#dlg_met").val($("#" + $(this).attr("met")).val());
+            $("#dlg_obs").val($("#" + $(this).attr("obs")).val());
+            $("#dlg_error").hide().html("");
+            $("#dlg_desc_obs").dialog("open")
+        });
 
         $("#btnReporte").button({
             icons:{
                 primary:"ui-icon-calculator"
             }
         }).click(function () {
-                    var url = "${createLink(controller: 'reportes', action: 'poaReporteWeb', id: unidad.id)}?anio=" + $("#anio_asg").val();
-                    window.open(url);
-                });
+            var url = "${createLink(controller: 'reportes', action: 'poaReporteWeb', id: unidad.id)}?anio=" + $("#anio_asg").val();
+            window.open(url);
+        });
 
 
         $("#dlg_desc_obs").dialog({
@@ -437,10 +621,12 @@
                 "Aceptar":function () {
                     if ($("#dlg_desc").val().length < 255) {
                         if ($("#dlg_obs").val().length < 127) {
-                            $("#" + $("#hid_desc").val()).val($("#dlg_desc").val())
+                            $("#" + $("#hid_desc").val()).val($("#dlg_desc").val());
                             $("#dlg_desc").val("")
-                            $("#" + $("#hid_obs").val()).val($("#dlg_obs").val())
+                            $("#" + $("#hid_obs").val()).val($("#dlg_obs").val());
                             $("#dlg_obs").val("")
+                            $("#" + $("#hid_met").val()).val($("#dlg_met").val());
+                            $("#dlg_met").val("");
                             $("#dlg_desc_obs").dialog("close")
                         } else {
                             $("#dlg_error").html("El campo meta no puede contener mas de 255 caracteres. Actual(" + $("#dlg_obs").val().length + ")")
@@ -476,23 +662,30 @@
             text:false
         }).click(function () {
 
-                    valorEditar = $(this).attr("valor");
-                    if ($(this).attr("comp") * 1 > 0) {
-                        $("#componente").selectmenu("value", $(this).attr("comp"));
-                    } else {
-                        $("#componente").selectmenu("value", "-1");
-                    }
-                    $("#programa").selectmenu("value", $(this).attr("prog"));
-                    $("#fuente").val($(this).attr("fuente"));
-                    $("#valor_txt").val(number_format($(this).attr("valor"), 2, ",", "."));
-                    $("#prsp_id").val($(this).attr("prsp_id"));
-                    $("#prsp_num").val($(this).attr("prsp_num"));
-                    $("#desc").html($(this).attr("desc"));
-                    $("#guardar_btn").attr("iden", $(this).attr("iden"));
-                    $("#actv").val($(this).attr("actv"));
-                    $("#meta").val($(this).attr("meta"));
-                    $("#indi").val($(this).attr("indi"));
-                });
+            valorEditar = $(this).attr("valor");
+            if ($(this).attr("comp") * 1 > 0) {
+                $("#componente").selectmenu("value", $(this).attr("comp"));
+            } else {
+                $("#componente").selectmenu("value", "-1");
+            }
+            $("#programa").selectmenu("value", $(this).attr("prog"));
+            $("#fuente").val($(this).attr("fuente"));
+            $("#valor_txt").val(number_format($(this).attr("valor"), 2, ",", "."));
+            $("#prsp_id").val($(this).attr("prsp_id"));
+            $("#prsp_num").val($(this).attr("prsp_num"));
+            $("#desc").html($(this).attr("desc"));
+            $("#guardar_btn").attr("iden", $(this).attr("iden"));
+            $("#actv").val($(this).attr("actv"));
+            $("#meta").val($(this).attr("meta"));
+            $("#indi").val($(this).attr("indi"));
+            $("#met").val($(this).attr("met"));
+            $("#unidadA").val($(this).attr("un"));
+
+            cargarActivdad($(this).attr("prog"), $(this).attr("actpr"));
+            cargarCombos($(this).attr("ope"));
+            cargarPlanDesarrollo($(this).attr('plan'));
+            cargarPolitica($(this).attr('pol'));
+        });
 
         $(".eliminar").button({
             icons:{
@@ -500,26 +693,26 @@
             },
             text:false
         }).click(function () {
-                    if (confirm("Está seguro de querer eliminar esta asignación?\nSe eliminarán las asignaciones hijas, el PAC, y la programación asociadas.")) {
-                        var id = $(this).attr("iden");
-                        var btn = $(this);
-                        $.ajax({
-                            type:"POST",
-                            url:"${createLink(action:'eliminarAsignacion')}",
-                            data:{
-                                id:id
-                            },
-                            success:function (msg) {
-                                if (msg == "OK") {
+            if (confirm("Está seguro de querer eliminar esta asignación?\nSe eliminarán las asignaciones hijas, el PAC, y la programación asociadas.")) {
+                var id = $(this).attr("iden");
+                var btn = $(this);
+                $.ajax({
+                    type:"POST",
+                    url:"${createLink(action:'eliminarAsignacion')}",
+                    data:{
+                        id:id
+                    },
+                    success:function (msg) {
+                        if (msg == "OK") {
 //                                            btn.parents("tr").remove();
-                                    window.location.reload(true);
-                                } else {
-                                    alert("Ha ocurrido un error.")
-                                }
-                            }
-                        });
+                            window.location.reload(true);
+                        } else {
+                            alert("Ha ocurrido un error.")
+                        }
                     }
                 });
+            }
+        });
 
         $("#anio_asg, #programa").change(function () {
             location.href = "${createLink(controller:'modificacion',action:'nuevaAsignacionCorrienteMod')}?id=${unidad.id}&anio=" + $("#anio_asg").val() + "&programa=" + $("#programa").val();
@@ -533,18 +726,25 @@
             var actField = $("#actv");
             var actividad = actField.val();
             var band = true;
-            var comp = $("#componente").val()
+            var comp = $("#componente").val(null);
             var meta = $("#meta").val();
             var indi = $("#indi").val();
+            var met = $("#met").val();
             var boton = $(this);
+            var actividadPresupuestaria = $("#actividadPresupuestaria").val();
+            var poli = $("#politica").val();
+            var unidadAdministrativa = $("#unidadA").val();
+            var operativo = $("#objetivoOperativo").val();
+            var plan = $("#plan").val();
+
             if (validar(0)) {
-                var anio = boton.attr("anio")
-                var fuente = $("#fuente").val()
-                var programa = $("#programa").val()
+                var anio = boton.attr("anio");
+                var fuente = $("#fuente").val();
+                var programa = $("#programa").val();
                 $.ajax({
                     type:"POST",
                     url:"${createLink(action:'guardarAsignacionMod',controller:'modificacion')}",
-                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&indicador=" + indi + "&componente.id=" + comp + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
+                    data:"anio.id=" + anio + "&fuente.id=" + fuente + "&programa.id=" + programa + "&planificado=" + valor + "&presupuesto.id=" + prsp + "&unidad.id=${unidad.id}" + "&actividad=" + actividad + "&meta=" + meta + "&met=" + met + "&actividadPresupuestaria=" + actividadPresupuestaria +"&unidadA=" + unidadAdministrativa + "&indicador=" + indi +  "&operativo=" + operativo + "&plan=" + plan + "&componente.id=" + comp + ((isNaN(boton.attr("iden"))) ? "" : "&id=" + boton.attr("iden")),
                     success:function (msg) {
                         if (msg * 1 >= 0) {
                             location.reload(true);
@@ -599,6 +799,34 @@
                 }
             });
         });
+
+
+        function validarNumSinPuntos(ev) {
+            /*
+             48-57      -> numeros
+             96-105     -> teclado numerico
+             188        -> , (coma)
+             190        -> . (punto) teclado
+             110        -> . (punto) teclado numerico
+             8          -> backspace
+             46         -> delete
+             9          -> tab
+             37         -> flecha izq
+             39         -> flecha der
+             */
+            return ((ev.keyCode >= 48 && ev.keyCode <= 57) ||
+            (ev.keyCode >= 96 && ev.keyCode <= 105) ||
+            ev.keyCode == 8 || ev.keyCode == 46 || ev.keyCode == 9 ||
+            ev.keyCode == 37 || ev.keyCode == 39 );
+        }
+
+        $(".validacionNumeroSinPuntos").keydown(function (ev) {
+            return validarNumSinPuntos(ev);
+        }).keyup(function () {
+        });
+
+
+
     });
 </script>
 
