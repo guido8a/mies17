@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="mies.TipoElemento; mies.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -41,8 +41,8 @@
                     <g:if test="${proy?.aprobado!='a'}">
                         <a href="#" class="btn aprobar" proy="${proy.id}">Aprobar</a>
                     </g:if><g:else>
-                        Aprobado
-                    </g:else>
+                    Aprobado
+                </g:else>
                 </td>
             </tr>
         </g:each>
@@ -69,8 +69,8 @@
 
     });
     $(".aprobar").click(function(){
-        $("#pass").val("")
-        $("#iden").val($(this).attr("proy"))
+        $("#pass").val("");
+        $("#iden").val($(this).attr("proy"));
         $("#aprob").dialog("open")
     });
     $("#aprob").dialog({
@@ -91,12 +91,12 @@
                         proy:$("#iden").val()
                     },
                     success: function(msg) {
-                        if(msg!="no"){
-                            alert("Proyecto aprobado")
+                        var parts = msg.split("_");
+                        if(parts[0] !="no"){
+                            alert(parts[1]);
                             window.location.href="${createLink(action:'listaAprobarProyecto')}/?parametro="+$("#txt_buscar").val()
-
                         }else{
-                            alert("Clave no valida")
+                            alert(parts[1])
                         }
                     }
                 });

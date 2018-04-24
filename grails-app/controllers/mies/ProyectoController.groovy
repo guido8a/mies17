@@ -222,19 +222,38 @@ class ProyectoController extends mies.seguridad.Shield {
 
 
     def aprobarProyecto = {
-        if (request.method == 'POST') {
-            println "params " + params
-            if (session.usuario.autorizacion == params.ssap.encodeAsMD5()) {
-                def proy = Proyecto.get(params.proy)
-                proy.aprobado = "a"
-                kerberosService.saveObject(proy, Proyecto, session.perfil, session.usuario, "aprobarProyecto", "proyecto", session)
-                render "ok"
-            } else {
-                render "no"
+
+
+        def proy = Proyecto.get(params.proy)
+
+        def tpel = TipoElemento.findByDescripcion("Fin")
+        def fin = MarcoLogico.find("from MarcoLogico where proyecto=${proy.id} and tipoElemento=${tpel.id} and estado=0")
+        def componentes = MarcoLogico.findAll("from MarcoLogico where proyecto=${proy.id} and tipoElemento=2 and estado=0 order by id")
+
+        println("fin " + fin)
+
+        if(fin){
+            if(componentes){
+                if (request.method == 'POST') {
+                    println "params " + params
+                    if (session.usuario.autorizacion == params.ssap.encodeAsMD5()) {
+                        proy.aprobado = "a"
+                        kerberosService.saveObject(proy, Proyecto, session.perfil, session.usuario, "aprobarProyecto", "proyecto", session)
+                        render "ok_Proyecto Aprobado"
+                    } else {
+                        render "no_Clave no Válida"
+                    }
+                } else {
+                    redirect(controller: "shield", action: "ataques")
+                }
+            }else{
+                render "no_Su Proyecto no contiene un Cronograma, no se puede aprobar!"
             }
-        } else {
-            redirect(controller: "shield", action: "ataques")
+        }else{
+            render "no_Su Proyecto no contiene Marco Lógico, no se puede aprobar!"
         }
+
+
     }
 
 
