@@ -25,11 +25,22 @@ class MetaController extends mies.seguridad.Shield{
             if (inversion.toFloat().round(2) < total.toFloat().round(2)){
                 render "Error: El nuevo valor de inversión de la meta (\$ ${params.inversion}) es inferior a lo registrado en el cronograma (\$ ${g.formatNumber(number:total,format:"###,##0",minFractionDigits:"2", maxFractionDigits:"2")})"
             }else{
-                def meta = kerberosService.save(params, Meta, session.perfil, session.usuario)
-                if (meta.errors.getErrorCount() == 0) {
+//                def meta = kerberosService.save(params, Meta, session.perfil, session.usuario)
+
+                mta.properties = params
+               def err = ''
+                try{
+                    mta.save(flush:true)
+                }catch (e){
+                    println("error al guardar meta" + e)
+                    err += e
+                }
+
+//                if (meta.errors.getErrorCount() == 0) {
+                if (err == '') {
                     render "ok"
                 } else {
-                    render "Error en los datos ingresados "+meta.errors
+                    render "Error en los datos ingresados "+ mta.errors
                 }
 
             }
