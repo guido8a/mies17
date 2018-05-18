@@ -625,26 +625,37 @@ class ProyectoController extends mies.seguridad.Shield {
         }
 
         def tx_fcha
+        def tx_fcha2
+        def tx_fcha3
+        def tx_fcha4
         def fcha
-        if (params.fechaInicioPlanificada.size() > 20) {
+        def fcha2
+        def fcha3
+        def fcha4
+//        if (params.fechaInicioPlanificada.size() > 20) {
+        if (params.fechaInicioPlanificada_day) {
             tx_fcha = "${params.fechaInicioPlanificada_day}-${params.fechaInicioPlanificada_month}-${params.fechaInicioPlanificada_year}"
             fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
             proyecto.fechaInicioPlanificada = fcha
         }
-        if (params.fechaFinPlanificada.size() > 20) {
-            tx_fcha = "${params.fechaFinPlanificada_day}-${params.fechaFinPlanificada_month}-${params.fechaFinPlanificada_year}"
-            fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
-            proyecto.fechaFinPlanificada = fcha
+
+//        if (params.fechaFinPlanificada.size() > 20) {
+        if (params.fechaFinPlanificada_day) {
+            tx_fcha2 = "${params.fechaFinPlanificada_day}-${params.fechaFinPlanificada_month}-${params.fechaFinPlanificada_year}"
+            fcha2 = new Date().parse("dd-MM-yyyy", tx_fcha2)
+            proyecto.fechaFinPlanificada = fcha2
         }
-        if (params.fechaInicio.size() > 20) {
-            tx_fcha = "${params.fechaInicio_day}-${params.fechaInicio_month}-${params.fechaInicio_year}"
-            fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
-            proyecto.fechaInicio = fcha
+//        if (params.fechaInicio.size()  > 20) {
+        if (params.fechaInicio_day) {
+            tx_fcha3 = "${params.fechaInicio_day}-${params.fechaInicio_month}-${params.fechaInicio_year}"
+            fcha3 = new Date().parse("dd-MM-yyyy", tx_fcha3)
+            proyecto.fechaInicio = fcha3
         }
-        if (params.fechaFin.size() > 20) {
-            tx_fcha = "${params.fechaFin_day}-${params.fechaFin_month}-${params.fechaFin_year}"
-            fcha = new Date().parse("dd-MM-yyyy", tx_fcha)
-            proyecto.fechaFin = fcha
+//        if (params.fechaFin.size() > 20) {
+        if (params.fechaFin_day) {
+            tx_fcha4 = "${params.fechaFin_day}-${params.fechaFin_month}-${params.fechaFin_year}"
+            fcha4 = new Date().parse("dd-MM-yyyy", tx_fcha4)
+            proyecto.fechaFin = fcha4
         }
 
         params.remove('fechaInicioPlanificada')
