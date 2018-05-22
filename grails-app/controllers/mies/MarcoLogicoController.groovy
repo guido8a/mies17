@@ -249,6 +249,7 @@ class MarcoLogicoController extends mies.seguridad.Shield {
             }
             break;
         /*Medios*/ case "2":
+            println("medios " + params)
 
             def medio
             if (params.id && params.id != "" && params.id != " " && params.id != "0") {
@@ -267,16 +268,16 @@ class MarcoLogicoController extends mies.seguridad.Shield {
             } else {
                 render medio.id
             }
-
             break;
         /*Supuestos*/ case "3":
             def supuesto
-            if (params.id && params.id != "" && params.id != " " && params.id != "0") {
+
+          if (params.id && params.id != "" && params.id != " " && params.id != "0") {
                 supuesto = Supuesto.get(params.id)
                 supuesto.descripcion = params.datos
             } else {
                 def marco = MarcoLogico.get(params.indicador)
-                supuesto = new Supuesto([descripcion: params.datos, MarcoLogico: marco])
+                supuesto = new Supuesto([descripcion: params.datos, marcoLogico: marco])
 
             }
 

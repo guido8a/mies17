@@ -489,7 +489,7 @@
                     if($("#txt_varios").val()!="" && $("#txt_varios").val()!=" "){
                         $.ajax({
                             type: "POST",
-                            url: "${createLink(action:'guardarDatosIndMedSup')}",
+                            url: "${createLink(controller: 'marcoLogico', action:'guardarDatosIndMedSup')}",
                             data: {
                                 ml:$("#c_ml").val(),
                                 datos:$("#txt_varios").val(),
