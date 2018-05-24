@@ -1,6 +1,6 @@
 package mies
 
-class ActividadPresupuestoController {
+class ActividadPresupuestoController extends mies.seguridad.Shield {
 
     def index() { }
 

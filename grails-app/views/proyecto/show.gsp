@@ -470,15 +470,15 @@
                             <g:each in="${metas}" status="i" var="meta">
                                 <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
                                     <td>
-                                        ${meta.metaBuenVivir.politica.objetivo.descripcion}
+                                        ${meta?.metaBuenVivir?.politica?.objetivo?.descripcion ?: ''}
                                     </td>
 
                                     <td>
-                                        ${meta.metaBuenVivir.politica.descripcion}
+                                        ${meta?.metaBuenVivir?.politica?.descripcion ?: ''}
                                     </td>
 
                                     <td>
-                                        ${meta.metaBuenVivir.descripcion}
+                                        ${meta?.metaBuenVivir?.descripcion ?: ''}
                                     </td>
                                 </tr>
                             </g:each>
@@ -504,7 +504,7 @@
                             <g:each in="${plas}" status="i" var="plast">
                                 <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
                                     <td>
-                                        <b style="color: #0e82c7;">*</b> "${plast.politicaAgendaSocial.descripcion}"
+                                        <b style="color: #0e82c7;">*</b> "${plast?.politicaAgendaSocial?.descripcion ?: ''}"
                                     </td>
                                 </tr>
                             </g:each>
@@ -536,7 +536,7 @@
                             <g:each in="${politicas}" status="i" var="pol">
                                 <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
                                     <td>
-                                        <b style="color: #0e82c7;">*</b> "${pol?.politica?.descripcion}"
+                                        <b style="color: #0e82c7;">*</b> "${pol?.politica?.descripcion ?: ''}"
                                     </td>
                                 </tr>
                             </g:each>
@@ -587,7 +587,7 @@
                             <g:each in="${financiamientos}" status="i" var="fin">
                                 <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
                                     <td fuente="${fin?.fuente.id}" tipo="descripcion">
-                                        ${fin?.fuente.descripcion}
+                                        ${fin?.fuente?.descripcion ?: ''}
                                     </td>
 
                                     <td style="text-align: right;" fuente="${fin?.fuente.id}" tipo="monto">
