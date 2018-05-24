@@ -8,7 +8,7 @@ class Shield{
      */
     def auth() {
         println "an "+actionName+" cn "+ controllerName+"  "
-        if((actionName != 'pdfLink') || (actionName != 'certificacion')) {
+        if((actionName == 'pdfLink') || (actionName == 'certificacion')) {
             return true
         }
 
