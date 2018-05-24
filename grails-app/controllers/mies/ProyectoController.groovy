@@ -486,12 +486,12 @@ class ProyectoController extends mies.seguridad.Shield {
             redirect(action: 'show', id: proyecto.id)
         }
 //        render "????"
-        flash.message = "Ha ocurrido un error grave"
-        redirect(action: 'show', id: proyecto.id)
+        flash.message = "Proyecto eliminado"
+        render "Proyecto eliminado"
     }
 
     def validarAutorizacion = {
-        if (session.usuario.id.toLong() == Usro.findByLogin("ruth").id.toLong()) {
+        if (session.usuario.id.toLong() == Usro.findByLogin("echato").id.toLong()) {
             if (session.usuario.autorizacion == params.auth.encodeAsMD5()) {
                 render "OK"
             } else {

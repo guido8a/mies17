@@ -116,7 +116,8 @@
             </g:link>
 
         </div>
-        <div style="height: 25px;width: 200px;position:absolute;bottom: 1px;right: 5px;text-align: right">Versión 1.1.30c</div>
+        <div style="height: 25px;width: 200px;position:absolute;bottom: 1px;right: 5px;text-align: right">
+            Versión ${message(code: 'version', default: '1.1.0x')}</div>
     </div>
 </div>
 <script type="text/javascript">
