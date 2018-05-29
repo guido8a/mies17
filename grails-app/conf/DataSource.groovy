@@ -21,8 +21,8 @@ environments {
             dbCreate = "update"
 //            url = "jdbc:postgresql://10.0.0.9:5432/mies"
 //            url = "jdbc:postgresql://10.0.0.9:5432/mies_antes"
-//            url = "jdbc:postgresql://10.0.0.9:5432/mies_brre"
-            url = "jdbc:postgresql://192.168.100.9:5432/mies_prba"
+            url = "jdbc:postgresql://192.168.100.9:5432/mies_brre"
+//            url = "jdbc:postgresql://192.168.100.9:5432/mies_prba"
             username = "postgres"
             password = "postgres"
         }
