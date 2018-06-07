@@ -65,10 +65,11 @@ class CronogramaController extends mies.seguridad.Shield{
         Cronograma.findAllByMarcoLogicoAndCronogramaIsNull(marco).each{
 
             if(it.id!=crg.id)
-                valor+=(it.valor+it.valor2)
+                valor += (it.valor + it.valor2)
         }
-//        println "valor!!! "+valor+" "+params.valor
-        if(marco.monto>=valor+params.valor.toDouble()+params.valor2.toDouble()){
+        println "monto: ${marco.monto} >= $valor + ${params.valor.toDouble()} + ${params.valor2.toDouble()}"
+        println "evalua: ${(marco.monto - (valor+params.valor.toDouble()+params.valor2.toDouble()))}"
+        if(!((marco.monto - (valor+params.valor.toDouble()+params.valor2.toDouble())) < -0.001)){
             crg = kerberosService.saveObject(crg, Cronograma, session.perfil, session.usuario, "guardarDatosCronograma", "cronograma", session)
             println " crg "+ crg.errors.getErrorCount()
             if(crg.errors.getErrorCount()!=0){
